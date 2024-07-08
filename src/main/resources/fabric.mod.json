@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "authors": [
+    "c0nstexpr"
+  ],
+  "contact": {
+    "homepage": "https://github.com/c0nstexpr",
+    "sources": "https://github.com/c0nstexpr/owo-dsl"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "org.c0nstexpr.owo.dsl.OwoDslMod::init"
+      }
+    ]
+  },
+  "depends": {
+    "owo": ">=${owo}",
+    "fabric-language-kotlin": ">=${fabricKotlin}"
+  }
+}
