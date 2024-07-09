@@ -1,5 +1,4 @@
 import kotlinx.datetime.Clock.System.now
-import net.fabricmc.loom.task.ValidateMixinNameTask
 
 plugins {
     id("kotlin-common")
@@ -57,14 +56,6 @@ tasks {
         inputs.property("timestamp", "${now()}")
         filesMatching(MOD_JSON) { expand(extension.properties.get()) }
     }
-
-    val validateMixinName =
-        register<ValidateMixinNameTask>("validateMixinName") {
-            source(srcMain.output)
-            source(srcClient.output)
-        }
-
-    build { dependsOn(validateMixinName) }
 
     remapJar {
         from(srcClient.output)
