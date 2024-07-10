@@ -1,4 +1,3 @@
-import com.diffplug.gradle.spotless.JavaExtension.EclipseConfig
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode
@@ -41,21 +40,6 @@ tasks {
 
     java { withSourcesJar() }
 }
-
-class Eclipse {
-    companion object {
-        const val STYLE_CONFIG = "eclipse-perf.xml"
-        const val IMPORT_CONFIG = "eclipse.importorder"
-    }
-}
-
-fun EclipseConfig.tryAdd(file: String) =
-    if (file(file).exists()) {
-        this.configFile(file)
-        true
-    } else {
-        false
-    }
 
 spotless {
     java { removeUnusedImports() }

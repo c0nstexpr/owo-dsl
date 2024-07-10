@@ -9,6 +9,8 @@ abstract class EditBoxBuilder<T : EditBoxWidget> : ScrollableWidgetBuilder<T>() 
 
     var text: String? = null
 
+    override val canBuild = message.canBuild
+
     override fun applyTo(component: T) {
         super.applyTo(component)
         maxLength?.let(component::setMaxLength)
@@ -18,7 +20,13 @@ abstract class EditBoxBuilder<T : EditBoxWidget> : ScrollableWidgetBuilder<T>() 
 
 inline fun editBoxWidget(crossinline block: EditBoxBuilder<EditBoxWidget>.() -> Unit) =
     object : EditBoxBuilder<EditBoxWidget>() {
-        override fun build() = message.build()?.let {
-            EditBoxWidget(MinecraftClient.getInstance().textRenderer, 0, 0, 0, 0, Text.empty(), it)
-        }
+        override fun build() = EditBoxWidget(
+            MinecraftClient.getInstance().textRenderer,
+            0,
+            0,
+            0,
+            0,
+            Text.empty(),
+            message.build()
+        )
     }.apply(block)

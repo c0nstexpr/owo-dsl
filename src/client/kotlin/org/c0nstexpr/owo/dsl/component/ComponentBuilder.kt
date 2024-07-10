@@ -38,7 +38,7 @@ interface ComponentBuilder<T : Component> : OwoBuilder<T> {
 
         id?.let(component::id)
 
-        if (tooltipBuilder.isNotEmpty()) component.tooltip(tooltipBuilder.mapNotNull { it.build() })
+        if (tooltipBuilder.isNotEmpty()) component.tooltip(tooltipBuilder.map { it.build() })
 
         zIndex?.let(component::zIndex)
 

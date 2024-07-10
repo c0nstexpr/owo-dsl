@@ -1,19 +1,34 @@
 package org.c0nstexpr.owo.dsl
 
+import com.mojang.authlib.minecraft.InsecurePublicKeyException.InvalidException
 import io.wispforest.owo.ui.core.Surface
 
-fun interface SurfaceBuilder : OwoBuilder<Surface>
+interface SurfaceBuilder : OwoBuilder<Surface>
 
-fun darkPanelSurface() = SurfaceBuilder { Surface.DARK_PANEL }
+fun invalidSurface() = object : SurfaceBuilder {
+    override fun build() = throw InvalidException("Invalid surface")
 
-fun panelInsetSurface() = SurfaceBuilder { Surface.PANEL_INSET }
+    override val canBuild = false
+}
 
-fun vanillaTranslucentSurface() = SurfaceBuilder { Surface.VANILLA_TRANSLUCENT }
+inline fun surfaceOf(crossinline block: () -> Surface) = object : SurfaceBuilder {
+    override fun build() = block()
 
-fun optionsBackgroundSurface() = SurfaceBuilder { Surface.OPTIONS_BACKGROUND }
+    override val canBuild = true
+}
 
-fun tooltipSurface() = SurfaceBuilder { Surface.TOOLTIP }
+fun darkPanelSurface() = surfaceOf { Surface.DARK_PANEL }
 
-fun SurfaceBuilder.and(other: SurfaceBuilder) = SurfaceBuilder {
-    build()?.and(other.build() ?: return@SurfaceBuilder null)
+fun panelInsetSurface() = surfaceOf { Surface.PANEL_INSET }
+
+fun vanillaTranslucentSurface() = surfaceOf { Surface.VANILLA_TRANSLUCENT }
+
+fun optionsBackgroundSurface() = surfaceOf { Surface.OPTIONS_BACKGROUND }
+
+fun tooltipSurface() = surfaceOf { Surface.TOOLTIP }
+
+fun SurfaceBuilder.and(other: SurfaceBuilder) = object : SurfaceBuilder {
+    override fun build() = this@and.build().and(other.build())
+
+    override val canBuild = this@and.canBuild && other.canBuild
 }

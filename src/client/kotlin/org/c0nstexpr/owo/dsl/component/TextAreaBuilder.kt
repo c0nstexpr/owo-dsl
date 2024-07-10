@@ -8,6 +8,9 @@ abstract class TextAreaBuilder<T : TextAreaComponent> : EditBoxBuilder<T>() {
 
     var maxLines: Int? = null
 
+    override val canBuild
+        get() = horizontalSizingBuilder.canBuild && verticalSizingBuilder.canBuild
+
     override fun applyTo(component: T) {
         super.applyTo(component)
         displayCharCount?.let(component::displayCharCount)
@@ -17,10 +20,8 @@ abstract class TextAreaBuilder<T : TextAreaComponent> : EditBoxBuilder<T>() {
 
 inline fun textArea(crossinline block: TextAreaBuilder<TextAreaComponent>.() -> Unit) =
     object : TextAreaBuilder<TextAreaComponent>() {
-        override fun build(): TextAreaComponent? {
-            return Components.textArea(
-                horizontalSizingBuilder.build() ?: return null,
-                verticalSizingBuilder.build() ?: return null
-            )
-        }
+        override fun build(): TextAreaComponent = Components.textArea(
+            horizontalSizingBuilder.build(),
+            verticalSizingBuilder.build()
+        )
     }.apply(block)

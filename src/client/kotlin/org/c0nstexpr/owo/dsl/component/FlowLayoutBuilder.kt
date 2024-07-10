@@ -11,41 +11,40 @@ abstract class FlowLayoutBuilder<T : FlowLayout> : BaseParentComponentBuilder<T>
 
     var gap: Int? = null
 
+    override val canBuild
+        get() = horizontalSizingBuilder.canBuild &&
+            verticalSizingBuilder.canBuild &&
+            algo != null
+
     override fun applyTo(component: T) {
         super.applyTo(component)
-
-        children.mapNotNull { it.build() }.forEach(component::child)
+        children.map { it.build() }.forEach(component::child)
         gap?.let(component::gap)
     }
 }
 
 fun flowLayout(block: FlowLayoutBuilder<FlowLayout>.() -> Unit) =
     object : FlowLayoutBuilder<FlowLayout>() {
-        override fun build(): FlowLayout? {
-            if (algo == null) return null
-
-            val horizontalSizing = horizontalSizingBuilder.build() ?: return null
-            val verticalSizing = verticalSizingBuilder.build() ?: return null
+        override fun build(): FlowLayout {
+            val horizontalSizing = horizontalSizingBuilder.build()
+            val verticalSizing = verticalSizingBuilder.build()
 
             return when (algo) {
-                Algorithm.HORIZONTAL ->
-                    Containers.horizontalFlow(horizontalSizing, verticalSizing)
+                Algorithm.HORIZONTAL -> Containers.horizontalFlow(horizontalSizing, verticalSizing)
 
-                Algorithm.VERTICAL ->
-                    Containers.verticalFlow(horizontalSizing, verticalSizing)
+                Algorithm.VERTICAL -> Containers.verticalFlow(horizontalSizing, verticalSizing)
 
-                Algorithm.LTR_TEXT ->
-                    Containers.ltrTextFlow(horizontalSizing, verticalSizing)
+                Algorithm.LTR_TEXT -> Containers.ltrTextFlow(horizontalSizing, verticalSizing)
 
                 else -> object : FlowLayout(horizontalSizing, verticalSizing, algo) {}
             }
         }
     }.apply(block)
 
-inline fun <reified T : ComponentBuilder<*>> FlowLayoutBuilder<FlowLayout>.child(block: () -> T) =
+inline fun FlowLayoutBuilder<FlowLayout>.child(crossinline block: () -> ComponentBuilder<*>) =
     children.add(block())
 
-inline fun <reified T : ComponentBuilder<*>> FlowLayoutBuilder<FlowLayout>.child(
+inline fun FlowLayoutBuilder<FlowLayout>.child(
     index: Int,
-    block: () -> T
+    crossinline block: () -> ComponentBuilder<*>
 ) = children.add(index, block())

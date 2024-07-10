@@ -6,6 +6,7 @@ import org.c0nstexpr.owo.dsl.InsetsBuilder
 import org.c0nstexpr.owo.dsl.PositioningBuilder
 import org.c0nstexpr.owo.dsl.SizingBuilder
 import org.c0nstexpr.owo.dsl.TextBuilder
+import org.c0nstexpr.owo.dsl.textOf
 
 abstract class ClickableWidgetBuilder<T : ClickableWidget> : ComponentBuilder<T> {
     override var positioningBuilder = PositioningBuilder()
@@ -28,11 +29,11 @@ abstract class ClickableWidgetBuilder<T : ClickableWidget> : ComponentBuilder<T>
 
     override var y: Int? = null
 
-    var messageBuilder = TextBuilder { null }
+    var messageBuilder: TextBuilder = textOf { "" }
 }
 
 inline val ClickableWidgetBuilder<*>.message
     get() = messageBuilder
 
 inline fun ClickableWidgetBuilder<*>.message(crossinline block: TextBuilder.() -> Unit) =
-    messageBuilder.apply(block)
+    block(messageBuilder)

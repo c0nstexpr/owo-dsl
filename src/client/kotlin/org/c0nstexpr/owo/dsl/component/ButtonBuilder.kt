@@ -5,7 +5,7 @@ import io.wispforest.owo.ui.component.Components
 
 abstract class ButtonBuilder<T : ButtonComponent> : ButtonWidgetBuilder<T>()
 
-fun buttonComponent(block: ButtonBuilder<ButtonComponent>.() -> Unit) =
+inline fun buttonComponent(crossinline block: ButtonBuilder<ButtonComponent>.() -> Unit) =
     object : ButtonBuilder<ButtonComponent>() {
-        override fun build() = messageBuilder.build()?.let { Components.button(it) {} }
+        override fun build() = Components.button(messageBuilder.build()) {}
     }.apply(block)

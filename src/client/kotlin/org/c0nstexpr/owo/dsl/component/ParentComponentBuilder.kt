@@ -17,16 +17,14 @@ interface ParentComponentBuilder<T : ParentComponent> : ComponentBuilder<T> {
         super.applyTo(component)
         verticalAlignment?.let(component::verticalAlignment)
         horizontalAlignment?.let(component::horizontalAlignment)
-        padding.build()?.let(component::padding)
+        if (padding.canBuild) component.padding(padding.build())
         allowOverflow?.let(component::allowOverflow)
-        surfaceBuilder.build()?.let(component::surface)
+        if (surfaceBuilder.canBuild) component.surface(surfaceBuilder.build())
     }
 }
 
-inline fun <reified T : ParentComponent> ParentComponentBuilder<T>.padding(
-    block: InsetsBuilder.() -> Unit
-) = block(padding)
+inline fun ParentComponentBuilder<*>.padding(crossinline block: InsetsBuilder.() -> Unit) =
+    block(padding)
 
-inline fun <reified T : ParentComponent> ParentComponentBuilder<T>.surface(
-    block: SurfaceBuilder.() -> Unit
-) = block(surfaceBuilder)
+inline fun ParentComponentBuilder<*>.surface(crossinline block: SurfaceBuilder.() -> Unit) =
+    block(surfaceBuilder)

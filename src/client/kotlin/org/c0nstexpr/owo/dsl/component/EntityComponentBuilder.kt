@@ -7,12 +7,14 @@ import net.minecraft.entity.EntityType
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.StringNbtReader
 import net.minecraft.registry.Registries
-import org.c0nstexpr.owo.dsl.IdentifierBuilder
+import net.minecraft.util.Identifier
+import org.c0nstexpr.owo.dsl.OwoBuilder
+import org.c0nstexpr.owo.dsl.invalidBuilder
 
 abstract class EntityComponentBuilder<T : EntityComponent<*>> : BaseComponentBuilder<T>() {
-    var entityId = IdentifierBuilder()
+    var entityTypeBuilder = invalidBuilder<EntityType<*>>()
 
-    var nbtCompound: NbtCompound? = null
+    var nbtCompoundBuilder = invalidBuilder<NbtCompound>()
 
     var allowMouseRotation: Boolean? = null
 
@@ -24,6 +26,8 @@ abstract class EntityComponentBuilder<T : EntityComponent<*>> : BaseComponentBui
 
     var showNametag: Boolean? = null
 
+    override val canBuild get() = entityType.canBuild
+
     override fun applyTo(component: T) {
         super.applyTo(component)
         allowMouseRotation?.let(component::allowMouseRotation)
@@ -34,17 +38,40 @@ abstract class EntityComponentBuilder<T : EntityComponent<*>> : BaseComponentBui
     }
 }
 
-inline val EntityComponentBuilder<*>.entityType: EntityType<*>?
-    get() = Registries.ENTITY_TYPE.getOrEmpty(entityId.build()).orElse(null)
+fun EntityComponentBuilder<*>.entityId(id: OwoBuilder<Identifier>) {
+    entityTypeBuilder = object : OwoBuilder<EntityType<*>> {
+        override fun build() = Registries.ENTITY_TYPE.get(id.build())
 
-inline var EntityComponentBuilder<*>.nbtCompoundString: String?
-    get() = nbtCompound?.toString()
-    set(value) {
-        nbtCompound = value?.let(StringNbtReader::parse)
+        override val canBuild get() = id.canBuild && Registries.ENTITY_TYPE.containsId(id.build())
     }
+}
+
+fun EntityComponentBuilder<*>.nbtCompoundString(nbtStr: String?) {
+    nbtCompoundBuilder = object : OwoBuilder<NbtCompound> {
+        override fun build() = StringNbtReader.parse(nbtStr!!)
+
+        override val canBuild get() = nbtStr != null
+    }
+}
 
 inline fun entityComponent(
     crossinline block: EntityComponentBuilder<EntityComponent<*>>.() -> Unit
 ) = object : EntityComponentBuilder<EntityComponent<*>>() {
-    override fun build() = Components.entity(Sizing.content(), entityType, nbtCompound)
+    override fun build() = Components.entity(
+        Sizing.content(),
+        entityTypeBuilder.build(),
+        nbtCompoundBuilder.build()
+    )
 }.apply(block)
+
+inline val EntityComponentBuilder<*>.entityType get() = entityTypeBuilder
+
+inline fun EntityComponentBuilder<*>.entityType(
+    crossinline block: OwoBuilder<EntityType<*>>.() -> Unit
+) = block(entityTypeBuilder)
+
+inline val EntityComponentBuilder<*>.nbtCompound get() = nbtCompoundBuilder
+
+inline fun EntityComponentBuilder<*>.nbtCompound(
+    crossinline block: OwoBuilder<NbtCompound>.() -> Unit
+) = block(nbtCompoundBuilder)

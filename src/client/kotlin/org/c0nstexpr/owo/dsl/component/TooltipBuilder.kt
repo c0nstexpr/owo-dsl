@@ -5,10 +5,12 @@ import org.c0nstexpr.owo.dsl.OrderedTextBuilder
 import org.c0nstexpr.owo.dsl.OwoBuilder
 import org.c0nstexpr.owo.dsl.orderedTextOf
 
-fun interface TooltipBuilder<T : TooltipComponent> : OwoBuilder<T>
+interface TooltipBuilder<T : TooltipComponent> : OwoBuilder<T>
 
-fun tooltipOf(text: OrderedTextBuilder) = TooltipBuilder {
-    TooltipComponent.of(text.build() ?: return@TooltipBuilder null)
+fun tooltipOf(text: OrderedTextBuilder) = object : TooltipBuilder<TooltipComponent> {
+    override fun build() = TooltipComponent.of(text.build())
+
+    override val canBuild get() = text.canBuild
 }
 
-fun tooltipOf(block: () -> String) = tooltipOf(orderedTextOf(block))
+inline fun tooltipOf(crossinline block: () -> String) = tooltipOf(orderedTextOf(block))
