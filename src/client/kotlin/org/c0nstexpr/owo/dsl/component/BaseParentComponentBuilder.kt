@@ -4,18 +4,19 @@ import io.wispforest.owo.ui.base.BaseParentComponent
 import io.wispforest.owo.ui.core.HorizontalAlignment
 import io.wispforest.owo.ui.core.VerticalAlignment
 import org.c0nstexpr.owo.dsl.InsetsBuilder
+import org.c0nstexpr.owo.dsl.invalidBuilder
 import org.c0nstexpr.owo.dsl.invalidSurface
 
 abstract class BaseParentComponentBuilder<T : BaseParentComponent> :
     BaseComponentBuilder<T>(),
     ParentComponentBuilder<T> {
-    override var verticalAlignment: VerticalAlignment? = null
+    override var verticalAlignment = invalidBuilder<VerticalAlignment>()
 
-    override var horizontalAlignment: HorizontalAlignment? = null
+    override var horizontalAlignment = invalidBuilder<HorizontalAlignment>()
 
     override var padding = InsetsBuilder()
 
-    override var allowOverflow: Boolean? = null
+    override var allowOverflow = invalidBuilder<Boolean>()
 
     override var surfaceBuilder = invalidSurface()
 

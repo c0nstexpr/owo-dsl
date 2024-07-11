@@ -9,16 +9,18 @@ import org.c0nstexpr.owo.dsl.invalidBuilder
 abstract class ItemComponentBuilder<T : ItemComponent> : BaseComponentBuilder<T>() {
     var stackBuilder = invalidBuilder<ItemStack>()
 
-    var showOverlay: Boolean? = null
+    var showOverlay = invalidBuilder<Boolean>()
 
-    var setTooltipFromStack: Boolean? = null
+    var setTooltipFromStack = invalidBuilder<Boolean>()
 
     override val canBuild get() = stackBuilder.canBuild
 
     override fun applyTo(component: T) {
         super.applyTo(component)
-        showOverlay?.let(component::showOverlay)
-        setTooltipFromStack?.let(component::setTooltipFromStack)
+
+        if (showOverlay.canBuild) component.showOverlay(showOverlay.build())
+
+        if (setTooltipFromStack.canBuild) component.setTooltipFromStack(setTooltipFromStack.build())
     }
 }
 

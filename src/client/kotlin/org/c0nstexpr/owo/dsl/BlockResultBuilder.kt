@@ -8,11 +8,11 @@ open class BlockResultBuilder : OwoBuilder<BlockArgumentParser.BlockResult> {
     var registry = Registries.BLOCK.readOnlyWrapper!!
     var allowNbt = true
 
-    override fun build() = string?.let {
-        BlockArgumentParser.block(
-            registry,
-            it,
-            allowNbt
-        )
-    }
+    override fun build() = BlockArgumentParser.block(
+        registry,
+        string!!,
+        allowNbt
+    )!!
+
+    override val canBuild get() = string != null
 }

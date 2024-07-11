@@ -9,5 +9,5 @@ open class EntityTypeBuilder : DelegateBuilder<EntityType<*>> {
 }
 
 fun EntityTypeBuilder.id(id: OwoBuilder<Identifier>) {
-    value = builder { Registries.ENTITY_TYPE.get(id.build()) }
+    value = OwoBuilder { Registries.ENTITY_TYPE.get(id.build()) }
 }

@@ -6,6 +6,7 @@ import org.c0nstexpr.owo.dsl.InsetsBuilder
 import org.c0nstexpr.owo.dsl.PositioningBuilder
 import org.c0nstexpr.owo.dsl.SizeBuilder
 import org.c0nstexpr.owo.dsl.SizingBuilder
+import org.c0nstexpr.owo.dsl.invalidBuilder
 
 abstract class BaseComponentBuilder<T : BaseComponent> : ComponentBuilder<T> {
     override var positioningBuilder = PositioningBuilder()
@@ -16,21 +17,21 @@ abstract class BaseComponentBuilder<T : BaseComponent> : ComponentBuilder<T> {
 
     override var verticalSizingBuilder = SizingBuilder()
 
-    override var id: String? = null
+    override var id = invalidBuilder<String>()
 
     override var tooltipBuilder = mutableListOf<TooltipBuilder<*>>()
 
-    override var zIndex: Int? = null
+    override var zIndex = invalidBuilder<Int>()
 
-    override var cursor: CursorStyle? = null
+    override var cursor = invalidBuilder<CursorStyle>()
 
-    override var x: Int? = null
+    override var x = invalidBuilder<Int>()
 
-    override var y: Int? = null
+    override var y = invalidBuilder<Int>()
 
     override fun applyTo(component: T) {
         super.applyTo(component)
-        spaceBuilder.build()?.let { component.inflate(it) }
+        if (spaceBuilder.canBuild) component.inflate(spaceBuilder.build())
     }
 
     var spaceBuilder = SizeBuilder()

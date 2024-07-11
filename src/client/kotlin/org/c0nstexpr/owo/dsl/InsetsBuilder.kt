@@ -3,33 +3,17 @@ package org.c0nstexpr.owo.dsl
 import io.wispforest.owo.ui.core.Insets
 
 open class InsetsBuilder : OwoBuilder<Insets> {
-    private var initialized = false
+    var top: Int? = null
 
-    var top = 0
-        set(value) {
-            field = value
-            initialized = true
-        }
+    var left: Int? = null
 
-    var left = 0
-        set(value) {
-            field = value
-            initialized = true
-        }
+    var bottom: Int? = null
 
-    var bottom = 0
-        set(value) {
-            field = value
-            initialized = true
-        }
+    var right: Int? = null
 
-    var right = 0
-        set(value) {
-            field = value
-            initialized = true
-        }
+    override fun build() = Insets.of(top!!, left!!, bottom!!, right!!)!!
 
-    override fun build() = if (initialized) Insets.of(top, left, bottom, right) else null
+    override val canBuild get() = top != null && left != null && bottom != null && right != null
 }
 
 fun InsetsBuilder.vertical(v: Int) {

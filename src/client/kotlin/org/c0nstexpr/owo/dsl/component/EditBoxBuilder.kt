@@ -3,18 +3,21 @@ package org.c0nstexpr.owo.dsl.component
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.widget.EditBoxWidget
 import net.minecraft.text.Text
+import org.c0nstexpr.owo.dsl.invalidBuilder
 
 abstract class EditBoxBuilder<T : EditBoxWidget> : ScrollableWidgetBuilder<T>() {
-    var maxLength: Int? = null
+    var maxLength = invalidBuilder<Int>()
 
-    var text: String? = null
+    var text = invalidBuilder<String>()
 
     override val canBuild = message.canBuild
 
     override fun applyTo(component: T) {
         super.applyTo(component)
-        maxLength?.let(component::setMaxLength)
-        text?.let(component::setText)
+
+        if (maxLength.canBuild) component.setMaxLength(maxLength.build())
+
+        if (text.canBuild) component.text = text.build()
     }
 }
 

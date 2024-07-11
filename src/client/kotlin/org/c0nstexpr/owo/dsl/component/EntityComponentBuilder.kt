@@ -8,31 +8,37 @@ import net.minecraft.nbt.NbtCompound
 import org.c0nstexpr.owo.dsl.EntityTypeBuilder
 import org.c0nstexpr.owo.dsl.NbtCompoundBuilder
 import org.c0nstexpr.owo.dsl.OwoBuilder
+import org.c0nstexpr.owo.dsl.invalidBuilder
 
 abstract class EntityComponentBuilder<T : EntityComponent<*>> : BaseComponentBuilder<T>() {
     var entityTypeBuilder = EntityTypeBuilder()
 
     var nbtCompoundBuilder = NbtCompoundBuilder()
 
-    var allowMouseRotation: Boolean? = null
+    var allowMouseRotation = invalidBuilder<Boolean>()
 
-    var lookAtCursor: Boolean? = null
+    var lookAtCursor = invalidBuilder<Boolean>()
 
-    var scale: Float? = null
+    var scale = invalidBuilder<Float>()
 
-    var scaleToFit: Boolean? = null
+    var scaleToFit = invalidBuilder<Boolean>()
 
-    var showNametag: Boolean? = null
+    var showNametag = invalidBuilder<Boolean>()
 
     override val canBuild get() = entityType.canBuild
 
     override fun applyTo(component: T) {
         super.applyTo(component)
-        allowMouseRotation?.let(component::allowMouseRotation)
-        lookAtCursor?.let(component::lookAtCursor)
-        scale?.let(component::scale)
-        scaleToFit?.let(component::scaleToFit)
-        showNametag?.let(component::showNametag)
+
+        if (allowMouseRotation.canBuild) component.allowMouseRotation(allowMouseRotation.build())
+
+        if (lookAtCursor.canBuild) component.lookAtCursor(lookAtCursor.build())
+
+        if (scale.canBuild) component.scale(scale.build())
+
+        if (scaleToFit.canBuild) component.scaleToFit(scaleToFit.build())
+
+        if (showNametag.canBuild) component.showNametag(showNametag.build())
     }
 }
 

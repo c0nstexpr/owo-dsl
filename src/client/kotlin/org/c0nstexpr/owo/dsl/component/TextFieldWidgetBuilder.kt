@@ -4,43 +4,53 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import org.c0nstexpr.owo.dsl.TextBuilder
+import org.c0nstexpr.owo.dsl.invalidBuilder
 import org.c0nstexpr.owo.dsl.invalidTextBuilder
 
 abstract class TextFieldWidgetBuilder<T : TextFieldWidget> : ClickableWidgetBuilder<T>() {
     var placeholderBuilder = invalidTextBuilder()
 
-    var text: String? = null
+    var text = invalidBuilder<String>()
 
-    var maxLength: Int? = null
+    var maxLength = invalidBuilder<Int>()
 
-    var drawsBackground: Boolean? = null
+    var drawsBackground = invalidBuilder<Boolean>()
 
-    var editableColor: Int? = null
+    var editableColor = invalidBuilder<Int>()
 
-    var uneditableColor: Int? = null
+    var uneditableColor = invalidBuilder<Int>()
 
-    var editable: Boolean? = null
+    var editable = invalidBuilder<Boolean>()
 
-    var focusUnlocked: Boolean? = null
+    var focusUnlocked = invalidBuilder<Boolean>()
 
-    var visible: Boolean? = null
+    var visible = invalidBuilder<Boolean>()
 
-    var suggestion: String? = null
+    var suggestion = invalidBuilder<String>()
 
     override val canBuild get() = true
 
     override fun applyTo(component: T) {
         super.applyTo(component)
         if (placeholderBuilder.canBuild) component.setPlaceholder(placeholderBuilder.build())
-        text?.let(component::setText)
-        maxLength?.let(component::setMaxLength)
-        drawsBackground?.let(component::setDrawsBackground)
-        editableColor?.let(component::setEditableColor)
-        uneditableColor?.let(component::setUneditableColor)
-        editable?.let(component::setEditable)
-        focusUnlocked?.let(component::setFocusUnlocked)
-        visible?.let(component::setVisible)
-        suggestion?.let(component::setSuggestion)
+
+        if (text.canBuild) component.text = text.build()
+
+        if (maxLength.canBuild) component.setMaxLength(maxLength.build())
+
+        if (drawsBackground.canBuild) component.setDrawsBackground(drawsBackground.build())
+
+        if (editableColor.canBuild) component.setEditableColor(editableColor.build())
+
+        if (uneditableColor.canBuild) component.setUneditableColor(uneditableColor.build())
+
+        if (editable.canBuild) component.setEditable(editable.build())
+
+        if (focusUnlocked.canBuild) component.setFocusUnlocked(focusUnlocked.build())
+
+        if (visible.canBuild) component.isVisible = visible.build()
+
+        if (suggestion.canBuild) component.setSuggestion(suggestion.build())
     }
 }
 
@@ -48,8 +58,8 @@ inline fun textFieldWidget(block: TextFieldWidgetBuilder<*>.() -> Unit) =
     object : TextFieldWidgetBuilder<TextFieldWidget>() {
         override fun build() = TextFieldWidget(
             MinecraftClient.getInstance().textRenderer,
-            x ?: 0,
-            y ?: 0,
+            x.build(),
+            y.build(),
             0,
             0,
             Text.empty()

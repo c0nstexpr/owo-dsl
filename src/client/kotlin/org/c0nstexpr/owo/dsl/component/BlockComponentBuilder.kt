@@ -12,7 +12,7 @@ abstract class BlockComponentBuilder<T : BlockComponent> : BaseComponentBuilder<
 
 inline fun blockComponent(crossinline block: BlockComponentBuilder<BlockComponent>.() -> Unit) =
     object : BlockComponentBuilder<BlockComponent>() {
-        override fun build() = blockStateBuilder.build()!!
+        override fun build() = blockStateBuilder.build()
             .run { Components.block(blockState(), nbt()) }
     }.apply(block)
 

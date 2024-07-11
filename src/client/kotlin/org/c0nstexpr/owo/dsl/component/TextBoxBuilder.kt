@@ -8,7 +8,7 @@ abstract class TextBoxBuilder<T : TextBoxComponent> : TextFieldWidgetBuilder<T>(
 
     override fun applyTo(component: T) {
         super.applyTo(component)
-        text?.let(component::text)
+        if (text.canBuild) component.text(text.build())
     }
 }
 

@@ -2,16 +2,16 @@ package org.c0nstexpr.owo.dsl
 
 import net.minecraft.text.Text
 
-interface TextBuilder : OwoBuilder<Text>
+interface TextBuilder : DelegateBuilder<Text>
 
 fun invalidTextBuilder() = object : TextBuilder {
-    override fun build() = throw IllegalStateException("Invalid text builder")
-
-    override val canBuild get() = false
+    override var value = invalidBuilder<Text>()
 }
 
-inline fun textOf(crossinline block: () -> String) = object : TextBuilder {
-    override fun build() = Text.of(block())
+fun textOf(block: OwoBuilder<String>) = object : TextBuilder {
+    override var value: OwoBuilder<Text> = object : OwoBuilder<Text> {
+        override fun build() = Text.of(block.build())
 
-    override val canBuild get() = true
+        override val canBuild get() = block.canBuild
+    }
 }

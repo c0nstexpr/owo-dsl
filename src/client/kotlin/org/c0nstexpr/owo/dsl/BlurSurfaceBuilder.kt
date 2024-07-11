@@ -3,19 +3,11 @@ package org.c0nstexpr.owo.dsl
 import io.wispforest.owo.ui.core.Surface
 
 open class BlurSurfaceBuilder : SurfaceBuilder {
-    private var initialized = false
+    var quality = invalidBuilder<Float>()
 
-    var quality: Float = 0f
-        set(value) {
-            initialized = true
-            field = value
-        }
+    var size = invalidBuilder<Float>()
 
-    var size: Float = 0f
-        set(value) {
-            initialized = true
-            field = value
-        }
+    override fun build() = Surface.blur(quality.build(), size.build())!!
 
-    override fun build() = if (initialized) Surface.blur(quality, size) else null
+    override val canBuild get() = quality.canBuild && size.canBuild
 }

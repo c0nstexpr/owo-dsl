@@ -16,36 +16,40 @@ interface ComponentBuilder<T : Component> : OwoBuilder<T> {
 
     var verticalSizingBuilder: SizingBuilder
 
-    var id: String?
+    var id: OwoBuilder<String>
 
     var tooltipBuilder: MutableList<TooltipBuilder<*>>
 
-    var zIndex: Int?
+    var zIndex: OwoBuilder<Int>
 
-    var cursor: CursorStyle?
+    var cursor: OwoBuilder<CursorStyle>
 
-    var x: Int?
+    var x: OwoBuilder<Int>
 
-    var y: Int?
+    var y: OwoBuilder<Int>
 
     fun applyTo(component: T) {
-        positioningBuilder.build()?.let(component::positioning)
+        if (positioningBuilder.canBuild) component.positioning(positioningBuilder.build())
 
-        marginsBuilder.build()?.let(component::margins)
+        if (marginsBuilder.canBuild) component.margins(marginsBuilder.build())
 
-        horizontalSizingBuilder.build()?.let(component::horizontalSizing)
-        verticalSizingBuilder.build()?.let(component::verticalSizing)
+        if (horizontalSizingBuilder.canBuild)
+            component.horizontalSizing(horizontalSizingBuilder.build())
 
-        id?.let(component::id)
+        if (verticalSizingBuilder.canBuild) component.verticalSizing(verticalSizingBuilder.build())
 
-        if (tooltipBuilder.isNotEmpty()) component.tooltip(tooltipBuilder.map { it.build() })
+        if (id.canBuild) component.id(id.build())
 
-        zIndex?.let(component::zIndex)
+        if (tooltipBuilder.isNotEmpty())
+            component.tooltip(tooltipBuilder.filter { it.canBuild }.map { it.build() })
 
-        cursor?.let(component::cursorStyle)
+        if (zIndex.canBuild) component.zIndex(zIndex.build())
 
-        x?.let(component::updateX)
-        y?.let(component::updateY)
+        if (cursor.canBuild) component.cursorStyle(cursor.build())
+
+        if (x.canBuild) component.updateX(x.build())
+
+        if (y.canBuild) component.updateY(y.build())
     }
 }
 

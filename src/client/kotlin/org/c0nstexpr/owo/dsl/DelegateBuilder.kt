@@ -1,9 +1,13 @@
 package org.c0nstexpr.owo.dsl
 
-interface DelegateBuilder<T> {
+interface DelegateBuilder<T> : OwoBuilder<T> {
     var value: OwoBuilder<T>
 
-    fun build() = value.build()
+    override fun build() = value.build()
 
-    fun canBuild() = value.canBuild
+    override val canBuild get() = value.canBuild
+}
+
+fun delegateBuilder(value: OwoBuilder<String>) = object : DelegateBuilder<String> {
+    override var value = value
 }

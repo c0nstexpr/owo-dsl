@@ -6,7 +6,8 @@ import org.c0nstexpr.owo.dsl.InsetsBuilder
 import org.c0nstexpr.owo.dsl.PositioningBuilder
 import org.c0nstexpr.owo.dsl.SizingBuilder
 import org.c0nstexpr.owo.dsl.TextBuilder
-import org.c0nstexpr.owo.dsl.textOf
+import org.c0nstexpr.owo.dsl.invalidBuilder
+import org.c0nstexpr.owo.dsl.invalidTextBuilder
 
 abstract class ClickableWidgetBuilder<T : ClickableWidget> : ComponentBuilder<T> {
     override var positioningBuilder = PositioningBuilder()
@@ -17,23 +18,22 @@ abstract class ClickableWidgetBuilder<T : ClickableWidget> : ComponentBuilder<T>
 
     override var verticalSizingBuilder = SizingBuilder()
 
-    override var id: String? = null
+    override var id = invalidBuilder<String>()
 
     override var tooltipBuilder = mutableListOf<TooltipBuilder<*>>()
 
-    override var zIndex: Int? = null
+    override var zIndex = invalidBuilder<Int>()
 
-    override var cursor: CursorStyle? = null
+    override var cursor = invalidBuilder<CursorStyle>()
 
-    override var x: Int? = null
+    override var x = invalidBuilder<Int>()
 
-    override var y: Int? = null
+    override var y = invalidBuilder<Int>()
 
-    var messageBuilder: TextBuilder = textOf { "" }
+    var messageBuilder = invalidTextBuilder()
 }
 
-inline val ClickableWidgetBuilder<*>.message
-    get() = messageBuilder
+inline val ClickableWidgetBuilder<*>.message get() = messageBuilder
 
 inline fun ClickableWidgetBuilder<*>.message(crossinline block: TextBuilder.() -> Unit) =
     block(messageBuilder)
