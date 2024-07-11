@@ -2,6 +2,7 @@ package org.c0nstexpr.owo.dsl.component
 
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.widget.TextFieldWidget
+import net.minecraft.text.Text
 import org.c0nstexpr.owo.dsl.TextBuilder
 import org.c0nstexpr.owo.dsl.invalidTextBuilder
 
@@ -26,6 +27,8 @@ abstract class TextFieldWidgetBuilder<T : TextFieldWidget> : ClickableWidgetBuil
 
     var suggestion: String? = null
 
+    override val canBuild get() = true
+
     override fun applyTo(component: T) {
         super.applyTo(component)
         if (placeholderBuilder.canBuild) component.setPlaceholder(placeholderBuilder.build())
@@ -43,8 +46,14 @@ abstract class TextFieldWidgetBuilder<T : TextFieldWidget> : ClickableWidgetBuil
 
 inline fun textFieldWidget(block: TextFieldWidgetBuilder<*>.() -> Unit) =
     object : TextFieldWidgetBuilder<TextFieldWidget>() {
-        override fun build() =
-            TextFieldWidget(MinecraftClient.getInstance().textRenderer, x, y, width, height, text!!)
+        override fun build() = TextFieldWidget(
+            MinecraftClient.getInstance().textRenderer,
+            x ?: 0,
+            y ?: 0,
+            0,
+            0,
+            Text.empty()
+        )
     }.apply(block)
 
 inline val TextFieldWidgetBuilder<*>.placeholder get() = placeholderBuilder

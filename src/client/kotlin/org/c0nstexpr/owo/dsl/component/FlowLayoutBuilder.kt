@@ -25,11 +25,11 @@ abstract class FlowLayoutBuilder<T : FlowLayout> : BaseParentComponentBuilder<T>
 
 fun flowLayout(block: FlowLayoutBuilder<FlowLayout>.() -> Unit) =
     object : FlowLayoutBuilder<FlowLayout>() {
-        override fun build(): FlowLayout {
+        override fun build() = run {
             val horizontalSizing = horizontalSizingBuilder.build()
             val verticalSizing = verticalSizingBuilder.build()
 
-            return when (algo) {
+            when (algo) {
                 Algorithm.HORIZONTAL -> Containers.horizontalFlow(horizontalSizing, verticalSizing)
 
                 Algorithm.VERTICAL -> Containers.verticalFlow(horizontalSizing, verticalSizing)

@@ -5,16 +5,14 @@ import io.wispforest.owo.ui.component.EntityComponent
 import io.wispforest.owo.ui.core.Sizing
 import net.minecraft.entity.EntityType
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.nbt.StringNbtReader
-import net.minecraft.registry.Registries
-import net.minecraft.util.Identifier
+import org.c0nstexpr.owo.dsl.EntityTypeBuilder
+import org.c0nstexpr.owo.dsl.NbtCompoundBuilder
 import org.c0nstexpr.owo.dsl.OwoBuilder
-import org.c0nstexpr.owo.dsl.invalidBuilder
 
 abstract class EntityComponentBuilder<T : EntityComponent<*>> : BaseComponentBuilder<T>() {
-    var entityTypeBuilder = invalidBuilder<EntityType<*>>()
+    var entityTypeBuilder = EntityTypeBuilder()
 
-    var nbtCompoundBuilder = invalidBuilder<NbtCompound>()
+    var nbtCompoundBuilder = NbtCompoundBuilder()
 
     var allowMouseRotation: Boolean? = null
 
@@ -35,22 +33,6 @@ abstract class EntityComponentBuilder<T : EntityComponent<*>> : BaseComponentBui
         scale?.let(component::scale)
         scaleToFit?.let(component::scaleToFit)
         showNametag?.let(component::showNametag)
-    }
-}
-
-fun EntityComponentBuilder<*>.entityId(id: OwoBuilder<Identifier>) {
-    entityTypeBuilder = object : OwoBuilder<EntityType<*>> {
-        override fun build() = Registries.ENTITY_TYPE.get(id.build())
-
-        override val canBuild get() = id.canBuild && Registries.ENTITY_TYPE.containsId(id.build())
-    }
-}
-
-fun EntityComponentBuilder<*>.nbtCompoundString(nbtStr: String?) {
-    nbtCompoundBuilder = object : OwoBuilder<NbtCompound> {
-        override fun build() = StringNbtReader.parse(nbtStr!!)
-
-        override val canBuild get() = nbtStr != null
     }
 }
 

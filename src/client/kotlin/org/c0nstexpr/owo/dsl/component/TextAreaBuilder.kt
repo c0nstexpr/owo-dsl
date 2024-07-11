@@ -20,7 +20,7 @@ abstract class TextAreaBuilder<T : TextAreaComponent> : EditBoxBuilder<T>() {
 
 inline fun textArea(crossinline block: TextAreaBuilder<TextAreaComponent>.() -> Unit) =
     object : TextAreaBuilder<TextAreaComponent>() {
-        override fun build(): TextAreaComponent = Components.textArea(
+        override fun build() = Components.textArea(
             horizontalSizingBuilder.build(),
             verticalSizingBuilder.build()
         )

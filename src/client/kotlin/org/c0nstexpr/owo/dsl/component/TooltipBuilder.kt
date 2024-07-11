@@ -3,14 +3,21 @@ package org.c0nstexpr.owo.dsl.component
 import net.minecraft.client.gui.tooltip.TooltipComponent
 import org.c0nstexpr.owo.dsl.OrderedTextBuilder
 import org.c0nstexpr.owo.dsl.OwoBuilder
+import org.c0nstexpr.owo.dsl.builder
 import org.c0nstexpr.owo.dsl.orderedTextOf
 
-interface TooltipBuilder<T : TooltipComponent> : OwoBuilder<T>
+interface TooltipBuilder<T : TooltipComponent> : OwoBuilder<T> {
+    var tip: OwoBuilder<T>
 
-fun tooltipOf(text: OrderedTextBuilder) = object : TooltipBuilder<TooltipComponent> {
-    override fun build() = TooltipComponent.of(text.build())
+    override val canBuild get() = tip.canBuild
 
-    override val canBuild get() = text.canBuild
+    override fun build() = tip.build()
 }
 
-inline fun tooltipOf(crossinline block: () -> String) = tooltipOf(orderedTextOf(block))
+fun TooltipBuilder<TooltipComponent>.text(text: OrderedTextBuilder) {
+    tip = builder { TooltipComponent.of(text.build()) }
+}
+
+fun TooltipBuilder<TooltipComponent>.text(text: OwoBuilder<String>) {
+    text(orderedTextOf(text))
+}
