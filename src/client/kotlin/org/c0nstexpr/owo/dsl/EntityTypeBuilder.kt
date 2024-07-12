@@ -1,13 +1,11 @@
 package org.c0nstexpr.owo.dsl
 
 import net.minecraft.entity.EntityType
-import net.minecraft.registry.Registries
-import net.minecraft.util.Identifier
 
-open class EntityTypeBuilder : DelegateBuilder<EntityType<*>> {
-    override var value = invalidBuilder<EntityType<*>>()
-}
+abstract class EntityTypeBuilder : OwoBuilder<EntityType<*>>
 
-fun EntityTypeBuilder.id(id: OwoBuilder<Identifier>) {
-    value = OwoBuilder { Registries.ENTITY_TYPE.get(id.build()) }
+fun entityType(block: OwoBuilder<EntityType<*>> = invalidBuilder()) = object : EntityTypeBuilder() {
+    override fun build() = block.build()
+
+    override val canBuild get() = block.canBuild
 }

@@ -2,30 +2,28 @@ package org.c0nstexpr.owo.dsl
 
 import io.wispforest.owo.ui.core.Surface
 
-interface SurfaceBuilder : DelegateBuilder<Surface>
+fun interface SurfaceBuilder : OwoBuilder<Surface>
 
-fun invalidSurface() = object : SurfaceBuilder {
-    override var value = invalidBuilder<Surface>()
+fun surface(block: OwoBuilder<Surface> = invalidBuilder()) = object : SurfaceBuilder {
+    override fun build() = block.build()
+
+    override val canBuild get() = block.canBuild
 }
 
-fun surfaceOf(block: OwoBuilder<Surface>) = object : SurfaceBuilder {
-    override var value = block
-}
+fun darkPanelSurface() = surface { Surface.DARK_PANEL }
 
-fun darkPanelSurface() = surfaceOf { Surface.DARK_PANEL }
+fun panelInsetSurface() = surface { Surface.PANEL_INSET }
 
-fun panelInsetSurface() = surfaceOf { Surface.PANEL_INSET }
+fun vanillaTranslucentSurface() = surface { Surface.VANILLA_TRANSLUCENT }
 
-fun vanillaTranslucentSurface() = surfaceOf { Surface.VANILLA_TRANSLUCENT }
+fun optionsBackgroundSurface() = surface { Surface.OPTIONS_BACKGROUND }
 
-fun optionsBackgroundSurface() = surfaceOf { Surface.OPTIONS_BACKGROUND }
+fun tooltipSurface() = surface { Surface.TOOLTIP }
 
-fun tooltipSurface() = surfaceOf { Surface.TOOLTIP }
-
-fun SurfaceBuilder.and(other: SurfaceBuilder) = object : SurfaceBuilder {
-    override var value: OwoBuilder<Surface> = object : OwoBuilder<Surface> {
+fun SurfaceBuilder.and(other: SurfaceBuilder) = surface(
+    object : OwoBuilder<Surface> {
         override fun build() = this@and.build().and(other.build())
 
         override val canBuild = this@and.canBuild && other.canBuild
     }
-}
+)

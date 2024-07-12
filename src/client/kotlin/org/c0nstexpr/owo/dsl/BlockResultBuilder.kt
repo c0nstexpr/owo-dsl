@@ -1,18 +1,12 @@
 package org.c0nstexpr.owo.dsl
 
 import net.minecraft.command.argument.BlockArgumentParser
-import net.minecraft.registry.Registries
 
-open class BlockResultBuilder : OwoBuilder<BlockArgumentParser.BlockResult> {
-    var string: String? = null
-    var registry = Registries.BLOCK.readOnlyWrapper!!
-    var allowNbt = true
+abstract class BlockResultBuilder : OwoBuilder<BlockArgumentParser.BlockResult>
 
-    override fun build() = BlockArgumentParser.block(
-        registry,
-        string!!,
-        allowNbt
-    )!!
+fun blockResultBuilder(block: OwoBuilder<BlockArgumentParser.BlockResult>) =
+    object : BlockResultBuilder() {
+        override fun build() = block.build()
 
-    override val canBuild get() = string != null
-}
+        override val canBuild get() = block.canBuild
+    }

@@ -1,16 +1,11 @@
 package org.c0nstexpr.owo.dsl
 
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.nbt.StringNbtReader
 
-open class NbtCompoundBuilder : DelegateBuilder<NbtCompound> {
-    override var value = invalidBuilder<NbtCompound>()
-}
+abstract class NbtCompoundBuilder : OwoBuilder<NbtCompound>
 
-fun NbtCompoundBuilder.nbtString(nbtStr: OwoBuilder<String>) {
-    value = object : OwoBuilder<NbtCompound> {
-        override fun build(): NbtCompound = StringNbtReader.parse(nbtStr.build())
+fun nbtCompound(block: OwoBuilder<NbtCompound> = invalidBuilder()) = object : NbtCompoundBuilder() {
+    override fun build() = block.build()
 
-        override val canBuild get() = nbtStr.canBuild
-    }
+    override val canBuild get() = block.canBuild
 }

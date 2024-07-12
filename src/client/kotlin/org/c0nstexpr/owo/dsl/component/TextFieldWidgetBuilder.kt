@@ -5,10 +5,10 @@ import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 import org.c0nstexpr.owo.dsl.TextBuilder
 import org.c0nstexpr.owo.dsl.invalidBuilder
-import org.c0nstexpr.owo.dsl.invalidTextBuilder
+import org.c0nstexpr.owo.dsl.text
 
 abstract class TextFieldWidgetBuilder<T : TextFieldWidget> : ClickableWidgetBuilder<T>() {
-    var placeholderBuilder = invalidTextBuilder()
+    var placeholderBuilder = text()
 
     var text = invalidBuilder<String>()
 

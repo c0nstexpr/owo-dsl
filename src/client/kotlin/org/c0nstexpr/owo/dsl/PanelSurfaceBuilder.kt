@@ -2,8 +2,15 @@ package org.c0nstexpr.owo.dsl
 
 import io.wispforest.owo.ui.core.Surface
 
-open class PanelSurfaceBuilder : SurfaceBuilder {
-    var insetWidth: Int? = null
+interface PanelSurfaceBuilder : SurfaceBuilder {
+    var insetWidth: OwoBuilder<Int>
 
-    override fun build() = insetWidth?.let(Surface::panelWithInset)
+    override fun build() = Surface.panelWithInset(insetWidth.build())!!
+
+    override val canBuild get() = insetWidth.canBuild
 }
+
+inline fun panelSurface(crossinline block: PanelSurfaceBuilder.() -> Unit) =
+    object : PanelSurfaceBuilder {
+        override var insetWidth = invalidBuilder<Int>()
+    }.apply(block)

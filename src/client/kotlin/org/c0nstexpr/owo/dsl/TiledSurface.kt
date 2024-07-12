@@ -2,12 +2,27 @@ package org.c0nstexpr.owo.dsl
 
 import io.wispforest.owo.ui.core.Surface
 
-open class TiledSurface : SurfaceBuilder {
-    var texture = IdentifierBuilder()
+interface TiledSurface : SurfaceBuilder {
+    var texture: IdentifierBuilder
 
-    var textureWidth: Int = 0
+    var textureWidth: OwoBuilder<Int>
 
-    var textureHeight: Int = 0
+    var textureHeight: OwoBuilder<Int>
 
-    override fun build() = texture.build()?.let { Surface.tiled(it, textureWidth, textureHeight) }
+    override fun build() = Surface.tiled(
+        texture.build(),
+        textureWidth.build(),
+        textureHeight.build()
+    )!!
+
+    override val canBuild
+        get() = texture.canBuild && textureWidth.canBuild && textureHeight.canBuild
 }
+
+inline fun titledSurface(crossinline block: TiledSurface.() -> Unit) = object : TiledSurface {
+    override var texture = identifier()
+
+    override var textureWidth = invalidBuilder<Int>()
+
+    override var textureHeight = invalidBuilder<Int>()
+}.apply(block)

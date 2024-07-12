@@ -5,7 +5,7 @@ import io.wispforest.owo.ui.core.HorizontalAlignment
 import io.wispforest.owo.ui.core.VerticalAlignment
 import org.c0nstexpr.owo.dsl.InsetsBuilder
 import org.c0nstexpr.owo.dsl.invalidBuilder
-import org.c0nstexpr.owo.dsl.invalidSurface
+import org.c0nstexpr.owo.dsl.surface
 
 abstract class BaseParentComponentBuilder<T : BaseParentComponent> :
     BaseComponentBuilder<T>(),
@@ -18,7 +18,7 @@ abstract class BaseParentComponentBuilder<T : BaseParentComponent> :
 
     override var allowOverflow = invalidBuilder<Boolean>()
 
-    override var surfaceBuilder = invalidSurface()
+    override var surfaceBuilder = surface(invalidBuilder())
 
     override fun applyTo(component: T) {
         super<BaseComponentBuilder>.applyTo(component)

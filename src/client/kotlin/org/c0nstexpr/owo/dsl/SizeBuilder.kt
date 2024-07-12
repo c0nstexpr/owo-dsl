@@ -2,20 +2,10 @@ package org.c0nstexpr.owo.dsl
 
 import io.wispforest.owo.ui.core.Size
 
-class SizeBuilder : OwoBuilder<Size> {
-    private var initialized = false
+abstract class SizeBuilder : OwoBuilder<Size>
 
-    var width: Int = 0
-        set(value) {
-            field = value
-            initialized = true
-        }
+fun size(block: OwoBuilder<Size> = invalidBuilder()) = object : SizeBuilder() {
+    override fun build() = block.build()
 
-    var height: Int = 0
-        set(value) {
-            field = value
-            initialized = true
-        }
-
-    override fun build() = if (initialized) Size.of(width, height) else null
+    override val canBuild get() = block.canBuild
 }

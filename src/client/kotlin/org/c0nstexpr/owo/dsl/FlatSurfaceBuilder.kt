@@ -2,14 +2,15 @@ package org.c0nstexpr.owo.dsl
 
 import io.wispforest.owo.ui.core.Surface
 
-open class FlatSurfaceBuilder : SurfaceBuilder {
-    private var initialized = false
+interface FlatSurfaceBuilder : SurfaceBuilder {
+    var color: OwoBuilder<Int>
 
-    var color: Int = 0
-        set(value) {
-            initialized = true
-            field = value
-        }
+    override fun build() = Surface.flat(color.build())!!
 
-    override fun build() = if (initialized) Surface.flat(color) else null
+    override val canBuild get() = color.canBuild
 }
+
+inline fun flatSurface(crossinline block: FlatSurfaceBuilder.() -> Unit) =
+    object : FlatSurfaceBuilder {
+        override var color = invalidBuilder<Int>()
+    }.apply(block)

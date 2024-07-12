@@ -2,8 +2,15 @@ package org.c0nstexpr.owo.dsl
 
 import io.wispforest.owo.ui.core.Surface
 
-open class OutlineSurface : SurfaceBuilder {
-    var color: Int? = null
+interface OutlineSurface : SurfaceBuilder {
+    var color: OwoBuilder<Int>
 
-    override fun build() = color?.let(Surface::outline)
+    override fun build() = Surface.outline(color.build())!!
+
+    override val canBuild get() = color.canBuild
 }
+
+inline fun outlineSurfaceOf(crossinline block: OutlineSurface.() -> Unit) =
+    object : OutlineSurface {
+        override var color = invalidBuilder<Int>()
+    }.apply(block)
