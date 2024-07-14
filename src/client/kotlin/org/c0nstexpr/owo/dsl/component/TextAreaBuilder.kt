@@ -2,29 +2,27 @@ package org.c0nstexpr.owo.dsl.component
 
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.TextAreaComponent
+import org.c0nstexpr.owo.dsl.applyBuild
 import org.c0nstexpr.owo.dsl.invalidBuilder
 
-abstract class TextAreaBuilder<T : TextAreaComponent> : EditBoxBuilder<T>() {
+open class TextAreaBuilder : EditBoxBuilder() {
     var displayCharCount = invalidBuilder<Boolean>()
 
     var maxLines = invalidBuilder<Int>()
 
-    override val canBuild
-        get() = horizontalSizingBuilder.canBuild && verticalSizingBuilder.canBuild
+    override fun build() = Components.textArea(
+        horizontalSizing.build(),
+        verticalSizing.build()
+    )!!.apply(::applyTo)
 
-    override fun applyTo(component: T) {
-        super.applyTo(component)
-
-        if (displayCharCount.canBuild) component.displayCharCount(displayCharCount.build())
-
-        if (maxLines.canBuild) component.maxLines(maxLines.build())
-    }
+    override val canBuild get() = horizontalSizing.canBuild && verticalSizing.canBuild
 }
 
-inline fun textArea(crossinline block: TextAreaBuilder<TextAreaComponent>.() -> Unit) =
-    object : TextAreaBuilder<TextAreaComponent>() {
-        override fun build() = Components.textArea(
-            horizontalSizingBuilder.build(),
-            verticalSizingBuilder.build()
-        )
-    }.apply(block)
+fun TextAreaBuilder.applyTo(component: TextAreaComponent) {
+    (this as EditBoxBuilder).applyTo(component)
+
+    displayCharCount.applyBuild(component::displayCharCount)
+    maxLines.applyBuild(component::maxLines)
+}
+
+inline fun textArea(crossinline block: TextAreaBuilder.() -> Unit) = TextAreaBuilder().apply(block)

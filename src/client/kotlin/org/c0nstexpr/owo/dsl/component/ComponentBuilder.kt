@@ -7,18 +7,18 @@ import org.c0nstexpr.owo.dsl.OwoBuilder
 import org.c0nstexpr.owo.dsl.PositioningBuilder
 import org.c0nstexpr.owo.dsl.SizingBuilder
 
-interface ComponentBuilder<T : Component> : OwoBuilder<T> {
-    var positioningBuilder: PositioningBuilder
+interface ComponentBuilder : OwoBuilder<Component> {
+    var positioning: PositioningBuilder
 
-    var marginsBuilder: InsetsBuilder
+    var margins: InsetsBuilder
 
-    var horizontalSizingBuilder: SizingBuilder
+    var horizontalSizing: SizingBuilder
 
-    var verticalSizingBuilder: SizingBuilder
+    var verticalSizing: SizingBuilder
 
     var id: OwoBuilder<String>
 
-    var tooltipBuilder: MutableList<TooltipBuilder<*>>
+    var tooltip: MutableList<TooltipBuilder>
 
     var zIndex: OwoBuilder<Int>
 
@@ -27,59 +27,36 @@ interface ComponentBuilder<T : Component> : OwoBuilder<T> {
     var x: OwoBuilder<Int>
 
     var y: OwoBuilder<Int>
-
-    fun applyTo(component: T) {
-        if (positioningBuilder.canBuild) component.positioning(positioningBuilder.build())
-
-        if (marginsBuilder.canBuild) component.margins(marginsBuilder.build())
-
-        if (horizontalSizingBuilder.canBuild)
-            component.horizontalSizing(horizontalSizingBuilder.build())
-
-        if (verticalSizingBuilder.canBuild) component.verticalSizing(verticalSizingBuilder.build())
-
-        if (id.canBuild) component.id(id.build())
-
-        if (tooltipBuilder.isNotEmpty())
-            component.tooltip(tooltipBuilder.filter { it.canBuild }.map { it.build() })
-
-        if (zIndex.canBuild) component.zIndex(zIndex.build())
-
-        if (cursor.canBuild) component.cursorStyle(cursor.build())
-
-        if (x.canBuild) component.updateX(x.build())
-
-        if (y.canBuild) component.updateY(y.build())
-    }
 }
 
-inline val ComponentBuilder<*>.positioning get() = positioningBuilder
+fun ComponentBuilder.applyTo(component: Component) {
+    if (positioning.canBuild) component.positioning(positioning.build())
 
-inline fun ComponentBuilder<*>.positioning(crossinline block: (PositioningBuilder) -> Unit) =
-    block(positioningBuilder)
+    if (margins.canBuild) component.margins(margins.build())
 
-inline val ComponentBuilder<*>.margins get() = marginsBuilder
+    if (horizontalSizing.canBuild) component.horizontalSizing(
+        horizontalSizing.build()
+    )
 
-inline fun ComponentBuilder<*>.margins(crossinline block: InsetsBuilder.() -> Unit) =
-    block(marginsBuilder)
+    if (verticalSizing.canBuild) component.verticalSizing(verticalSizing.build())
 
-inline val ComponentBuilder<*>.horizontalSizing
-    get() = horizontalSizingBuilder
+    if (id.canBuild) component.id(id.build())
 
-inline fun ComponentBuilder<*>.horizontalSizing(crossinline block: SizingBuilder.() -> Unit) =
-    block(horizontalSizingBuilder)
+    if (tooltip.isNotEmpty()) component.tooltip(tooltip.filter { it.canBuild }.map { it.build() })
 
-inline val ComponentBuilder<*>.verticalSizing get() = verticalSizingBuilder
+    if (zIndex.canBuild) component.zIndex(zIndex.build())
 
-inline fun ComponentBuilder<*>.verticalSizing(crossinline block: SizingBuilder.() -> Unit) =
-    block(verticalSizingBuilder)
+    if (cursor.canBuild) component.cursorStyle(cursor.build())
 
-inline fun ComponentBuilder<*>.sizing(crossinline block: SizingBuilder.() -> Unit) {
-    horizontalSizing(block)
-    verticalSizing(block)
+    if (x.canBuild) component.updateX(x.build())
+
+    if (y.canBuild) component.updateY(y.build())
 }
 
-inline fun ComponentBuilder<*>.tooltip(crossinline block: List<TooltipBuilder<*>>.() -> Unit) {
-    tooltipBuilder
-    block(tooltipBuilder)
+fun ComponentBuilder.sizing(block: SizingBuilder) {
+    horizontalSizing = block
+    verticalSizing = block
 }
+
+inline fun ComponentBuilder.tooltip(crossinline block: List<TooltipBuilder>.() -> Unit) =
+    block(tooltip)

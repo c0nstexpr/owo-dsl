@@ -1,26 +1,24 @@
 package org.c0nstexpr.owo.dsl.component
 
 import io.wispforest.owo.ui.core.CursorStyle
-import net.minecraft.client.gui.widget.ClickableWidget
-import org.c0nstexpr.owo.dsl.InsetsBuilder
-import org.c0nstexpr.owo.dsl.PositioningBuilder
-import org.c0nstexpr.owo.dsl.SizingBuilder
-import org.c0nstexpr.owo.dsl.TextBuilder
+import org.c0nstexpr.owo.dsl.insets
 import org.c0nstexpr.owo.dsl.invalidBuilder
+import org.c0nstexpr.owo.dsl.positioning
+import org.c0nstexpr.owo.dsl.sizing
 import org.c0nstexpr.owo.dsl.text
 
-abstract class ClickableWidgetBuilder<T : ClickableWidget> : ComponentBuilder<T> {
-    override var positioningBuilder = PositioningBuilder()
+abstract class ClickableWidgetBuilder : ComponentBuilder {
+    override var positioning = positioning()
 
-    override var marginsBuilder = InsetsBuilder()
+    override var margins = insets()
 
-    override var horizontalSizingBuilder = SizingBuilder()
+    override var horizontalSizing = sizing()
 
-    override var verticalSizingBuilder = SizingBuilder()
+    override var verticalSizing = sizing()
 
     override var id = invalidBuilder<String>()
 
-    override var tooltipBuilder = mutableListOf<TooltipBuilder<*>>()
+    override var tooltip = mutableListOf<TooltipBuilder>()
 
     override var zIndex = invalidBuilder<Int>()
 
@@ -30,10 +28,5 @@ abstract class ClickableWidgetBuilder<T : ClickableWidget> : ComponentBuilder<T>
 
     override var y = invalidBuilder<Int>()
 
-    var messageBuilder = text()
+    var message = text()
 }
-
-inline val ClickableWidgetBuilder<*>.message get() = messageBuilder
-
-inline fun ClickableWidgetBuilder<*>.message(crossinline block: TextBuilder.() -> Unit) =
-    block(messageBuilder)

@@ -1,11 +1,10 @@
 package org.c0nstexpr.owo.dsl.component
 
-import io.wispforest.owo.ui.component.ButtonComponent
 import io.wispforest.owo.ui.component.Components
 
-abstract class ButtonBuilder<T : ButtonComponent> : ButtonWidgetBuilder<T>()
+open class ButtonBuilder : ButtonWidgetBuilder() {
+    override fun build() = Components.button(message.build()) {}!!.apply(::applyTo)
+}
 
-inline fun buttonComponent(crossinline block: ButtonBuilder<ButtonComponent>.() -> Unit) =
-    object : ButtonBuilder<ButtonComponent>() {
-        override fun build() = Components.button(messageBuilder.build()) {}
-    }.apply(block)
+inline fun buttonComponent(crossinline block: ButtonBuilder.() -> Unit) =
+    object : ButtonBuilder() {}.apply(block)

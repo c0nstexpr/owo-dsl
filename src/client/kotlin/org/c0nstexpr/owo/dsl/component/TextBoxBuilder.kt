@@ -2,17 +2,19 @@ package org.c0nstexpr.owo.dsl.component
 
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.TextBoxComponent
+import org.c0nstexpr.owo.dsl.applyBuild
 
-abstract class TextBoxBuilder<T : TextBoxComponent> : TextFieldWidgetBuilder<T>() {
-    override val canBuild get() = horizontalSizingBuilder.canBuild
+open class TextBoxBuilder : TextFieldWidgetBuilder() {
+    override fun build() = Components.textBox(horizontalSizing.build())!!.apply(::applyTo)
 
-    override fun applyTo(component: T) {
-        super.applyTo(component)
-        if (text.canBuild) component.text(text.build())
-    }
+    override val canBuild get() = horizontalSizing.canBuild
 }
 
-inline fun textBoxComponent(crossinline block: TextBoxBuilder<TextBoxComponent>.() -> Unit) =
-    object : TextBoxBuilder<TextBoxComponent>() {
-        override fun build() = Components.textBox(horizontalSizingBuilder.build())
-    }.apply(block)
+fun TextBoxBuilder.applyTo(component: TextBoxComponent) {
+    (this as TextFieldWidgetBuilder).applyTo(component)
+
+    text.applyBuild(component::text)
+}
+
+inline fun textBoxComponent(crossinline block: TextBoxBuilder.() -> Unit) =
+    TextBoxBuilder().apply(block)

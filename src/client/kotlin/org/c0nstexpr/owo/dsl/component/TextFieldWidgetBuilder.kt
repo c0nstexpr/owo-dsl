@@ -3,11 +3,11 @@ package org.c0nstexpr.owo.dsl.component
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
-import org.c0nstexpr.owo.dsl.TextBuilder
+import org.c0nstexpr.owo.dsl.applyBuild
 import org.c0nstexpr.owo.dsl.invalidBuilder
 import org.c0nstexpr.owo.dsl.text
 
-abstract class TextFieldWidgetBuilder<T : TextFieldWidget> : ClickableWidgetBuilder<T>() {
+open class TextFieldWidgetBuilder : ClickableWidgetBuilder() {
     var placeholderBuilder = text()
 
     var text = invalidBuilder<String>()
@@ -28,45 +28,32 @@ abstract class TextFieldWidgetBuilder<T : TextFieldWidget> : ClickableWidgetBuil
 
     var suggestion = invalidBuilder<String>()
 
+    override fun build() = TextFieldWidget(
+        MinecraftClient.getInstance().textRenderer,
+        x.build(),
+        y.build(),
+        0,
+        0,
+        Text.empty()
+    ).apply(::applyTo)
+
     override val canBuild get() = true
-
-    override fun applyTo(component: T) {
-        super.applyTo(component)
-        if (placeholderBuilder.canBuild) component.setPlaceholder(placeholderBuilder.build())
-
-        if (text.canBuild) component.text = text.build()
-
-        if (maxLength.canBuild) component.setMaxLength(maxLength.build())
-
-        if (drawsBackground.canBuild) component.setDrawsBackground(drawsBackground.build())
-
-        if (editableColor.canBuild) component.setEditableColor(editableColor.build())
-
-        if (uneditableColor.canBuild) component.setUneditableColor(uneditableColor.build())
-
-        if (editable.canBuild) component.setEditable(editable.build())
-
-        if (focusUnlocked.canBuild) component.setFocusUnlocked(focusUnlocked.build())
-
-        if (visible.canBuild) component.isVisible = visible.build()
-
-        if (suggestion.canBuild) component.setSuggestion(suggestion.build())
-    }
 }
 
-inline fun textFieldWidget(block: TextFieldWidgetBuilder<*>.() -> Unit) =
-    object : TextFieldWidgetBuilder<TextFieldWidget>() {
-        override fun build() = TextFieldWidget(
-            MinecraftClient.getInstance().textRenderer,
-            x.build(),
-            y.build(),
-            0,
-            0,
-            Text.empty()
-        )
-    }.apply(block)
+fun TextFieldWidgetBuilder.applyTo(component: TextFieldWidget) {
+    (this as ClickableWidgetBuilder).applyTo(component)
 
-inline val TextFieldWidgetBuilder<*>.placeholder get() = placeholderBuilder
+    placeholderBuilder.applyBuild(component::setPlaceholder)
+    text.applyBuild(component::setText)
+    maxLength.applyBuild(component::setMaxLength)
+    drawsBackground.applyBuild(component::setDrawsBackground)
+    editableColor.applyBuild(component::setEditableColor)
+    uneditableColor.applyBuild(component::setUneditableColor)
+    editable.applyBuild(component::setEditable)
+    focusUnlocked.applyBuild(component::setFocusUnlocked)
+    visible.applyBuild(component::setVisible)
+    suggestion.applyBuild(component::setSuggestion)
+}
 
-inline fun TextFieldWidgetBuilder<*>.placeholder(crossinline block: TextBuilder.() -> Unit) =
-    block(placeholderBuilder)
+inline fun textFieldWidget(block: TextFieldWidgetBuilder.() -> Unit) =
+    TextFieldWidgetBuilder().apply(block)

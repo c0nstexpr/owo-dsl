@@ -2,24 +2,26 @@ package org.c0nstexpr.owo.dsl.component
 
 import io.wispforest.owo.ui.base.BaseComponent
 import io.wispforest.owo.ui.core.CursorStyle
-import org.c0nstexpr.owo.dsl.InsetsBuilder
-import org.c0nstexpr.owo.dsl.PositioningBuilder
 import org.c0nstexpr.owo.dsl.SizeBuilder
-import org.c0nstexpr.owo.dsl.SizingBuilder
+import org.c0nstexpr.owo.dsl.applyBuild
+import org.c0nstexpr.owo.dsl.insets
 import org.c0nstexpr.owo.dsl.invalidBuilder
+import org.c0nstexpr.owo.dsl.positioning
+import org.c0nstexpr.owo.dsl.size
+import org.c0nstexpr.owo.dsl.sizing
 
-abstract class BaseComponentBuilder<T : BaseComponent> : ComponentBuilder<T> {
-    override var positioningBuilder = PositioningBuilder()
+abstract class BaseComponentBuilder : ComponentBuilder {
+    override var positioning = positioning()
 
-    override var marginsBuilder = InsetsBuilder()
+    override var margins = insets()
 
-    override var horizontalSizingBuilder = SizingBuilder()
+    override var horizontalSizing = sizing()
 
-    override var verticalSizingBuilder = SizingBuilder()
+    override var verticalSizing = sizing()
 
     override var id = invalidBuilder<String>()
 
-    override var tooltipBuilder = mutableListOf<TooltipBuilder<*>>()
+    override var tooltip = mutableListOf<TooltipBuilder>()
 
     override var zIndex = invalidBuilder<Int>()
 
@@ -29,15 +31,13 @@ abstract class BaseComponentBuilder<T : BaseComponent> : ComponentBuilder<T> {
 
     override var y = invalidBuilder<Int>()
 
-    override fun applyTo(component: T) {
-        super.applyTo(component)
-        if (spaceBuilder.canBuild) component.inflate(spaceBuilder.build())
-    }
-
-    var spaceBuilder = SizeBuilder()
+    var space = size()
 }
 
-inline val BaseComponentBuilder<*>.space get() = spaceBuilder
+fun BaseComponentBuilder.applyTo(component: BaseComponent) {
+    (this as ComponentBuilder).applyTo(component)
 
-inline fun BaseComponentBuilder<*>.space(crossinline block: SizeBuilder.() -> Unit) =
-    block(spaceBuilder)
+    space.applyBuild(component::inflate)
+}
+
+inline fun BaseComponentBuilder.space(crossinline block: SizeBuilder.() -> Unit) = block(space)

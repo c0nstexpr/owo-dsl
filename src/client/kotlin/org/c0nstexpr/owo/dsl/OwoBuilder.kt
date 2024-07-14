@@ -20,3 +20,7 @@ inline fun <reified T> invalidBuilder() = invalidBuilderMap.getOrPut(T::class) {
         override val canBuild get() = false
     }
 } as OwoBuilder<T>
+
+inline fun <T> OwoBuilder<T>.applyBuild(crossinline block: (T) -> Unit) {
+    if (canBuild) block(build())
+}

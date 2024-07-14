@@ -3,48 +3,43 @@ package org.c0nstexpr.owo.dsl.component
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.FlowLayout
 import io.wispforest.owo.ui.container.FlowLayout.Algorithm
+import org.c0nstexpr.owo.dsl.applyBuild
 import org.c0nstexpr.owo.dsl.invalidBuilder
 
-abstract class FlowLayoutBuilder<T : FlowLayout> : BaseParentComponentBuilder<T>() {
+open class FlowLayoutBuilder : BaseParentComponentBuilder() {
     var algo = invalidBuilder<Algorithm>()
 
-    var children = mutableListOf<ComponentBuilder<*>>()
+    var children = mutableListOf<ComponentBuilder>()
 
     var gap = invalidBuilder<Int>()
 
     override val canBuild
-        get() = horizontalSizingBuilder.canBuild &&
-            verticalSizingBuilder.canBuild &&
+        get() = horizontalSizing.canBuild &&
+            verticalSizing.canBuild &&
             algo.canBuild
 
-    override fun applyTo(component: T) {
-        super.applyTo(component)
+    override fun build(): FlowLayout {
+        val horizontalSizing = horizontalSizing.build()
+        val verticalSizing = verticalSizing.build()
 
-        children.map { it.build() }.forEach(component::child)
-
-        if (gap.canBuild) component.gap(gap.build())
+        return when (val algorithm = algo.build()) {
+            Algorithm.HORIZONTAL -> Containers.horizontalFlow(horizontalSizing, verticalSizing)
+            Algorithm.VERTICAL -> Containers.verticalFlow(horizontalSizing, verticalSizing)
+            Algorithm.LTR_TEXT -> Containers.ltrTextFlow(horizontalSizing, verticalSizing)
+            else -> object : FlowLayout(horizontalSizing, verticalSizing, algorithm) {}
+        }.apply(::applyTo)
     }
 }
 
-fun flowLayout(block: FlowLayoutBuilder<FlowLayout>.() -> Unit) =
-    object : FlowLayoutBuilder<FlowLayout>() {
-        override fun build() = run {
-            val horizontalSizing = horizontalSizingBuilder.build()
-            val verticalSizing = verticalSizingBuilder.build()
+fun FlowLayoutBuilder.applyTo(component: FlowLayout) {
+    (this as BaseParentComponentBuilder).applyTo(component)
 
-            when (val algorithm = algo.build()) {
-                Algorithm.HORIZONTAL -> Containers.horizontalFlow(horizontalSizing, verticalSizing)
+    children.map { it.build() }.forEach(component::child)
+    gap.applyBuild(component::gap)
+}
 
-                Algorithm.VERTICAL -> Containers.verticalFlow(horizontalSizing, verticalSizing)
+inline fun flowLayout(crossinline block: FlowLayoutBuilder.() -> Unit) =
+    FlowLayoutBuilder().apply(block)
 
-                Algorithm.LTR_TEXT -> Containers.ltrTextFlow(horizontalSizing, verticalSizing)
-
-                else -> object : FlowLayout(horizontalSizing, verticalSizing, algorithm) {}
-            }
-        }
-    }.apply(block)
-
-fun FlowLayoutBuilder<FlowLayout>.child(block: ComponentBuilder<*>) = children.add(block)
-
-fun FlowLayoutBuilder<FlowLayout>.child(index: Int, block: ComponentBuilder<*>) =
-    children.add(index, block)
+inline fun FlowLayoutBuilder.children(crossinline block: ChildrenScope.() -> Unit) =
+    ChildrenScope(children).block()

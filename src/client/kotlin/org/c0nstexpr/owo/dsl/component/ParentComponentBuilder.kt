@@ -6,31 +6,22 @@ import io.wispforest.owo.ui.core.VerticalAlignment
 import org.c0nstexpr.owo.dsl.InsetsBuilder
 import org.c0nstexpr.owo.dsl.OwoBuilder
 import org.c0nstexpr.owo.dsl.SurfaceBuilder
+import org.c0nstexpr.owo.dsl.applyBuild
 
-interface ParentComponentBuilder<T : ParentComponent> : ComponentBuilder<T> {
+interface ParentComponentBuilder : ComponentBuilder {
     var verticalAlignment: OwoBuilder<VerticalAlignment>
     var horizontalAlignment: OwoBuilder<HorizontalAlignment>
     var padding: InsetsBuilder
     var allowOverflow: OwoBuilder<Boolean>
-    var surfaceBuilder: SurfaceBuilder
-
-    override fun applyTo(component: T) {
-        super.applyTo(component)
-
-        if (verticalAlignment.canBuild) component.verticalAlignment(verticalAlignment.build())
-
-        if (horizontalAlignment.canBuild) component.horizontalAlignment(horizontalAlignment.build())
-
-        if (padding.canBuild) component.padding(padding.build())
-
-        if (allowOverflow.canBuild) component.allowOverflow(allowOverflow.build())
-
-        if (surfaceBuilder.canBuild) component.surface(surfaceBuilder.build())
-    }
+    var surface: SurfaceBuilder
 }
 
-inline fun ParentComponentBuilder<*>.padding(crossinline block: InsetsBuilder.() -> Unit) =
-    block(padding)
+fun ParentComponentBuilder.applyTo(component: ParentComponent) {
+    (this as ComponentBuilder).applyTo(component)
 
-inline fun ParentComponentBuilder<*>.surface(crossinline block: SurfaceBuilder.() -> Unit) =
-    block(surfaceBuilder)
+    verticalAlignment.applyBuild(component::verticalAlignment)
+    horizontalAlignment.applyBuild(component::horizontalAlignment)
+    padding.applyBuild(component::padding)
+    allowOverflow.applyBuild(component::allowOverflow)
+    surface.applyBuild(component::surface)
+}

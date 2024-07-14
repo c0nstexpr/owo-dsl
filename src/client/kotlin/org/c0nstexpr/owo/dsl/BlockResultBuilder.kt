@@ -4,7 +4,7 @@ import net.minecraft.command.argument.BlockArgumentParser
 
 abstract class BlockResultBuilder : OwoBuilder<BlockArgumentParser.BlockResult>
 
-fun blockResultBuilder(block: OwoBuilder<BlockArgumentParser.BlockResult>) =
+fun blockResult(block: OwoBuilder<BlockArgumentParser.BlockResult> = invalidBuilder()) =
     object : BlockResultBuilder() {
         override fun build() = block.build()
 

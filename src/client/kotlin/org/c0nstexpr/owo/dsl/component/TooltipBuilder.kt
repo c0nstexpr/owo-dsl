@@ -1,19 +1,18 @@
 package org.c0nstexpr.owo.dsl.component
 
 import net.minecraft.client.gui.tooltip.TooltipComponent
-import org.c0nstexpr.owo.dsl.DelegateBuilder
 import org.c0nstexpr.owo.dsl.OrderedTextBuilder
 import org.c0nstexpr.owo.dsl.OwoBuilder
-import org.c0nstexpr.owo.dsl.orderedTextOf
+import org.c0nstexpr.owo.dsl.orderedText
 
-interface TooltipBuilder<T : TooltipComponent> : DelegateBuilder<T>
+interface TooltipBuilder : OwoBuilder<TooltipComponent> {
+    var orderedTextBuilder: OrderedTextBuilder
 
-fun TooltipBuilder<TooltipComponent>.text(text: OrderedTextBuilder) {
-    value = OwoBuilder {
-        TooltipComponent.of(text.build())
-    }
+    override fun build() = TooltipComponent.of(orderedTextBuilder.build())!!
+
+    override val canBuild get() = orderedTextBuilder.canBuild
 }
 
-fun TooltipBuilder<TooltipComponent>.text(text: OwoBuilder<String>) {
-    text(orderedTextOf(text))
-}
+inline fun tooltip(crossinline block: TooltipBuilder.() -> Unit) = object : TooltipBuilder {
+    override var orderedTextBuilder = orderedText()
+}.apply(block)
