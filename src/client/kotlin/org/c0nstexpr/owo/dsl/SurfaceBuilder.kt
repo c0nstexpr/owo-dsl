@@ -2,6 +2,7 @@ package org.c0nstexpr.owo.dsl
 
 import io.wispforest.owo.ui.core.Surface
 
+@FunctionalInterface
 fun interface SurfaceBuilder : OwoBuilder<Surface>
 
 fun surface(block: OwoBuilder<Surface> = invalidBuilder()) = object : SurfaceBuilder {

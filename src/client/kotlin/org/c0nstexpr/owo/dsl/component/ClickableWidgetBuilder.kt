@@ -1,6 +1,8 @@
 package org.c0nstexpr.owo.dsl.component
 
 import io.wispforest.owo.ui.core.CursorStyle
+import net.minecraft.client.gui.widget.ClickableWidget
+import org.c0nstexpr.owo.dsl.applyBuild
 import org.c0nstexpr.owo.dsl.insets
 import org.c0nstexpr.owo.dsl.invalidBuilder
 import org.c0nstexpr.owo.dsl.positioning
@@ -29,4 +31,10 @@ abstract class ClickableWidgetBuilder : ComponentBuilder {
     override var y = invalidBuilder<Int>()
 
     var message = text()
+}
+
+fun ClickableWidgetBuilder.applyTo(component: ClickableWidget) {
+    (this as ComponentBuilder).applyTo(component)
+
+    message.applyBuild(component::setMessage)
 }
