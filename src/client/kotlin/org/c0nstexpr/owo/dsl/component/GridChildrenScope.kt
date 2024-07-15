@@ -4,13 +4,16 @@ import io.wispforest.owo.ui.core.Component
 import org.c0nstexpr.owo.dsl.OwoBuilder
 
 open class GridChildrenScope(
-    private val columns: OwoBuilder<Int>,
-    children: MutableList<OwoBuilder<Component>>
-) : ChildrenScope(children) {
-    fun OwoBuilder<Component>.scope(row: Int, column: Int) {
-        OwoBuilder {
-        }
+    private val children: MutableList<MutableList<OwoBuilder<Component>>>
+) {
+    fun row(block: ChildrenScope.() -> Unit) {
+        children.add(mutableListOf())
+        ChildrenScope(children.last()).apply(block)
+    }
 
-        scope(row * columns + column)
+    fun row(index: Int, block: ChildrenScope.() -> Unit) {
+        while (children.size <= index) children.add(mutableListOf())
+
+        ChildrenScope(children[index]).apply(block)
     }
 }
