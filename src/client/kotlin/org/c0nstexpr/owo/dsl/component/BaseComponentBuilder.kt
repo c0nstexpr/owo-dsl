@@ -32,6 +32,8 @@ abstract class BaseComponentBuilder : ComponentBuilder {
     override var y = invalidBuilder<Int>()
 
     var space = size()
+
+    abstract override fun build(): BaseComponent
 }
 
 fun BaseComponentBuilder.applyTo(component: BaseComponent) {

@@ -27,6 +27,8 @@ interface ComponentBuilder : OwoBuilder<Component> {
     var x: OwoBuilder<Int>
 
     var y: OwoBuilder<Int>
+
+    override fun build(): Component
 }
 
 fun ComponentBuilder.applyTo(component: Component) {

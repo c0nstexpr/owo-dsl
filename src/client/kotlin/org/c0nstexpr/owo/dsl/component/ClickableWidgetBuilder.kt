@@ -31,6 +31,8 @@ abstract class ClickableWidgetBuilder : ComponentBuilder {
     override var y = invalidBuilder<Int>()
 
     var message = text()
+
+    abstract override fun build(): ClickableWidget
 }
 
 fun ClickableWidgetBuilder.applyTo(component: ClickableWidget) {

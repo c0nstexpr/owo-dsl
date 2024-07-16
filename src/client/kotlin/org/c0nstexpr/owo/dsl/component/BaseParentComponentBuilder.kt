@@ -19,6 +19,8 @@ abstract class BaseParentComponentBuilder :
     override var allowOverflow = invalidBuilder<Boolean>()
 
     override var surface = surface(invalidBuilder())
+
+    abstract override fun build(): BaseParentComponent
 }
 
 fun BaseParentComponentBuilder.applyTo(component: BaseParentComponent) {

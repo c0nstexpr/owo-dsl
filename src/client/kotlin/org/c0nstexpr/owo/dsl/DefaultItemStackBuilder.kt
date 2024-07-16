@@ -6,7 +6,7 @@ import net.minecraft.util.Identifier
 open class DefaultItemStackBuilder : ItemStackBuilder() {
     var id = invalidBuilder<Identifier>()
 
-    override val canBuild get() = id.canBuild && Registries.ITEM.containsId(id.build())
+    override val canBuild get() = id.canBuild
 
     override fun build() = Registries.ITEM.get(id.build()).defaultStack!!
 }

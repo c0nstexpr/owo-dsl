@@ -1,3 +1,7 @@
 package org.c0nstexpr.owo.dsl.component
 
-abstract class ScrollableWidgetBuilder : ClickableWidgetBuilder()
+import net.minecraft.client.gui.widget.ScrollableWidget
+
+abstract class ScrollableWidgetBuilder : ClickableWidgetBuilder() {
+    abstract override fun build(): ScrollableWidget
+}

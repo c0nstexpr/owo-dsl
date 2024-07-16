@@ -11,3 +11,5 @@ fun interface OwoBuilder<out T> {
 inline fun <T> OwoBuilder<T>.applyBuild(crossinline block: (T) -> Unit) {
     if (canBuild) block(build())
 }
+
+inline val <T> T.owoValue get() = OwoBuilder { this }

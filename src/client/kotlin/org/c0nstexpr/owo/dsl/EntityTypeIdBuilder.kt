@@ -7,7 +7,7 @@ open class EntityTypeIdBuilder : EntityTypeBuilder() {
 
     override fun build() = Registries.ENTITY_TYPE.get(id.build())
 
-    override val canBuild get() = id.canBuild && Registries.ENTITY_TYPE.containsId(id.build())
+    override val canBuild get() = id.canBuild
 }
 
 inline fun entityTypeId(crossinline block: EntityTypeIdBuilder.() -> Unit) =

@@ -14,6 +14,8 @@ interface ParentComponentBuilder : ComponentBuilder {
     var padding: InsetsBuilder
     var allowOverflow: OwoBuilder<Boolean>
     var surface: SurfaceBuilder
+
+    override fun build(): ParentComponent
 }
 
 fun ParentComponentBuilder.applyTo(component: ParentComponent) {

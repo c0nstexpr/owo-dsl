@@ -21,7 +21,7 @@ fun optionsBackgroundSurface() = surface { Surface.OPTIONS_BACKGROUND }
 
 fun tooltipSurface() = surface { Surface.TOOLTIP }
 
-fun SurfaceBuilder.and(other: SurfaceBuilder) = surface(
+infix fun SurfaceBuilder.and(other: SurfaceBuilder) = surface(
     object : OwoBuilder<Surface> {
         override fun build() = this@and.build().and(other.build())
 

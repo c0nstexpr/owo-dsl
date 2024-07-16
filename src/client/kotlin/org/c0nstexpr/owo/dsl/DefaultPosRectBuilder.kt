@@ -15,12 +15,11 @@ interface DefaultPosRectBuilder : PosRectBuilder {
     override val canBuild get() = x.canBuild && y.canBuild && size.canBuild
 }
 
-inline fun defaultPosRectBuilder(
-    crossinline block: DefaultPosRectBuilder.() -> Unit
-): DefaultPosRectBuilder = object : DefaultPosRectBuilder {
-    override var x = invalidBuilder<Int>()
+inline fun defaultPosRectBuilder(crossinline block: DefaultPosRectBuilder.() -> Unit) =
+    object : DefaultPosRectBuilder {
+        override var x = invalidBuilder<Int>()
 
-    override var y = invalidBuilder<Int>()
+        override var y = invalidBuilder<Int>()
 
-    override var size = size()
-}.apply(block)
+        override var size = size()
+    }.apply(block)

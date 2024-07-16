@@ -7,7 +7,7 @@ open class DefaultSizeBuilder : SizeBuilder() {
 
     var height = invalidBuilder<Int>()
 
-    override fun build(): Size = Size.of(width.build(), height.build())
+    override fun build() = Size.of(width.build(), height.build())!!
 
     override val canBuild get() = width.canBuild && height.canBuild
 }

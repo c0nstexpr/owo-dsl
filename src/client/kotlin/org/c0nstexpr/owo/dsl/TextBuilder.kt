@@ -5,7 +5,7 @@ import net.minecraft.text.Text
 @FunctionalInterface
 fun interface TextBuilder : OwoBuilder<Text>
 
-fun text(block: OwoBuilder<Text> = invalidBuilder()): TextBuilder = object : TextBuilder {
+fun text(block: OwoBuilder<Text> = invalidBuilder()) = object : TextBuilder {
     override fun build() = block.build()
 
     override val canBuild get() = block.canBuild

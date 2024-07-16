@@ -1,14 +1,11 @@
 package org.c0nstexpr.owo.dsl
 
-import net.minecraft.block.Block
 import net.minecraft.command.argument.BlockArgumentParser
 import net.minecraft.registry.Registries
-import net.minecraft.registry.RegistryWrapper
 
 open class ParseBlockResultBuilder : BlockResultBuilder() {
     var string = invalidBuilder<String>()
-    var registry: OwoBuilder<RegistryWrapper<Block>> =
-        OwoBuilder { Registries.BLOCK.readOnlyWrapper }
+    var registry = OwoBuilder { Registries.BLOCK.readOnlyWrapper!! }
     var allowNbt = OwoBuilder { true }
 
     override fun build() = BlockArgumentParser.block(

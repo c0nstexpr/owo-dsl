@@ -3,7 +3,7 @@ package org.c0nstexpr.owo.dsl.component
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.GridLayout
 import io.wispforest.owo.ui.core.Component
-import org.c0nstexpr.owo.dsl.OwoBuilder
+import org.c0nstexpr.owo.dsl.applyBuild
 import org.c0nstexpr.owo.dsl.invalidBuilder
 
 class GridLayoutBuilder : BaseParentComponentBuilder() {
@@ -11,13 +11,15 @@ class GridLayoutBuilder : BaseParentComponentBuilder() {
 
     var columns = invalidBuilder<Int>()
 
-    var children = mutableListOf<MutableList<OwoBuilder<Component>>>()
+    val columnSize by lazy { columns.build() }
+
+    var children = invalidBuilder<List<Map<Int, Component>>>()
 
     override fun build() = Containers.grid(
         horizontalSizing.build(),
         verticalSizing.build(),
         rows.build(),
-        columns.build()
+        columnSize
     )!!.apply(::applyTo)
 
     override val canBuild
@@ -25,24 +27,22 @@ class GridLayoutBuilder : BaseParentComponentBuilder() {
             verticalSizing.canBuild &&
             rows.canBuild &&
             columns.canBuild &&
-            children.all { it.all { it.canBuild } }
+            children.canBuild
 }
 
 fun GridLayoutBuilder.applyTo(component: GridLayout) {
-    require(children.size <= rows.build())
+    (this as BaseParentComponentBuilder).applyTo(component)
 
-    val columnSize = columns.build()
+    children.applyBuild {
+        require(it.size <= rows.build())
 
-    children.forEachIndexed { i, row ->
-        require(row.size <= columnSize)
+        it.forEachIndexed { i, row ->
+            require(row.size <= columnSize)
 
-        row.forEachIndexed { j, child -> component.child(child.build(), i, j) }
+            row.forEach { (j, child) -> component.child(child, i, j) }
+        }
     }
 }
 
 inline fun gridLayout(crossinline block: GridLayoutBuilder.() -> Unit) =
     GridLayoutBuilder().apply(block)
-
-inline fun GridLayoutBuilder.children(crossinline block: GridChildrenScope.() -> Unit) {
-    GridChildrenScope(children).apply(block)
-}

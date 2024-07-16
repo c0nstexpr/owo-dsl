@@ -4,14 +4,13 @@ import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.FlowLayout
 import io.wispforest.owo.ui.container.FlowLayout.Algorithm
 import io.wispforest.owo.ui.core.Component
-import org.c0nstexpr.owo.dsl.OwoBuilder
 import org.c0nstexpr.owo.dsl.applyBuild
 import org.c0nstexpr.owo.dsl.invalidBuilder
 
 open class FlowLayoutBuilder : BaseParentComponentBuilder() {
     var algo = invalidBuilder<Algorithm>()
 
-    var children = mutableListOf<OwoBuilder<Component>>()
+    var children = invalidBuilder<List<Component>>()
 
     var gap = invalidBuilder<Int>()
 
@@ -19,7 +18,7 @@ open class FlowLayoutBuilder : BaseParentComponentBuilder() {
         get() = horizontalSizing.canBuild &&
             verticalSizing.canBuild &&
             algo.canBuild &&
-            children.all { it.canBuild }
+            children.canBuild
 
     override fun build(): FlowLayout {
         val horizontalSizing = horizontalSizing.build()
@@ -37,12 +36,9 @@ open class FlowLayoutBuilder : BaseParentComponentBuilder() {
 fun FlowLayoutBuilder.applyTo(component: FlowLayout) {
     (this as BaseParentComponentBuilder).applyTo(component)
 
-    children.map { it.build() }.forEach(component::child)
+    children.applyBuild { it.forEach(component::child) }
     gap.applyBuild(component::gap)
 }
 
 inline fun flowLayout(crossinline block: FlowLayoutBuilder.() -> Unit) =
     FlowLayoutBuilder().apply(block)
-
-inline fun FlowLayoutBuilder.children(crossinline block: ChildrenScope.() -> Unit) =
-    ChildrenScope(children).block()
