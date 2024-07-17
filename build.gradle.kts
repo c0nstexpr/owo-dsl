@@ -14,7 +14,6 @@ dependencies {
         api(it)
         include(it)
     }
-    modClientRuntimeOnly(libs.modmenu)
 }
 
 tasks {

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "environment": "client",
+  "entrypoints": {
+    "modmenu": [
+      "io.github.c0nstexpr.owo.dsl.OwoDslMenuApi"
+    ],
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "io.github.c0nstexpr.owo.dsl.OwoDslTestModKt::init"
+      }
+    ]
+  }
+}

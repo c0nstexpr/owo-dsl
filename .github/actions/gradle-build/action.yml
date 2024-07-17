@@ -1,0 +1,33 @@
+name: Gradle build
+description: use Gradle to build project
+
+inputs:
+  jdk:
+    description: jdk version
+    required: true
+    default: "21"
+
+runs:
+  using: composite
+
+  steps:
+
+    - name: setup jdk ${{ inputs.jdk }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ inputs.jdk }}
+        distribution: 'liberica'
+
+    - name: Run chmod to make gradlew executable
+      run: chmod +x ./gradlew
+      shell: bash
+
+    - name: validate gradle wrapper
+      uses: gradle/actions/wrapper-validation@v3
+
+    - name: Gradle configure
+      uses: gradle/actions/setup-gradle@v3
+
+    - name: Gradle build
+      run: ./gradlew build
+      shell: bash

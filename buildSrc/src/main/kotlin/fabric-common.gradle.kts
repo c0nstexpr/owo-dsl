@@ -39,7 +39,6 @@ loom {
         sourceSet(srcMain)
         sourceSet(srcClient)
     }
-
     runs {
         named("client") {
             isIdeConfigGenerated = true

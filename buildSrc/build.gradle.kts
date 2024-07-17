@@ -13,7 +13,7 @@ dependencies {
     listOf(
         libs.plugins.kotlin.jvm,
         libs.plugins.loom,
-        libs.plugins.spotless,
+        libs.plugins.spotless
     ).forEach { provider ->
         val p = provider.get()
         val id = p.pluginId

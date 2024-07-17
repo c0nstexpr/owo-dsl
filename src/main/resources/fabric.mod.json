@@ -16,7 +16,7 @@
     "client": [
       {
         "adapter": "kotlin",
-        "value": "org.c0nstexpr.owo.dsl.OwoDslMod::init"
+        "value": "io.github.c0nstexpr.owo.dsl.OwoDslModKt::init"
       }
     ]
   },
