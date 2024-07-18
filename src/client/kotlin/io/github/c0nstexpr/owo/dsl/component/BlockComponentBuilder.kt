@@ -11,6 +11,3 @@ open class BlockComponentBuilder : BaseComponentBuilder() {
     override fun build() =
         blockResult.build().run { Components.block(blockState(), nbt())!! }.apply(::applyTo)
 }
-
-inline fun blockComponent(crossinline block: BlockComponentBuilder.() -> Unit) =
-    object : BlockComponentBuilder() {}.apply(block)

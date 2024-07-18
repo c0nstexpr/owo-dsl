@@ -34,9 +34,6 @@ fun BoxComponentBuilder.applyTo(component: BoxComponent) {
     endColor.applyBuild(component::endColor)
 }
 
-inline fun box(crossinline block: BoxComponentBuilder.() -> Unit) =
-    BoxComponentBuilder().apply(block)
-
 fun BoxComponentBuilder.color(block: ColorBuilder) {
     startColor = block
     endColor = block

@@ -1,8 +1,8 @@
 package io.github.c0nstexpr.owo.dsl
 
 import io.github.c0nstexpr.owo.dsl.component.button
-import io.github.c0nstexpr.owo.dsl.component.children
 import io.github.c0nstexpr.owo.dsl.component.flowLayout
+import io.github.c0nstexpr.owo.dsl.component.list
 import io.wispforest.owo.ui.component.ButtonComponent
 import io.wispforest.owo.ui.container.FlowLayout
 import io.wispforest.owo.ui.core.Sizing
@@ -14,7 +14,7 @@ fun buildUI() = flowLayout root@{
 
     algo = FlowLayout.Algorithm.VERTICAL.owoValue
 
-    children = children {
+    children = list {
         // From https://github.com/wisp-forest/owo-lib/blob/1.21/src/testmod/java/io/wispforest/uwu/client/ComponentTestScreen.java
 
         flowLayout {
