@@ -10,26 +10,27 @@ open class DefaultInsetsBuilder : InsetsBuilder() {
 
     override fun build() = Insets.of(top.build(), left.build(), bottom.build(), right.build())!!
 
-    override val canBuild
-        get() = top.canBuild && left.canBuild && bottom.canBuild && right.canBuild
+    override val canBuild get() = top.canBuild && left.canBuild && bottom.canBuild && right.canBuild
 
-    fun vertical(v: OwoBuilder<Int> = invalidBuilder()) {
+    fun vertical(v: OwoBuilder<Int>) {
         top = v
         bottom = v
     }
 
-    fun horizontal(h: OwoBuilder<Int> = invalidBuilder()) {
+    fun horizontal(h: OwoBuilder<Int>) {
         left = h
         right = h
     }
 
-    fun both(v: OwoBuilder<Int> = invalidBuilder()) {
+    fun both(h: OwoBuilder<Int>, v: OwoBuilder<Int>) {
+        horizontal(h)
         vertical(v)
-        horizontal(v)
     }
 
-    fun none() = both { 0 }
+    fun of(v: OwoBuilder<Int>) = both(v, v)
+
+    fun none() = of { 0 }
 }
 
-inline fun insets(crossinline block: DefaultInsetsBuilder.() -> Unit) =
+inline fun defaultInsets(crossinline block: DefaultInsetsBuilder.() -> Unit) =
     DefaultInsetsBuilder().apply(block)

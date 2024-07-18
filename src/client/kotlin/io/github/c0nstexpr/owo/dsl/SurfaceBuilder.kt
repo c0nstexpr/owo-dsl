@@ -19,6 +19,8 @@ fun vanillaTranslucentSurface() = surface { Surface.VANILLA_TRANSLUCENT }
 
 fun optionsBackgroundSurface() = surface { Surface.OPTIONS_BACKGROUND }
 
+fun blankSurface() = surface { Surface.BLANK }
+
 fun tooltipSurface() = surface { Surface.TOOLTIP }
 
 infix fun SurfaceBuilder.and(other: SurfaceBuilder) = surface(

@@ -8,4 +8,4 @@ object InvalidBuilder : OwoBuilder<Nothing> {
     override val canBuild get() = false
 }
 
-fun <T> invalidBuilder(): OwoBuilder<T> = InvalidBuilder
+fun <T : Any> invalidBuilder(): OwoBuilder<T> = InvalidBuilder

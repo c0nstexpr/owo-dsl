@@ -4,6 +4,5 @@ import com.terraformersmc.modmenu.api.ConfigScreenFactory
 import com.terraformersmc.modmenu.api.ModMenuApi
 
 class OwoDslMenuApi : ModMenuApi {
-    override fun getModConfigScreenFactory(): ConfigScreenFactory<*> =
-        ConfigScreenFactory { parent -> TestScreen(parent) }
+    override fun getModConfigScreenFactory() = ConfigScreenFactory { parent -> TestScreen(parent) }
 }
