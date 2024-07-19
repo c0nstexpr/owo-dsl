@@ -31,5 +31,3 @@ fun SliderBuilder.applyTo(component: SliderComponent) {
     scrollStep.applyBuild(component::scrollStep)
     active.applyBuild(component::active)
 }
-
-inline fun slider(crossinline block: SliderBuilder.() -> Unit) = SliderBuilder().apply(block)

@@ -1,12 +1,12 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.OwoBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.container.ScrollContainer
 import io.wispforest.owo.ui.core.Color
 
 interface FlatScrollbarBuilder : ScrollbarBuilder {
-    var color: OwoBuilder<Color>
+    var color: DslBuilder<Color>
 
     override fun build() = ScrollContainer.Scrollbar.flat(color.build())!!
 

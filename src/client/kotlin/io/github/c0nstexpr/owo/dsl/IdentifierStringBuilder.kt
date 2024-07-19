@@ -20,7 +20,7 @@ open class IdentifierStringBuilder : IdentifierBuilder() {
 inline fun identifierString(crossinline block: IdentifierStringBuilder.() -> Unit) =
     IdentifierStringBuilder().apply(block)
 
-fun IdentifierStringBuilder.vanilla(p: OwoBuilder<String> = invalidBuilder()) {
-    namespace = OwoBuilder { VANILLA_NAMESPACE }
+fun IdentifierStringBuilder.vanilla(p: DslBuilder<String> = invalidBuilder()) {
+    namespace = DslBuilder { VANILLA_NAMESPACE }
     path = p
 }

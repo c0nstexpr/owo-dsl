@@ -3,7 +3,7 @@ package io.github.c0nstexpr.owo.dsl
 import io.wispforest.owo.ui.core.Animatable
 import io.wispforest.owo.ui.core.Easing
 
-open class DefaultOwoAnimationBuilder<T : Animatable<T>> : OwoAnimationBuilder<T>() {
+open class DefaultAnimationBuilder<T : Animatable<T>> : AnimationBuilder<T>() {
     var duration = invalidBuilder<Int>()
     var easing = invalidBuilder<Easing>()
     var to = invalidBuilder<T>()
@@ -14,5 +14,5 @@ open class DefaultOwoAnimationBuilder<T : Animatable<T>> : OwoAnimationBuilder<T
 }
 
 inline fun <T : Animatable<T>> defaultAnimation(
-    crossinline block: DefaultOwoAnimationBuilder<T>.() -> Unit
-) = DefaultOwoAnimationBuilder<T>().apply(block)
+    crossinline block: DefaultAnimationBuilder<T>.() -> Unit
+) = DefaultAnimationBuilder<T>().apply(block)

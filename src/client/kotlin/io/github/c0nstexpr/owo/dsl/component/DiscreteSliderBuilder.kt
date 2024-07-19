@@ -31,6 +31,3 @@ fun DiscreteSliderBuilder.applyTo(component: DiscreteSliderComponent) {
     decimalPlaces.applyBuild(component::decimalPlaces)
     snap.applyBuild(component::snap)
 }
-
-inline fun discreteSlider(crossinline block: DiscreteSliderBuilder.() -> Unit) =
-    DiscreteSliderBuilder().apply(block)

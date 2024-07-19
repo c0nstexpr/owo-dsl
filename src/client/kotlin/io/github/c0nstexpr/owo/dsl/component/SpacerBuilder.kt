@@ -10,6 +10,8 @@ open class SpacerBuilder : BaseComponentBuilder() {
     var percent = invalidBuilder<Int>()
 
     override fun build() = Components.spacer()!!.apply(::applyTo)
+
+    override val canBuild get() = true
 }
 
 fun SpacerBuilder.applyTo(component: SpriteComponent) {
@@ -17,5 +19,3 @@ fun SpacerBuilder.applyTo(component: SpriteComponent) {
 
     percent.applyBuild { component.sizing(Sizing.expand(it)) }
 }
-
-inline fun spacer(crossinline block: SpacerBuilder.() -> Unit) = SpacerBuilder().apply(block)

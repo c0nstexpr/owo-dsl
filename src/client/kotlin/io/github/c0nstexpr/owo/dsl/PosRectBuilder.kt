@@ -3,9 +3,9 @@ package io.github.c0nstexpr.owo.dsl
 import io.wispforest.owo.ui.core.PositionedRectangle
 
 @FunctionalInterface
-fun interface PosRectBuilder : OwoBuilder<PositionedRectangle>
+fun interface PosRectBuilder : DslBuilder<PositionedRectangle>
 
-fun posRect(block: OwoBuilder<PositionedRectangle> = invalidBuilder()) = object : PosRectBuilder {
+fun posRect(block: DslBuilder<PositionedRectangle> = invalidBuilder()) = object : PosRectBuilder {
     override fun build() = block.build()
 
     override val canBuild get() = block.canBuild
@@ -21,5 +21,5 @@ fun PosRectBuilder.intersects(other: PosRectBuilder) = object : PosRectBuilder {
     override val canBuild get() = left.canBuild && right.canBuild
 }
 
-fun PosRectBuilder.interpolate(other: PosRectBuilder, t: OwoBuilder<Float>) =
-    posRect((this as OwoBuilder<PositionedRectangle>).interpolate(other, t))
+fun PosRectBuilder.interpolate(other: PosRectBuilder, t: DslBuilder<Float>) =
+    posRect((this as DslBuilder<PositionedRectangle>).interpolate(other, t))

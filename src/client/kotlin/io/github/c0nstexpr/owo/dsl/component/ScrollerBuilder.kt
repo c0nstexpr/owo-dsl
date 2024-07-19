@@ -8,7 +8,7 @@ import io.wispforest.owo.ui.container.ScrollContainer.ScrollDirection
 import io.wispforest.owo.ui.container.ScrollContainer.Scrollbar
 import io.wispforest.owo.ui.core.Component
 
-open class ScrollContainerBuilder<T : Component> : WrappingParentBuilder() {
+open class ScrollerBuilder<T : Component> : WrappingParentBuilder() {
     var direction = invalidBuilder<ScrollDirection>()
 
     var child = invalidBuilder<T>()
@@ -42,7 +42,7 @@ open class ScrollContainerBuilder<T : Component> : WrappingParentBuilder() {
             child.canBuild
 }
 
-fun <T : Component> ScrollContainerBuilder<T>.applyTo(component: ScrollContainer<T>) {
+fun <T : Component> ScrollerBuilder<T>.applyTo(component: ScrollContainer<T>) {
     (this as WrappingParentBuilder).applyTo(component)
 
     scrollbarThickness.applyBuild(component::scrollbarThiccness)
@@ -50,7 +50,3 @@ fun <T : Component> ScrollContainerBuilder<T>.applyTo(component: ScrollContainer
     scrollStep.applyBuild(component::scrollStep)
     fixedScrollbarLength.applyBuild(component::fixedScrollbarLength)
 }
-
-inline fun <T : Component> scrollContainer(
-    crossinline block: ScrollContainerBuilder<T>.() -> Unit
-) = ScrollContainerBuilder<T>().apply(block)

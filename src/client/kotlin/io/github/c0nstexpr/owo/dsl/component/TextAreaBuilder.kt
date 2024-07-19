@@ -24,5 +24,3 @@ fun TextAreaBuilder.applyTo(component: TextAreaComponent) {
     displayCharCount.applyBuild(component::displayCharCount)
     maxLines.applyBuild(component::maxLines)
 }
-
-inline fun textArea(crossinline block: TextAreaBuilder.() -> Unit) = TextAreaBuilder().apply(block)

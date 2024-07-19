@@ -22,6 +22,3 @@ fun StackLayoutBuilder.applyTo(component: StackLayout) {
 
     children.applyBuild { it.forEach(component::child) }
 }
-
-inline fun stackLayout(crossinline block: StackLayoutBuilder.() -> Unit) =
-    StackLayoutBuilder().apply(block)

@@ -1,10 +1,10 @@
 package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.SizeBuilder
+import io.github.c0nstexpr.owo.dsl.animation
 import io.github.c0nstexpr.owo.dsl.applyBuild
 import io.github.c0nstexpr.owo.dsl.insets
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
-import io.github.c0nstexpr.owo.dsl.owoAnimation
 import io.github.c0nstexpr.owo.dsl.positioning
 import io.github.c0nstexpr.owo.dsl.size
 import io.github.c0nstexpr.owo.dsl.sizing
@@ -24,13 +24,13 @@ abstract class BaseComponentBuilder : ComponentBuilder {
 
     override var verticalSizing = sizing()
 
-    override var positioningAnimation = owoAnimation<Positioning>()
+    override var positioningAnimation = animation<Positioning>()
 
-    override var marginsAnimation = owoAnimation<Insets>()
+    override var marginsAnimation = animation<Insets>()
 
-    override var horizontalSizingAnimation = owoAnimation<Sizing>()
+    override var horizontalSizingAnimation = animation<Sizing>()
 
-    override var verticalSizingAnimation = owoAnimation<Sizing>()
+    override var verticalSizingAnimation = animation<Sizing>()
 
     override var id = invalidBuilder<String>()
 

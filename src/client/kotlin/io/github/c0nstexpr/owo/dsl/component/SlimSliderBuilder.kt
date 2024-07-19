@@ -33,6 +33,3 @@ fun SlimSliderBuilder.applyTo(component: SlimSliderComponent) {
 
     stepSize.applyBuild { component.stepSize(it) }
 }
-
-inline fun slimSlider(crossinline block: SlimSliderBuilder.() -> Unit) =
-    SlimSliderBuilder().apply(block)

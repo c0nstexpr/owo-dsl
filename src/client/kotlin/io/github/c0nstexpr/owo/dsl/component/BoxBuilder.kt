@@ -8,7 +8,7 @@ import io.wispforest.owo.ui.component.BoxComponent
 import io.wispforest.owo.ui.component.BoxComponent.GradientDirection
 import io.wispforest.owo.ui.component.Components
 
-open class BoxComponentBuilder : BaseComponentBuilder() {
+open class BoxBuilder : BaseComponentBuilder() {
     var fill = invalidBuilder<Boolean>()
 
     var direction = invalidBuilder<GradientDirection>()
@@ -25,7 +25,7 @@ open class BoxComponentBuilder : BaseComponentBuilder() {
     override val canBuild get() = horizontalSizing.canBuild && verticalSizing.canBuild
 }
 
-fun BoxComponentBuilder.applyTo(component: BoxComponent) {
+fun BoxBuilder.applyTo(component: BoxComponent) {
     (this as BaseComponentBuilder).applyTo(component)
 
     fill.applyBuild(component::fill)
@@ -34,7 +34,7 @@ fun BoxComponentBuilder.applyTo(component: BoxComponent) {
     endColor.applyBuild(component::endColor)
 }
 
-fun BoxComponentBuilder.color(block: ColorBuilder) {
+fun BoxBuilder.color(block: ColorBuilder) {
     startColor = block
     endColor = block
 }

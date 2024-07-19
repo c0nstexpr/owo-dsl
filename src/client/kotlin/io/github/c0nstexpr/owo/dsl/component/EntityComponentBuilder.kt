@@ -39,6 +39,3 @@ fun EntityComponentBuilder.applyTo(component: EntityComponent<*>) {
     scaleToFit.applyBuild(component::scaleToFit)
     showNametag.applyBuild(component::showNametag)
 }
-
-inline fun entityComponent(crossinline block: EntityComponentBuilder.() -> Unit) =
-    EntityComponentBuilder().apply(block)

@@ -41,5 +41,3 @@ fun LabelBuilder.applyTo(label: LabelComponent) {
     horizontalTextAlignment.applyBuild(label::horizontalTextAlignment)
     lineHeight.applyBuild(label::lineHeight)
 }
-
-inline fun label(crossinline block: LabelBuilder.() -> Unit) = LabelBuilder().apply(block)

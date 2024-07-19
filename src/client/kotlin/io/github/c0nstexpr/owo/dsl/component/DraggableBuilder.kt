@@ -40,6 +40,3 @@ fun <T : Component> DraggableBuilder<T>.applyTo(component: DraggableContainer<T>
 
     foreheadSize.applyBuild(component::foreheadSize)
 }
-
-inline fun <T : Component> draggable(crossinline block: DraggableBuilder<T>.() -> Unit) =
-    DraggableBuilder<T>().apply(block)

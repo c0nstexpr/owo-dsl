@@ -9,5 +9,6 @@ repositories {
 
 dependencies {
     implementation(project(":", "namedElements"))
-    modImplementation(libs.modmenu)
+
+    listOf(libs.owo, libs.modmenu).forEach(::modImplementation)
 }

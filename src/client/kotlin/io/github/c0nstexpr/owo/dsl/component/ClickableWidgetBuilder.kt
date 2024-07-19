@@ -1,5 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
+import io.github.c0nstexpr.owo.dsl.animation
 import io.github.c0nstexpr.owo.dsl.applyBuild
 import io.github.c0nstexpr.owo.dsl.insets
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
@@ -7,6 +8,10 @@ import io.github.c0nstexpr.owo.dsl.positioning
 import io.github.c0nstexpr.owo.dsl.sizing
 import io.github.c0nstexpr.owo.dsl.text
 import io.wispforest.owo.ui.core.CursorStyle
+import io.wispforest.owo.ui.core.Insets
+import io.wispforest.owo.ui.core.Positioning
+import io.wispforest.owo.ui.core.Sizing
+import net.minecraft.client.gui.tooltip.TooltipComponent
 import net.minecraft.client.gui.widget.ClickableWidget
 
 abstract class ClickableWidgetBuilder : ComponentBuilder {
@@ -18,9 +23,17 @@ abstract class ClickableWidgetBuilder : ComponentBuilder {
 
     override var verticalSizing = sizing()
 
+    override var positioningAnimation = animation<Positioning>()
+
+    override var marginsAnimation = animation<Insets>()
+
+    override var horizontalSizingAnimation = animation<Sizing>()
+
+    override var verticalSizingAnimation = animation<Sizing>()
+
     override var id = invalidBuilder<String>()
 
-    override var tooltip = mutableListOf<TooltipBuilder>()
+    override var tooltip = invalidBuilder<List<TooltipComponent>>()
 
     override var zIndex = invalidBuilder<Int>()
 

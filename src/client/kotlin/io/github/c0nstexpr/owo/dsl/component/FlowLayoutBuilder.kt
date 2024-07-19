@@ -17,8 +17,7 @@ open class FlowLayoutBuilder : BaseParentComponentBuilder() {
     override val canBuild
         get() = horizontalSizing.canBuild &&
             verticalSizing.canBuild &&
-            algo.canBuild &&
-            children.canBuild
+            algo.canBuild
 
     override fun build(): FlowLayout {
         val horizontalSizing = horizontalSizing.build()
@@ -39,6 +38,3 @@ fun FlowLayoutBuilder.applyTo(component: FlowLayout) {
     children.applyBuild { it.forEach(component::child) }
     gap.applyBuild(component::gap)
 }
-
-inline fun flowLayout(crossinline block: FlowLayoutBuilder.() -> Unit) =
-    FlowLayoutBuilder().apply(block)

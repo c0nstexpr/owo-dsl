@@ -7,6 +7,3 @@ open class ButtonWidgetBuilder : PressableWidgetBuilder() {
 
     override fun build() = ButtonWidget.builder(message.build()) {}.build()!!.apply(::applyTo)
 }
-
-inline fun buttonWidget(crossinline block: ButtonWidgetBuilder.() -> Unit) =
-    object : ButtonWidgetBuilder() {}.apply(block)

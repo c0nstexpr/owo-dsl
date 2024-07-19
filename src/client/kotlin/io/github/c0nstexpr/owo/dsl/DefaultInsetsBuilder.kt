@@ -12,22 +12,22 @@ open class DefaultInsetsBuilder : InsetsBuilder() {
 
     override val canBuild get() = top.canBuild && left.canBuild && bottom.canBuild && right.canBuild
 
-    fun vertical(v: OwoBuilder<Int>) {
+    fun vertical(v: DslBuilder<Int>) {
         top = v
         bottom = v
     }
 
-    fun horizontal(h: OwoBuilder<Int>) {
+    fun horizontal(h: DslBuilder<Int>) {
         left = h
         right = h
     }
 
-    fun both(h: OwoBuilder<Int>, v: OwoBuilder<Int>) {
+    fun both(h: DslBuilder<Int>, v: DslBuilder<Int>) {
         horizontal(h)
         vertical(v)
     }
 
-    fun of(v: OwoBuilder<Int>) = both(v, v)
+    fun of(v: DslBuilder<Int>) = both(v, v)
 
     fun none() = of { 0 }
 }

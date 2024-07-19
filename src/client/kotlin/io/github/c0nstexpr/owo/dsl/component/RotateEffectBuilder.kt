@@ -1,14 +1,14 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.OwoBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.container.RenderEffectWrapper
 import net.minecraft.util.math.RotationAxis
 
 interface RotateEffectBuilder : RenderEffectBuilder {
-    var angle: OwoBuilder<Float>
+    var angle: DslBuilder<Float>
 
-    var axis: OwoBuilder<RotationAxis>
+    var axis: DslBuilder<RotationAxis>
 
     override fun build() = if (axis.canBuild)
         RenderEffectWrapper.RenderEffect.rotate(

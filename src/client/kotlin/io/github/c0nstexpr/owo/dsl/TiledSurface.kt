@@ -5,9 +5,9 @@ import io.wispforest.owo.ui.core.Surface
 interface TiledSurface : SurfaceBuilder {
     var texture: IdentifierBuilder
 
-    var textureWidth: OwoBuilder<Int>
+    var textureWidth: DslBuilder<Int>
 
-    var textureHeight: OwoBuilder<Int>
+    var textureHeight: DslBuilder<Int>
 
     override fun build() = Surface.tiled(
         texture.build(),

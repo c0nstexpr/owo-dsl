@@ -1,19 +1,12 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.OwoBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 
-open class ListBuilder<T : Any> : OwoBuilder<List<T>> {
+open class ListBuilder<T : Any> : DslBuilder<List<T>> {
     @PublishedApi
-    internal val list = mutableListOf<OwoBuilder<T>>()
+    internal val list = mutableListOf<DslBuilder<T>>()
 
-    inline fun <U : OwoBuilder<T>> add(
-        crossinline provider: () -> U,
-        crossinline block: (Int, U) -> Unit
-    ) {
-        val builder = provider()
-        block(list.size, builder)
-        list.add(builder)
-    }
+    inline fun add(crossinline provider: (Int) -> DslBuilder<T>) = list.add(provider(list.size))
 
     override fun build() = list.map { it.build() }
 

@@ -7,7 +7,7 @@ import net.minecraft.client.gui.screen.Screen
 
 open class DslScreen<Layout : ParentComponent>(
     val parent: Screen,
-    private val layoutBlock: OwoBuilder<Layout>
+    private val layoutBlock: DslBuilder<Layout>
 ) : BaseOwoScreen<Layout>() {
     override fun createAdapter() = OwoUIAdapter.create(this) { h, v ->
         require(layoutBlock.canBuild)

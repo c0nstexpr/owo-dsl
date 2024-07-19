@@ -21,6 +21,3 @@ fun SpriteComponentBuilder.applyTo(component: SpriteComponent) {
 
     blend.applyBuild(component::blend)
 }
-
-inline fun spriteComponent(crossinline block: SpriteComponentBuilder.() -> Unit) =
-    SpriteComponentBuilder().apply(block)

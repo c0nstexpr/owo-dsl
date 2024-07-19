@@ -1,12 +1,12 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.OwoBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.wispforest.owo.ui.container.RenderEffectWrapper.RenderEffect
 
 @FunctionalInterface
-fun interface RenderEffectBuilder : OwoBuilder<RenderEffect>
+fun interface RenderEffectBuilder : DslBuilder<RenderEffect>
 
-fun renderEffect(block: OwoBuilder<RenderEffect>) = object : RenderEffectBuilder {
+fun renderEffect(block: DslBuilder<RenderEffect>) = object : RenderEffectBuilder {
     override fun build() = block.build()
 
     override val canBuild get() = block.canBuild

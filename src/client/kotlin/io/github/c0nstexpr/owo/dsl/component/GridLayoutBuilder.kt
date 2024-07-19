@@ -6,7 +6,7 @@ import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.GridLayout
 import io.wispforest.owo.ui.core.Component
 
-class GridLayoutBuilder : BaseParentComponentBuilder() {
+open class GridLayoutBuilder : BaseParentComponentBuilder() {
     var rows = invalidBuilder<Int>()
 
     var columns = invalidBuilder<Int>()
@@ -26,8 +26,7 @@ class GridLayoutBuilder : BaseParentComponentBuilder() {
         get() = horizontalSizing.canBuild &&
             verticalSizing.canBuild &&
             rows.canBuild &&
-            columns.canBuild &&
-            children.canBuild
+            columns.canBuild
 }
 
 fun GridLayoutBuilder.applyTo(component: GridLayout) {
@@ -43,6 +42,3 @@ fun GridLayoutBuilder.applyTo(component: GridLayout) {
         }
     }
 }
-
-inline fun gridLayout(crossinline block: GridLayoutBuilder.() -> Unit) =
-    GridLayoutBuilder().apply(block)

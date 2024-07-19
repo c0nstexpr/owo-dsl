@@ -5,8 +5,8 @@ import net.minecraft.registry.Registries
 
 open class ParseBlockResultBuilder : BlockResultBuilder() {
     var string = invalidBuilder<String>()
-    var registry = OwoBuilder { Registries.BLOCK.readOnlyWrapper!! }
-    var allowNbt = OwoBuilder { true }
+    var registry = DslBuilder { Registries.BLOCK.readOnlyWrapper!! }
+    var allowNbt = DslBuilder { true }
 
     override fun build() = BlockArgumentParser.block(
         registry.build(),

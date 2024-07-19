@@ -24,6 +24,3 @@ fun ItemComponentBuilder.applyTo(component: ItemComponent) {
     showOverlay.applyBuild(component::showOverlay)
     setTooltipFromStack.applyBuild(component::setTooltipFromStack)
 }
-
-inline fun itemComponent(crossinline block: ItemComponentBuilder.() -> Unit) =
-    ItemComponentBuilder().apply(block)

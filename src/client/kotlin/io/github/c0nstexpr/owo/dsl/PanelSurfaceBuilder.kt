@@ -3,7 +3,7 @@ package io.github.c0nstexpr.owo.dsl
 import io.wispforest.owo.ui.core.Surface
 
 interface PanelSurfaceBuilder : SurfaceBuilder {
-    var insetWidth: OwoBuilder<Int>
+    var insetWidth: DslBuilder<Int>
 
     override fun build() = Surface.panelWithInset(insetWidth.build())!!
 

@@ -7,7 +7,7 @@ import io.wispforest.owo.ui.container.RenderEffectWrapper
 import io.wispforest.owo.ui.container.RenderEffectWrapper.RenderEffect
 import io.wispforest.owo.ui.core.Component
 
-open class RenderEffectWrapperBuilder<T : Component> : WrappingParentBuilder() {
+open class RenderEffectorBuilder<T : Component> : WrappingParentBuilder() {
     var child = invalidBuilder<T>()
 
     var effects = invalidBuilder<List<RenderEffect>>()
@@ -17,12 +17,8 @@ open class RenderEffectWrapperBuilder<T : Component> : WrappingParentBuilder() {
     override val canBuild get() = child.canBuild
 }
 
-fun <T : Component> RenderEffectWrapperBuilder<T>.applyTo(component: RenderEffectWrapper<T>) {
+fun <T : Component> RenderEffectorBuilder<T>.applyTo(component: RenderEffectWrapper<T>) {
     (this as WrappingParentBuilder).applyTo(component)
 
     effects.applyBuild { it.forEach(component::effect) }
 }
-
-inline fun <T : Component> renderEffect(
-    crossinline block: RenderEffectWrapperBuilder<T>.() -> Unit
-) = RenderEffectWrapperBuilder<T>().apply(block)

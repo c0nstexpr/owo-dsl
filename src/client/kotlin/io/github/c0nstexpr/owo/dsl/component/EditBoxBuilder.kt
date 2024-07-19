@@ -30,6 +30,3 @@ fun EditBoxBuilder.applyTo(component: EditBoxWidget) {
     maxLength.applyBuild(component::setMaxLength)
     text.applyBuild(component::setText)
 }
-
-inline fun editBoxWidget(crossinline block: EditBoxBuilder.() -> Unit) =
-    object : EditBoxBuilder() {}.apply(block)

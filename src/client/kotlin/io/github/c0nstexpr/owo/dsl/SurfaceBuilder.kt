@@ -3,9 +3,9 @@ package io.github.c0nstexpr.owo.dsl
 import io.wispforest.owo.ui.core.Surface
 
 @FunctionalInterface
-fun interface SurfaceBuilder : OwoBuilder<Surface>
+fun interface SurfaceBuilder : DslBuilder<Surface>
 
-fun surface(block: OwoBuilder<Surface> = invalidBuilder()) = object : SurfaceBuilder {
+fun surface(block: DslBuilder<Surface> = invalidBuilder()) = object : SurfaceBuilder {
     override fun build() = block.build()
 
     override val canBuild get() = block.canBuild
@@ -24,7 +24,7 @@ fun blankSurface() = surface { Surface.BLANK }
 fun tooltipSurface() = surface { Surface.TOOLTIP }
 
 infix fun SurfaceBuilder.and(other: SurfaceBuilder) = surface(
-    object : OwoBuilder<Surface> {
+    object : DslBuilder<Surface> {
         override fun build() = this@and.build().and(other.build())
 
         override val canBuild = this@and.canBuild && other.canBuild

@@ -1,21 +1,20 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.OwoBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.wispforest.owo.ui.core.Component
 
-open class GridRowBuilder(val rowIndex: Int) : OwoBuilder<Map<Int, Component>> {
-    val row = mutableMapOf<Int, OwoBuilder<Component>>()
+open class GridRowBuilder(val rowIndex: Int) : DslBuilder<Map<Int, Component>> {
+    val row = mutableMapOf<Int, DslBuilder<Component>>()
 
     override fun build() = row.mapValues { it.value.build() }
 
     override val canBuild get() = row.all { it.value.canBuild }
 
-    inline fun <T : OwoBuilder<Component>> cell(
+    inline fun <T : DslBuilder<Component>> cell(
         column: Int,
-        crossinline provider: () -> T,
+        builder: T,
         crossinline block: (Int, T) -> Unit
     ) {
-        val builder = provider()
         block(rowIndex, builder)
         row[column] = builder
     }

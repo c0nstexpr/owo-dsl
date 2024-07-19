@@ -6,6 +6,8 @@ import io.wispforest.owo.ui.component.Components
 
 open class CheckboxBuilder : CheckboxWidgetBuilder() {
     override fun build() = Components.checkbox(message.build())!!.apply(::applyTo)
+
+    override val canBuild get() = message.canBuild
 }
 
 fun CheckboxBuilder.applyTo(component: CheckboxComponent) {
@@ -13,5 +15,3 @@ fun CheckboxBuilder.applyTo(component: CheckboxComponent) {
 
     checked.applyBuild(component::checked)
 }
-
-inline fun checkbox(crossinline block: CheckboxBuilder.() -> Unit) = CheckboxBuilder().apply(block)

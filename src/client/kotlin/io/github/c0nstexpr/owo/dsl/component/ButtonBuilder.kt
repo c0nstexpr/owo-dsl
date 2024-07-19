@@ -10,13 +10,11 @@ open class ButtonBuilder : ButtonWidgetBuilder() {
     var onPress = invalidBuilder<Consumer<ButtonComponent>>()
 
     override fun build() = Components.button(message.build()) {}!!.apply(::applyTo)
+
+    override val canBuild get() = message.canBuild
 }
 
 fun ButtonBuilder.applyTo(component: ButtonComponent) {
     (this as ButtonWidgetBuilder).applyTo(component)
-
     onPress.applyBuild(component::onPress)
 }
-
-inline fun button(crossinline block: ButtonBuilder.() -> Unit) =
-    object : ButtonBuilder() {}.apply(block)

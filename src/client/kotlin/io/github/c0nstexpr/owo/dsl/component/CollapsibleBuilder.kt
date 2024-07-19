@@ -22,6 +22,3 @@ open class CollapsibleBuilder : FlowLayoutBuilder() {
             title.canBuild &&
             expended.canBuild
 }
-
-inline fun collapsible(crossinline block: CollapsibleBuilder.() -> Unit) =
-    CollapsibleBuilder().apply(block)

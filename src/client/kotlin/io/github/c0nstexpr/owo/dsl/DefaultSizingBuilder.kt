@@ -21,5 +21,5 @@ open class DefaultSizingBuilder : SizingBuilder() {
     override val canBuild get() = value.canBuild && method.canBuild
 }
 
-inline fun defaultSizingBuilder(crossinline block: DefaultSizingBuilder.() -> Unit) =
+inline fun sizing(crossinline block: DefaultSizingBuilder.() -> Unit) =
     DefaultSizingBuilder().apply(block)

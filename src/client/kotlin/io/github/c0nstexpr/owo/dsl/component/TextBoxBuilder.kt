@@ -15,6 +15,3 @@ fun TextBoxBuilder.applyTo(component: TextBoxComponent) {
 
     text.applyBuild(component::text)
 }
-
-inline fun textBoxComponent(crossinline block: TextBoxBuilder.() -> Unit) =
-    TextBoxBuilder().apply(block)

@@ -1,12 +1,13 @@
 package io.github.c0nstexpr.owo.dsl.component
 
+import io.github.c0nstexpr.owo.dsl.AnimationBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.InsetsBuilder
-import io.github.c0nstexpr.owo.dsl.OwoAnimationBuilder
-import io.github.c0nstexpr.owo.dsl.OwoBuilder
 import io.github.c0nstexpr.owo.dsl.PositioningBuilder
 import io.github.c0nstexpr.owo.dsl.SizingBuilder
 import io.github.c0nstexpr.owo.dsl.animate
 import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.dslBuilder
 import io.wispforest.owo.ui.core.Component
 import io.wispforest.owo.ui.core.CursorStyle
 import io.wispforest.owo.ui.core.Insets
@@ -23,25 +24,25 @@ interface ComponentBuilder {
 
     var verticalSizing: SizingBuilder
 
-    var positioningAnimation: OwoAnimationBuilder<Positioning>
+    var positioningAnimation: AnimationBuilder<Positioning>
 
-    var marginsAnimation: OwoAnimationBuilder<Insets>
+    var marginsAnimation: AnimationBuilder<Insets>
 
-    var horizontalSizingAnimation: OwoAnimationBuilder<Sizing>
+    var horizontalSizingAnimation: AnimationBuilder<Sizing>
 
-    var verticalSizingAnimation: OwoAnimationBuilder<Sizing>
+    var verticalSizingAnimation: AnimationBuilder<Sizing>
 
-    var id: OwoBuilder<String>
+    var id: DslBuilder<String>
 
-    var tooltip: OwoBuilder<List<TooltipComponent>>
+    var tooltip: DslBuilder<List<TooltipComponent>>
 
-    var zIndex: OwoBuilder<Int>
+    var zIndex: DslBuilder<Int>
 
-    var cursor: OwoBuilder<CursorStyle>
+    var cursor: DslBuilder<CursorStyle>
 
-    var x: OwoBuilder<Int>
+    var x: DslBuilder<Int>
 
-    var y: OwoBuilder<Int>
+    var y: DslBuilder<Int>
 
     fun build(): Component
 
@@ -69,3 +70,8 @@ fun ComponentBuilder.sizing(block: SizingBuilder) {
     horizontalSizing = block
     verticalSizing = block
 }
+
+inline fun <reified T : ComponentBuilder, U : Component> component(
+    instance: T,
+    crossinline buildBlock: T.() -> U
+): DslBuilder<U> = instance.run { dslBuilder(::canBuild) { buildBlock(this) } }

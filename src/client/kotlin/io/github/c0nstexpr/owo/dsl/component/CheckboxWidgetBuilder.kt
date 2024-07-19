@@ -25,7 +25,6 @@ open class CheckboxWidgetBuilder : PressableWidgetBuilder() {
         callback.applyBuild(::callback)
         checked.applyBuild(::checked)
     }.build()!!.apply(::applyTo)
-}
 
-inline fun checkboxWidget(crossinline block: CheckboxWidgetBuilder.() -> Unit) =
-    CheckboxWidgetBuilder().apply(block)
+    override val canBuild get() = message.canBuild
+}

@@ -3,9 +3,9 @@ package io.github.c0nstexpr.owo.dsl
 import io.wispforest.owo.ui.core.PositionedRectangle
 
 interface DefaultPosRectBuilder : PosRectBuilder {
-    var x: OwoBuilder<Int>
+    var x: DslBuilder<Int>
 
-    var y: OwoBuilder<Int>
+    var y: DslBuilder<Int>
 
     var size: SizeBuilder
 

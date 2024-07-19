@@ -15,6 +15,8 @@ open class ColorPickerBuilder : BaseComponentBuilder() {
     var showAlpha = invalidBuilder<Boolean>()
 
     override fun build() = ColorPickerComponent().apply(::applyTo)
+
+    override val canBuild get() = true
 }
 
 fun ColorPickerBuilder.applyTo(component: ColorPickerComponent) {
@@ -25,6 +27,3 @@ fun ColorPickerBuilder.applyTo(component: ColorPickerComponent) {
     selectorPadding.applyBuild(component::selectorPadding)
     showAlpha.applyBuild(component::showAlpha)
 }
-
-inline fun colorPicker(crossinline block: ColorPickerBuilder.() -> Unit) =
-    ColorPickerBuilder().apply(block)

@@ -54,6 +54,3 @@ fun TextFieldWidgetBuilder.applyTo(component: TextFieldWidget) {
     visible.applyBuild(component::setVisible)
     suggestion.applyBuild(component::setSuggestion)
 }
-
-inline fun textFieldWidget(block: TextFieldWidgetBuilder.() -> Unit) =
-    TextFieldWidgetBuilder().apply(block)

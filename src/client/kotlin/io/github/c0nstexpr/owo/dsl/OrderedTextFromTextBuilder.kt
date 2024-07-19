@@ -3,7 +3,7 @@ package io.github.c0nstexpr.owo.dsl
 import net.minecraft.text.Text
 
 interface OrderedTextFromTextBuilder : OrderedTextBuilder {
-    var txt: OwoBuilder<Text>
+    var txt: DslBuilder<Text>
 
     override fun build() = txt.build().asOrderedText()!!
 

@@ -1,9 +1,9 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.OwoBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.wispforest.owo.ui.core.Component
 
-open class GridChildrenBuilder : OwoBuilder<List<Map<Int, Component>>> {
+open class GridChildrenBuilder : DslBuilder<List<Map<Int, Component>>> {
     val children = mutableListOf<GridRowBuilder>()
 
     inline fun row(crossinline block: GridRowBuilder.() -> Unit) {

@@ -2,9 +2,9 @@ package io.github.c0nstexpr.owo.dsl
 
 import net.minecraft.client.texture.Sprite
 
-abstract class SpriteBuilder : OwoBuilder<Sprite>
+abstract class SpriteBuilder : DslBuilder<Sprite>
 
-fun sprite(block: OwoBuilder<Sprite> = invalidBuilder()) = object : SpriteBuilder() {
+fun sprite(block: DslBuilder<Sprite> = invalidBuilder()) = object : SpriteBuilder() {
     override fun build() = block.build()
 
     override val canBuild get() = block.canBuild

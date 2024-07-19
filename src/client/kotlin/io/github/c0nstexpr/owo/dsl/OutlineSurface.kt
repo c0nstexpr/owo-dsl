@@ -3,7 +3,7 @@ package io.github.c0nstexpr.owo.dsl
 import io.wispforest.owo.ui.core.Surface
 
 interface OutlineSurface : SurfaceBuilder {
-    var color: OwoBuilder<Int>
+    var color: DslBuilder<Int>
 
     override fun build() = Surface.outline(color.build())!!
 

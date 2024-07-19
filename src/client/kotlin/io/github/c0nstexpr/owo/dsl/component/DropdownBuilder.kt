@@ -85,8 +85,6 @@ fun DropdownBuilder.applyTo(component: DropdownComponent) {
     closeWhenNotHovered.applyBuild(component::closeWhenNotHovered)
 }
 
-inline fun dropdown(crossinline block: DropdownBuilder.() -> Unit) = DropdownBuilder().apply(block)
-
 fun DropdownBuilder.divider() = dropdownChildren.add(DropdownBuilder.Divider())
 
 fun DropdownBuilder.text(block: DropdownBuilder.Text.() -> Unit) =

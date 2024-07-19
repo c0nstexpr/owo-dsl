@@ -3,9 +3,9 @@ package io.github.c0nstexpr.owo.dsl
 import io.wispforest.owo.ui.core.Surface
 
 interface BlurSurfaceBuilder : SurfaceBuilder {
-    var qualityBuilder: OwoBuilder<Float>
+    var qualityBuilder: DslBuilder<Float>
 
-    var sizeBuilder: OwoBuilder<Float>
+    var sizeBuilder: DslBuilder<Float>
 
     override fun build() = Surface.blur(
         qualityBuilder.build(),

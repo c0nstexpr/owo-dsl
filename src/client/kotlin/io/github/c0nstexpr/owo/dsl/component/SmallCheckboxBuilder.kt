@@ -24,6 +24,3 @@ fun SmallCheckboxBuilder.applyTo(component: SmallCheckboxComponent) {
     checked.applyBuild(component::checked)
     labelShadow.applyBuild(component::labelShadow)
 }
-
-inline fun smallCheckbox(crossinline block: SmallCheckboxBuilder.() -> Unit) =
-    SmallCheckboxBuilder().apply(block)

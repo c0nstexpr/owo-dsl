@@ -54,6 +54,3 @@ fun TextureComponentBuilder.applyTo(component: TextureComponent) {
     visibleArea.applyBuild(component::visibleArea)
     blend.applyBuild(component::blend)
 }
-
-inline fun textureComponent(crossinline block: TextureComponentBuilder.() -> Unit) =
-    TextureComponentBuilder().apply(block)
