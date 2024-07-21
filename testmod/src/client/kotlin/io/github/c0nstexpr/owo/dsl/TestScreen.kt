@@ -11,7 +11,6 @@ import io.wispforest.owo.ui.core.Sizing
 import io.wispforest.owo.ui.core.Surface
 import io.wispforest.owo.ui.core.VerticalAlignment
 import net.minecraft.client.gui.screen.Screen
-import java.util.function.Consumer
 
 private val defaultSurface = Surface.flat(0x77000000)!!
 
@@ -22,18 +21,16 @@ private val darkBackgroundButton = button {
 private val noBackgroundButton = button {
     id = "NoBackgroundButton".owoValue
     message = textString { str = "No Background".owoValue }
-    onPress =
-        Consumer<ButtonComponent> {
-            this@root.surface = blankSurface()
-        }.owoValue
 }
 
 private val dirtBackgroundButton = button {
     id = "DirtBackgroundButton".owoValue
     message = textString { str = "Dirt Background".owoValue }
-    onPress = Consumer<ButtonComponent> {
-        this@root.surface = optionsBackgroundSurface()
-    }.owoValue
+}
+
+private val testButton = button {
+    id = "TestButton".owoValue
+    message = textString { str = "Test Background".owoValue }
 }
 
 fun buildUI(): DslBuilder<FlowLayout> = flowLayout {
@@ -49,6 +46,7 @@ fun buildUI(): DslBuilder<FlowLayout> = flowLayout {
         add { darkBackgroundButton }
         add { noBackgroundButton }
         add { dirtBackgroundButton }
+        add { testButton }
     }
 }
 
@@ -60,13 +58,18 @@ class TestScreen(parent: Screen) :
     override fun build(rootComponent: FlowLayout) {
         super.build(rootComponent)
 
-        rootComponent.getChild<ButtonComponent>("DarkBackgroundButton")!!
-            .onPress { rootComponent.surface(defaultSurface) }
+        rootComponent.apply {
+            getChild<ButtonComponent>("DarkBackgroundButton")!!
+                .onPress { surface(defaultSurface) }
 
-        rootComponent.getChild<ButtonComponent>("NoBackgroundButton")!!
-            .onPress { rootComponent.surface(Surface.BLANK) }
+            getChild<ButtonComponent>("NoBackgroundButton")!!
+                .onPress { surface(Surface.BLANK) }
 
-        rootComponent.getChild<ButtonComponent>("NoBackgroundButton")!!
-            .onPress { rootComponent.surface(Surface.BLANK) }
+            getChild<ButtonComponent>("DirtBackgroundButton")!!
+                .onPress { surface(Surface.BLANK) }
+
+            getChild<ButtonComponent>("TestButton")!!
+                .onPress { surface(blankSurface().build()) }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.orderedText
 import io.wispforest.owo.ui.core.Component
 
@@ -97,6 +98,6 @@ inline fun tooltip(crossinline block: TooltipBuilder.() -> Unit) = object : Tool
     override var orderedTextBuilder = orderedText()
 }.apply(block)
 
-class ComponentBuilder
+class IdComponent<T : Any>(val id: String, builder: DslBuilder<T>) : DslBuilder<T> by builder
 
 fun <T : ComponentBuilder> component(crossinline block: T.() -> Unit)
