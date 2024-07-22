@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":", "namedElements"))
+    api(project(":owo-dsl", "namedElements"))
 
     listOf(libs.owo, libs.modmenu).forEach(::modImplementation)
 }

@@ -1,2 +1,2 @@
-rootProject.name = "owo-dsl"
+include("owo-dsl")
 include("testmod")

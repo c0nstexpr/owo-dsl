@@ -16,21 +16,21 @@ private val defaultSurface = Surface.flat(0x77000000)!!
 
 private val darkBackgroundButton = button {
     id = "DarkBackgroundButton".owoValue
-    message = textString { str = "Dark Background".owoValue }
+    message = str2Text { str = "Dark Background".owoValue }
 }
 private val noBackgroundButton = button {
     id = "NoBackgroundButton".owoValue
-    message = textString { str = "No Background".owoValue }
+    message = str2Text { str = "No Background".owoValue }
 }
 
 private val dirtBackgroundButton = button {
     id = "DirtBackgroundButton".owoValue
-    message = textString { str = "Dirt Background".owoValue }
+    message = str2Text { str = "Dirt Background".owoValue }
 }
 
 private val testButton = button {
     id = "TestButton".owoValue
-    message = textString { str = "Test Background".owoValue }
+    message = str2Text { str = "Test Background".owoValue }
 }
 
 fun buildUI(): DslBuilder<FlowLayout> = flowLayout {
@@ -66,7 +66,7 @@ class TestScreen(parent: Screen) :
                 .onPress { surface(Surface.BLANK) }
 
             getChild<ButtonComponent>("DirtBackgroundButton")!!
-                .onPress { surface(Surface.BLANK) }
+                .onPress { surface(Surface.OPTIONS_BACKGROUND) }
 
             getChild<ButtonComponent>("TestButton")!!
                 .onPress { surface(blankSurface().build()) }

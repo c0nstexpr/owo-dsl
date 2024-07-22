@@ -1,0 +1,14 @@
+package io.github.c0nstexpr.owo.dsl
+
+import net.minecraft.text.Text
+
+@FunctionalInterface
+fun interface TextBuilder : DslBuilder<Text>
+
+fun text(block: DslBuilder<Text> = invalidBuilder()) = object : TextBuilder {
+    override fun build() = block.build()
+
+    override val canBuild get() = block.canBuild
+}
+
+inline fun text(crossinline block: () -> Text) = text(dslBuilder { block() })
