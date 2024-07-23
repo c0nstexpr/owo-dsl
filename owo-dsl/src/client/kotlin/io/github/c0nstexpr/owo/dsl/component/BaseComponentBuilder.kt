@@ -2,7 +2,7 @@ package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.SizeBuilder
 import io.github.c0nstexpr.owo.dsl.animation
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.insets
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.github.c0nstexpr.owo.dsl.positioning
@@ -52,7 +52,7 @@ abstract class BaseComponentBuilder : ComponentBuilder {
 fun BaseComponentBuilder.applyTo(component: BaseComponent) {
     (this as ComponentBuilder).applyTo(component)
 
-    space.applyBuild(component::inflate)
+    space.applyBuilt(component::inflate)
 }
 
 inline fun BaseComponentBuilder.space(crossinline block: SizeBuilder.() -> Unit) = block(space)

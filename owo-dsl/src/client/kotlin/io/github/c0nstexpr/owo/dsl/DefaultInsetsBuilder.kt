@@ -2,16 +2,23 @@ package io.github.c0nstexpr.owo.dsl
 
 import io.wispforest.owo.ui.core.Insets
 
-open class DefaultInsetsBuilder : InsetsBuilder() {
-    var top = invalidBuilder<Int>()
-    var bottom = invalidBuilder<Int>()
-    var left = invalidBuilder<Int>()
-    var right = invalidBuilder<Int>()
-
-    override fun build() = Insets.of(top.build(), left.build(), bottom.build(), right.build())!!
-
-    override val canBuild get() = top.canBuild && left.canBuild && bottom.canBuild && right.canBuild
-
+open class DefaultInsetsBuilder(
+    var top: DslBuilder<Int> = invalidBuilder(),
+    var bottom: DslBuilder<Int> = invalidBuilder(),
+    var left: DslBuilder<Int> = invalidBuilder(),
+    var right: DslBuilder<Int> = invalidBuilder()
+) : InsetsBuilder(),
+    DslBuilder<Insets> by insets(
+        {
+            top.applyBuilt { top ->
+                bottom.applyBuilt { bottom ->
+                    left.applyBuilt { left ->
+                        right.applyBuilt { Insets.of(top, left, bottom, it) }
+                    }
+                }
+            }
+        }
+    ) {
     fun vertical(v: DslBuilder<Int>) {
         top = v
         bottom = v
@@ -29,7 +36,7 @@ open class DefaultInsetsBuilder : InsetsBuilder() {
 
     fun of(v: DslBuilder<Int>) = both(v, v)
 
-    fun none() = of { 0 }
+    fun none() = of(dslBuilder { 0 })
 }
 
 inline fun defaultInsets(crossinline block: DefaultInsetsBuilder.() -> Unit) =

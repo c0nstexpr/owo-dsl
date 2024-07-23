@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.Components
@@ -22,6 +22,6 @@ open class ItemComponentBuilder : BaseComponentBuilder() {
 fun ItemComponentBuilder.applyTo(component: ItemComponent) {
     (this as BaseComponentBuilder).applyTo(component)
 
-    showOverlay.applyBuild(component::showOverlay)
-    setTooltipFromStack.applyBuild(component::setTooltipFromStack)
+    showOverlay.applyBuilt(component::showOverlay)
+    setTooltipFromStack.applyBuilt(component::setTooltipFromStack)
 }

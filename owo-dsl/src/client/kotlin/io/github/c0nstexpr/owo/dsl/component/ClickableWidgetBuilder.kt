@@ -1,7 +1,7 @@
 package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.animation
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.insets
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.github.c0nstexpr.owo.dsl.positioning
@@ -51,5 +51,5 @@ abstract class ClickableWidgetBuilder : ComponentBuilder {
 fun ClickableWidgetBuilder.applyTo(component: ClickableWidget) {
     (this as ComponentBuilder).applyTo(component)
 
-    message.applyBuild(component::setMessage)
+    message.applyBuilt(component::setMessage)
 }

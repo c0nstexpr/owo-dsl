@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.container.Containers
@@ -39,5 +39,5 @@ open class DraggableBuilder<T : Component> : WrappingParentBuilder() {
 fun <T : Component> DraggableBuilder<T>.applyTo(component: DraggableContainer<T>) {
     (this as WrappingParentBuilder).applyTo(component)
 
-    foreheadSize.applyBuild(component::foreheadSize)
+    foreheadSize.applyBuilt(component::foreheadSize)
 }

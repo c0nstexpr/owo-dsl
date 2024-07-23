@@ -6,7 +6,7 @@ import io.github.c0nstexpr.owo.dsl.InsetsBuilder
 import io.github.c0nstexpr.owo.dsl.PositioningBuilder
 import io.github.c0nstexpr.owo.dsl.SizingBuilder
 import io.github.c0nstexpr.owo.dsl.animate
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.dslBuilder
 import io.wispforest.owo.ui.core.Component
 import io.wispforest.owo.ui.core.CursorStyle
@@ -50,20 +50,20 @@ interface ComponentBuilder {
 }
 
 fun ComponentBuilder.applyTo(component: Component) {
-    positioning.applyBuild(component::positioning)
-    margins.applyBuild(component::margins)
-    horizontalSizing.applyBuild(component::horizontalSizing)
-    verticalSizing.applyBuild(component::verticalSizing)
-    positioningAnimation.applyBuild(component.positioning()::animate)
-    marginsAnimation.applyBuild(component.margins()::animate)
-    horizontalSizingAnimation.applyBuild(component.horizontalSizing()::animate)
-    verticalSizingAnimation.applyBuild(component.verticalSizing()::animate)
-    id.applyBuild(component::id)
-    tooltip.applyBuild(component::tooltip)
-    zIndex.applyBuild(component::zIndex)
-    cursor.applyBuild(component::cursorStyle)
-    x.applyBuild(component::updateX)
-    y.applyBuild(component::updateY)
+    positioning.applyBuilt(component::positioning)
+    margins.applyBuilt(component::margins)
+    horizontalSizing.applyBuilt(component::horizontalSizing)
+    verticalSizing.applyBuilt(component::verticalSizing)
+    positioningAnimation.applyBuilt(component.positioning()::animate)
+    marginsAnimation.applyBuilt(component.margins()::animate)
+    horizontalSizingAnimation.applyBuilt(component.horizontalSizing()::animate)
+    verticalSizingAnimation.applyBuilt(component.verticalSizing()::animate)
+    id.applyBuilt(component::id)
+    tooltip.applyBuilt(component::tooltip)
+    zIndex.applyBuilt(component::zIndex)
+    cursor.applyBuilt(component::cursorStyle)
+    x.applyBuilt(component::updateX)
+    y.applyBuilt(component::updateY)
 }
 
 fun ComponentBuilder.sizing(block: SizingBuilder) {

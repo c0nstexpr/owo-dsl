@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.SpriteComponent
@@ -17,5 +17,5 @@ open class SpacerBuilder : BaseComponentBuilder() {
 fun SpacerBuilder.applyTo(component: SpriteComponent) {
     (this as BaseComponentBuilder).applyTo(component)
 
-    percent.applyBuild { component.sizing(Sizing.expand(it)) }
+    percent.applyBuilt { component.sizing(Sizing.expand(it)) }
 }

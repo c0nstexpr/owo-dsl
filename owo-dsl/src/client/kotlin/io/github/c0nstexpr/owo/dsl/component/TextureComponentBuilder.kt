@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
 import io.github.c0nstexpr.owo.dsl.identifier
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
@@ -52,6 +52,6 @@ open class TextureComponentBuilder : BaseComponentBuilder() {
 fun TextureComponentBuilder.applyTo(component: TextureComponent) {
     (this as BaseComponentBuilder).applyTo(component)
 
-    visibleArea.applyBuild(component::visibleArea)
-    blend.applyBuild(component::blend)
+    visibleArea.applyBuilt(component::visibleArea)
+    blend.applyBuilt(component::blend)
 }

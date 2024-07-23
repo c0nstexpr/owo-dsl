@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import net.minecraft.client.MinecraftClient
@@ -22,9 +22,9 @@ open class CheckboxWidgetBuilder : PressableWidgetBuilder() {
             else pos(x.build(), 0)
         } else if (y.canBuild) pos(0, y.build())
 
-        maxWidth.applyBuild(::maxWidth)
-        callback.applyBuild(::callback)
-        checked.applyBuild(::checked)
+        maxWidth.applyBuilt(::maxWidth)
+        callback.applyBuilt(::callback)
+        checked.applyBuilt(::checked)
     }.build()!!.apply(::applyTo)
 
     override val canBuild get() = message.canBuild

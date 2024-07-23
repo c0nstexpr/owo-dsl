@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.github.c0nstexpr.owo.dsl.sizing
@@ -83,7 +83,7 @@ fun DropdownBuilder.applyTo(component: DropdownComponent) {
 
     if (dropdownChildren.all { it.canAdd }) dropdownChildren.forEach { it.addTo(component) }
 
-    closeWhenNotHovered.applyBuild(component::closeWhenNotHovered)
+    closeWhenNotHovered.applyBuilt(component::closeWhenNotHovered)
 }
 
 fun DropdownBuilder.divider() = dropdownChildren.add(DropdownBuilder.Divider())

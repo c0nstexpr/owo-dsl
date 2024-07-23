@@ -17,9 +17,16 @@ fun <T : Any> dslBuilder(buildBlock: () -> T?): DslBuilder<T> = object : DslBuil
     }
 }
 
-inline fun <T : Any, R> DslBuilder<T>.applyBuild(crossinline block: (T) -> R): R? {
+inline fun <T : Any, R> DslBuilder<T>.applyBuilt(crossinline block: (T) -> R): R? {
     build()
     return value?.let(block)
 }
 
-inline val <T : Any> T.owoValue get() = dslBuilder { this }
+inline val <T : Any> DslBuilder<T>.built get() = applyBuilt { it }
+
+inline val <T : Any> T.owoValue: DslBuilder<T>
+    get() = object : DslBuilder<T> {
+        override val value get() = this@owoValue
+
+        override fun build() = Unit
+    }

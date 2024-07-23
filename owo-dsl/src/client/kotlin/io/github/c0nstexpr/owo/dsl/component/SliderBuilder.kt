@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.Components
@@ -22,13 +22,13 @@ open class SliderBuilder : SliderWidgetBuilder() {
 fun SliderBuilder.applyTo(component: SliderComponent) {
     (this as ClickableWidgetBuilder).applyTo(component)
 
-    value.applyBuild(component::value)
+    value.applyBuilt(component::value)
 
-    if (translate.canBuild && translate.build()) message.applyBuild { msg ->
+    if (translate.canBuild && translate.build()) message.applyBuilt { msg ->
         component.message { Text.translatable(msg.string, it) }
     }
-    else message.applyBuild { msg -> component.message { msg } }
+    else message.applyBuilt { msg -> component.message { msg } }
 
-    scrollStep.applyBuild(component::scrollStep)
-    active.applyBuild(component::active)
+    scrollStep.applyBuilt(component::scrollStep)
+    active.applyBuilt(component::active)
 }

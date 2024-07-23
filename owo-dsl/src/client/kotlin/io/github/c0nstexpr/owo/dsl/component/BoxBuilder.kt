@@ -1,9 +1,8 @@
 package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.ColorBuilder
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
-import io.github.c0nstexpr.owo.dsl.color
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.BoxComponent
 import io.wispforest.owo.ui.component.BoxComponent.GradientDirection
@@ -29,8 +28,8 @@ open class BoxBuilder : BaseComponentBuilder() {
 fun BoxBuilder.applyTo(component: BoxComponent) {
     (this as BaseComponentBuilder).applyTo(component)
 
-    fill.applyBuild(component::fill)
-    direction.applyBuild(component::direction)
+    fill.applyBuilt(component::fill)
+    direction.applyBuilt(component::direction)
     startColor.applyBuild(component::startColor)
     endColor.applyBuild(component::endColor)
 }

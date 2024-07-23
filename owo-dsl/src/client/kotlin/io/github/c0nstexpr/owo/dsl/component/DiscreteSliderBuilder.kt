@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.Components
@@ -28,7 +28,7 @@ open class DiscreteSliderBuilder : SliderBuilder() {
 fun DiscreteSliderBuilder.applyTo(component: DiscreteSliderComponent) {
     (this as SliderBuilder).applyTo(component)
 
-    discreteValue.applyBuild(component::setFromDiscreteValue)
-    decimalPlaces.applyBuild(component::decimalPlaces)
-    snap.applyBuild(component::snap)
+    discreteValue.applyBuilt(component::setFromDiscreteValue)
+    decimalPlaces.applyBuilt(component::decimalPlaces)
+    snap.applyBuilt(component::snap)
 }

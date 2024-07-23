@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import net.minecraft.client.MinecraftClient
@@ -28,6 +28,6 @@ open class EditBoxBuilder : ScrollableWidgetBuilder() {
 fun EditBoxBuilder.applyTo(component: EditBoxWidget) {
     (this as ScrollableWidgetBuilder).applyTo(component)
 
-    maxLength.applyBuild(component::setMaxLength)
-    text.applyBuild(component::setText)
+    maxLength.applyBuilt(component::setMaxLength)
+    text.applyBuilt(component::setText)
 }

@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.color
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.ColorPickerComponent
@@ -23,7 +23,7 @@ fun ColorPickerBuilder.applyTo(component: ColorPickerComponent) {
     (this as BaseComponentBuilder).applyTo(component)
 
     selectedColor.applyBuild(component::selectedColor)
-    selectorWidth.applyBuild(component::selectorWidth)
-    selectorPadding.applyBuild(component::selectorPadding)
-    showAlpha.applyBuild(component::showAlpha)
+    selectorWidth.applyBuilt(component::selectorWidth)
+    selectorPadding.applyBuilt(component::selectorPadding)
+    showAlpha.applyBuilt(component::showAlpha)
 }

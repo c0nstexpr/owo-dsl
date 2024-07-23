@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
 import io.wispforest.owo.ui.component.CheckboxComponent
 import io.wispforest.owo.ui.component.Components
@@ -14,5 +14,5 @@ open class CheckboxBuilder : CheckboxWidgetBuilder() {
 fun CheckboxBuilder.applyTo(component: CheckboxComponent) {
     (this as CheckboxWidgetBuilder).applyTo(component)
 
-    checked.applyBuild(component::checked)
+    checked.applyBuilt(component::checked)
 }

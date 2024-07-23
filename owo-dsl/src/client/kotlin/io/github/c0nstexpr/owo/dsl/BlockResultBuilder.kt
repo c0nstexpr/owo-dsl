@@ -1,15 +1,18 @@
 package io.github.c0nstexpr.owo.dsl
 
-import net.minecraft.command.argument.BlockArgumentParser
+import net.minecraft.command.argument.BlockArgumentParser.BlockResult
 
-abstract class BlockResultBuilder : DslBuilder<BlockArgumentParser.BlockResult>
+abstract class BlockResultBuilder : DslBuilder<BlockResult> {
+    open class Entrance :
+        BlockResultBuilder(),
+        DslBuilder<BlockResult> by invalidBuilder() {
+        fun by(block: DslBuilder<BlockResult>): BlockResultBuilder =
+            object : BlockResultBuilder(), DslBuilder<BlockResult> by block {}
 
-fun blockResult(block: DslBuilder<BlockArgumentParser.BlockResult> = invalidBuilder()) =
-    object : BlockResultBuilder() {
-        override fun build() = block.build()
+        fun by(block: () -> BlockResult?) = by(dslBuilder { block() })
 
-        override val canBuild get() = block.canBuild
+        fun with(value: BlockResult) = by { value }
     }
+}
 
-inline fun blockResult(crossinline block: () -> BlockArgumentParser.BlockResult) =
-    blockResult(dslBuilder { block() })
+fun <R> blockResult(block: BlockResultBuilder.() -> R) = BlockResultBuilder.Entrance().block()

@@ -2,25 +2,27 @@ package io.github.c0nstexpr.owo.dsl
 
 import io.wispforest.owo.ui.core.Positioning
 
-open class DefaultPositioningBuilder : PositioningBuilder() {
-    var x = invalidBuilder<Int>()
-    var y = invalidBuilder<Int>()
-    var type = invalidBuilder<Positioning.Type>()
-
-    override fun build(): Positioning {
-        val px = x.build()
-        val py = y.build()
-
-        return when (type.build()) {
-            Positioning.Type.LAYOUT -> Positioning.layout().withX(px).withY(py)
-            Positioning.Type.ABSOLUTE -> Positioning.absolute(px, py)
-            Positioning.Type.RELATIVE -> Positioning.relative(px, py)
-            Positioning.Type.ACROSS -> Positioning.across(px, py)
+open class DefaultPositioningBuilder(
+    var x: DslBuilder<Int> = invalidBuilder(),
+    var y: DslBuilder<Int> = invalidBuilder(),
+    var type: DslBuilder<Positioning.Type> = invalidBuilder()
+) : PositioningBuilder(),
+    DslBuilder<Positioning> by positioning(
+        {
+            x.applyBuilt { x ->
+                y.applyBuilt { y ->
+                    type.applyBuilt {
+                        when (it) {
+                            Positioning.Type.LAYOUT -> Positioning.layout().withX(x).withY(y)
+                            Positioning.Type.ABSOLUTE -> Positioning.absolute(x, y)
+                            Positioning.Type.RELATIVE -> Positioning.relative(x, y)
+                            Positioning.Type.ACROSS -> Positioning.across(x, y)
+                        }
+                    }
+                }
+            }
         }
-    }
-
-    override val canBuild get() = x.canBuild && y.canBuild && type.canBuild
-}
+    )
 
 inline fun defaultPositioning(crossinline block: DefaultPositioningBuilder.() -> Unit) =
     DefaultPositioningBuilder().apply(block)

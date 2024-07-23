@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuild
+import io.github.c0nstexpr.owo.dsl.applyBuilt
 import io.github.c0nstexpr.owo.dsl.canBuild
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.container.Containers
@@ -36,6 +36,6 @@ open class FlowLayoutBuilder : BaseParentComponentBuilder() {
 fun FlowLayoutBuilder.applyTo(component: FlowLayout) {
     (this as BaseParentComponentBuilder).applyTo(component)
 
-    children.applyBuild { it.forEach(component::child) }
-    gap.applyBuild(component::gap)
+    children.applyBuilt { it.forEach(component::child) }
+    gap.applyBuilt(component::gap)
 }
