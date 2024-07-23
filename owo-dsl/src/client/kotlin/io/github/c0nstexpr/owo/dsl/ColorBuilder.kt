@@ -14,6 +14,8 @@ abstract class ColorBuilder : DslBuilder<Color> {
 
         fun by(block: () -> Color?) = by(dslBuilder { block() })
 
+        fun with(value: Color) = by { value }
+
         fun argb(value: DslBuilder<Int>) = by { value.applyBuilt(Color::ofArgb) }
 
         fun rgb(red: DslBuilder<Float>, green: DslBuilder<Float>, blue: DslBuilder<Float>) = by {
