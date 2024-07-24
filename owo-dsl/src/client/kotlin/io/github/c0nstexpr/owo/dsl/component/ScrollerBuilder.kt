@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.ScrollContainer
@@ -46,8 +45,8 @@ open class ScrollerBuilder<T : Component> : WrappingParentBuilder() {
 fun <T : Component> ScrollerBuilder<T>.applyTo(component: ScrollContainer<T>) {
     (this as WrappingParentBuilder).applyTo(component)
 
-    scrollbarThickness.applyBuilt(component::scrollbarThiccness)
-    scrollbar.applyBuilt(component::scrollbar)
-    scrollStep.applyBuilt(component::scrollStep)
-    fixedScrollbarLength.applyBuilt(component::fixedScrollbarLength)
+    scrollbarThickness.built?.let(component::scrollbarThiccness)
+    scrollbar.built?.let(component::scrollbar)
+    scrollStep.built?.let(component::scrollStep)
+    fixedScrollbarLength.built?.let(component::fixedScrollbarLength)
 }

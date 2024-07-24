@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.DiscreteSliderComponent
@@ -17,18 +16,19 @@ open class DiscreteSliderBuilder : SliderBuilder() {
 
     var snap = invalidBuilder<Boolean>()
 
-    override fun build() =
-        Components.discreteSlider(horizontalSizing.build(), min.build(), max.build())!!
-            .apply(::applyTo)
-
-    override val canBuild: Boolean
-        get() = horizontalSizing.canBuild && min.canBuild && max.canBuild
+    override fun build(): DiscreteSliderComponent? {
+        return Components.discreteSlider(
+            horizontalSizing.built ?: return null,
+            min.built ?: return null,
+            max.built ?: return null
+        ).apply(::applyTo)
+    }
 }
 
 fun DiscreteSliderBuilder.applyTo(component: DiscreteSliderComponent) {
     (this as SliderBuilder).applyTo(component)
 
-    discreteValue.applyBuilt(component::setFromDiscreteValue)
-    decimalPlaces.applyBuilt(component::decimalPlaces)
-    snap.applyBuilt(component::snap)
+    discreteValue.built?.let(component::setFromDiscreteValue)
+    decimalPlaces.built?.let(component::decimalPlaces)
+    snap.built?.let(component::snap)
 }

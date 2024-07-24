@@ -1,13 +1,16 @@
 package io.github.c0nstexpr.owo.dsl
 
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.nbt.StringNbtReader
 
 abstract class NbtCompoundBuilder : DslBuilder<NbtCompound>
 
-fun nbtCompound(block: DslBuilder<NbtCompound> = invalidBuilder()) = object : NbtCompoundBuilder() {
-    override fun build() = block.build()
+fun nbtCompound() = invalidBuilder<NbtCompound>()
 
-    override val canBuild get() = block.canBuild
-}
+fun nbtCompound(block: DslBuilder<NbtCompound>): NbtCompoundBuilder =
+    object : NbtCompoundBuilder(), DslBuilder<NbtCompound> by block {}
 
-inline fun nbtCompound(crossinline block: () -> NbtCompound) = nbtCompound(dslBuilder { block() })
+fun nbtCompound(block: () -> NbtCompound?) = nbtCompound(dslBuilder { block() })
+
+fun parseNbtCompound(block: DslBuilder<String>) =
+    nbtCompound { block.built?.let(StringNbtReader::parse) }

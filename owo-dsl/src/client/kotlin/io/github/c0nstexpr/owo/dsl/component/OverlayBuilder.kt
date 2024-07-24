@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.OverlayContainer
@@ -20,5 +19,5 @@ open class OverlayBuilder<T : Component> : WrappingParentBuilder() {
 fun <T : Component> OverlayBuilder<T>.applyTo(component: OverlayContainer<T>) {
     (this as WrappingParentBuilder).applyTo(component)
 
-    closeOnClick.applyBuilt(component::closeOnClick)
+    closeOnClick.built?.let(component::closeOnClick)
 }

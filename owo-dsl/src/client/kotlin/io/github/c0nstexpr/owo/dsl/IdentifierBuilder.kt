@@ -12,9 +12,9 @@ abstract class IdentifierBuilder : DslBuilder<Identifier> {
         fun by(block: () -> Identifier?) = by(dslBuilder(block))
 
         fun of(namespace: DslBuilder<String>, path: DslBuilder<String>) = by {
-            namespace.applyBuilt { n -> path.applyBuilt { Identifier.of(n, it) } }
+            namespace.built?.let { n -> path.built?.let { Identifier.of(n, it) } }
         }
 
-        fun ofVanilla(path: DslBuilder<String>) = by { path.applyBuilt(Identifier::ofVanilla) }
+        fun ofVanilla(path: DslBuilder<String>) = by { path.built?.let(Identifier::ofVanilla) }
     }
 }

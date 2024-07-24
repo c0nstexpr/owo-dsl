@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.FlowLayout
@@ -15,16 +14,11 @@ open class FlowLayoutBuilder : BaseParentComponentBuilder() {
 
     var gap = invalidBuilder<Int>()
 
-    override val canBuild
-        get() = horizontalSizing.canBuild &&
-            verticalSizing.canBuild &&
-            algo.canBuild
+    override fun build(): FlowLayout? {
+        val horizontalSizing = horizontalSizing.built ?: return null
+        val verticalSizing = verticalSizing.built ?: return null
 
-    override fun build(): FlowLayout {
-        val horizontalSizing = horizontalSizing.build()
-        val verticalSizing = verticalSizing.build()
-
-        return when (val algorithm = algo.build()) {
+        return when (val algorithm = algo.built ?: return null) {
             Algorithm.HORIZONTAL -> Containers.horizontalFlow(horizontalSizing, verticalSizing)
             Algorithm.VERTICAL -> Containers.verticalFlow(horizontalSizing, verticalSizing)
             Algorithm.LTR_TEXT -> Containers.ltrTextFlow(horizontalSizing, verticalSizing)
@@ -36,6 +30,6 @@ open class FlowLayoutBuilder : BaseParentComponentBuilder() {
 fun FlowLayoutBuilder.applyTo(component: FlowLayout) {
     (this as BaseParentComponentBuilder).applyTo(component)
 
-    children.applyBuilt { it.forEach(component::child) }
-    gap.applyBuilt(component::gap)
+    children.built?.forEach(component::child)
+    gap.built?.let(component::gap)
 }

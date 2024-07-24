@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.DraggableContainer
@@ -15,29 +14,17 @@ open class DraggableBuilder<T : Component> : WrappingParentBuilder() {
 
     var foreheadSize = invalidBuilder<Int>()
 
-    override fun build() = when (direction.build()) {
-        ScrollDirection.VERTICAL -> Containers.draggable(
-            horizontalSizing.build(),
-            verticalSizing.build(),
-            child.build()
-        )!!
-
-        ScrollDirection.HORIZONTAL -> Containers.draggable(
-            horizontalSizing.build(),
-            verticalSizing.build(),
-            child.build()
-        )!!
-    }.apply(::applyTo)
-
-    override val canBuild
-        get() = horizontalSizing.canBuild &&
-            verticalSizing.canBuild &&
-            direction.canBuild &&
-            child.canBuild
+    override fun build(): DraggableContainer<T>? {
+        return Containers.draggable(
+            horizontalSizing.built ?: return null,
+            verticalSizing.built ?: return null,
+            child.built ?: return null
+        ).apply(::applyTo)
+    }
 }
 
 fun <T : Component> DraggableBuilder<T>.applyTo(component: DraggableContainer<T>) {
     (this as WrappingParentBuilder).applyTo(component)
 
-    foreheadSize.applyBuilt(component::foreheadSize)
+    foreheadSize.built?.let(component::foreheadSize)
 }

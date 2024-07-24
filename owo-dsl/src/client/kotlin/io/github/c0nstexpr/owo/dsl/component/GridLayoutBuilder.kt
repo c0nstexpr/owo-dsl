@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.GridLayout
@@ -33,7 +32,7 @@ open class GridLayoutBuilder : BaseParentComponentBuilder() {
 fun GridLayoutBuilder.applyTo(component: GridLayout) {
     (this as BaseParentComponentBuilder).applyTo(component)
 
-    children.applyBuilt {
+    children.built?.let {
         require(it.size <= rows.build())
 
         it.forEachIndexed { i, row ->

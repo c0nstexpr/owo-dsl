@@ -1,6 +1,8 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
+import io.github.c0nstexpr.owo.dsl.built
+
+?.let
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.github.c0nstexpr.owo.dsl.text
 import net.minecraft.client.MinecraftClient
@@ -43,14 +45,14 @@ open class TextFieldWidgetBuilder : ClickableWidgetBuilder() {
 fun TextFieldWidgetBuilder.applyTo(component: TextFieldWidget) {
     (this as ClickableWidgetBuilder).applyTo(component)
 
-    placeholderBuilder.applyBuilt(component::setPlaceholder)
-    text.applyBuilt(component::setText)
-    maxLength.applyBuilt(component::setMaxLength)
-    drawsBackground.applyBuilt(component::setDrawsBackground)
-    editableColor.applyBuilt(component::setEditableColor)
-    uneditableColor.applyBuilt(component::setUneditableColor)
-    editable.applyBuilt(component::setEditable)
-    focusUnlocked.applyBuilt(component::setFocusUnlocked)
-    visible.applyBuilt(component::setVisible)
-    suggestion.applyBuilt(component::setSuggestion)
+    placeholderBuilder.built?.let(component::setPlaceholder)
+    text.built?.let(component::setText)
+    maxLength.built?.let(component::setMaxLength)
+    drawsBackground.built?.let(component::setDrawsBackground)
+    editableColor.built?.let(component::setEditableColor)
+    uneditableColor.built?.let(component::setUneditableColor)
+    editable.built?.let(component::setEditable)
+    focusUnlocked.built?.let(component::setFocusUnlocked)
+    visible.built?.let(component::setVisible)
+    suggestion.built?.let(component::setSuggestion)
 }

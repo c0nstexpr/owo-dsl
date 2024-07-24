@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.TextBoxComponent
 
@@ -14,5 +13,5 @@ open class TextBoxBuilder : TextFieldWidgetBuilder() {
 fun TextBoxBuilder.applyTo(component: TextBoxComponent) {
     (this as TextFieldWidgetBuilder).applyTo(component)
 
-    text.applyBuilt(component::text)
+    text.built?.let(component::text)
 }

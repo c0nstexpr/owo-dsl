@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.github.c0nstexpr.owo.dsl.text
 import io.wispforest.owo.ui.component.Components
@@ -22,6 +21,6 @@ open class SmallCheckboxBuilder : BaseComponentBuilder() {
 fun SmallCheckboxBuilder.applyTo(component: SmallCheckboxComponent) {
     (this as BaseComponentBuilder).applyTo(component)
 
-    checked.applyBuilt(component::checked)
-    labelShadow.applyBuilt(component::labelShadow)
+    checked.built?.let(component::checked)
+    labelShadow.built?.let(component::labelShadow)
 }

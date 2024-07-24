@@ -1,10 +1,10 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import net.minecraft.client.gui.widget.ButtonWidget
 
 open class ButtonWidgetBuilder : PressableWidgetBuilder() {
-    override val canBuild get() = message.canBuild
-
-    override fun build() = ButtonWidget.builder(message.build()) {}.build()!!.apply(::applyTo)
+    override fun build() = message.built?.let {
+        ButtonWidget.builder(it) {}
+    }?.build()?.apply(::applyTo)
 }

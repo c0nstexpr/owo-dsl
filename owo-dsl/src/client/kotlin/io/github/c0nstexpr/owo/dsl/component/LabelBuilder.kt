@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.color
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.github.c0nstexpr.owo.dsl.text
@@ -35,10 +34,10 @@ open class LabelBuilder : BaseComponentBuilder() {
 fun LabelBuilder.applyTo(label: LabelComponent) {
     (this as BaseComponentBuilder).applyTo(label)
 
-    maxWidth.applyBuilt(label::maxWidth)
-    shadow.applyBuilt(label::shadow)
+    maxWidth.built?.let(label::maxWidth)
+    shadow.built?.let(label::shadow)
     color.applyBuild(label::color)
-    verticalTextAlignment.applyBuilt(label::verticalTextAlignment)
-    horizontalTextAlignment.applyBuilt(label::horizontalTextAlignment)
-    lineHeight.applyBuilt(label::lineHeight)
+    verticalTextAlignment.built?.let(label::verticalTextAlignment)
+    horizontalTextAlignment.built?.let(label::horizontalTextAlignment)
+    lineHeight.built?.let(label::lineHeight)
 }

@@ -13,7 +13,7 @@ open class OwoAnimation<T : Animatable<T>>(
 )
 
 fun <T : Animatable<T>> AnimatableProperty<T>.animate(owoAnimation: OwoAnimation<T>) =
-    owoAnimation.run {
+    owoAnimation.apply {
         val animation = animate(duration, easing, to)
         callback?.invoke(animation)
     }

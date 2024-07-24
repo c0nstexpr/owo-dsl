@@ -1,12 +1,13 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.SizeBuilder
-import io.github.c0nstexpr.owo.dsl.animation
-import io.github.c0nstexpr.owo.dsl.applyBuilt
+import io.github.c0nstexpr.owo.dsl.OwoAnimation
+import io.github.c0nstexpr.owo.dsl.SizeBuilder.Companion.Of
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.insets
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.github.c0nstexpr.owo.dsl.positioning
 import io.github.c0nstexpr.owo.dsl.size
+import io.github.c0nstexpr.owo.dsl.sizeOf
 import io.github.c0nstexpr.owo.dsl.sizing
 import io.wispforest.owo.ui.base.BaseComponent
 import io.wispforest.owo.ui.core.CursorStyle
@@ -24,13 +25,13 @@ abstract class BaseComponentBuilder : ComponentBuilder {
 
     override var verticalSizing = sizing()
 
-    override var positioningAnimation = animation<Positioning>()
+    override var positioningAnimation = invalidBuilder<OwoAnimation<Positioning>>()
 
-    override var marginsAnimation = animation<Insets>()
+    override var marginsAnimation = invalidBuilder<OwoAnimation<Insets>>()
 
-    override var horizontalSizingAnimation = animation<Sizing>()
+    override var horizontalSizingAnimation = invalidBuilder<OwoAnimation<Sizing>>()
 
-    override var verticalSizingAnimation = animation<Sizing>()
+    override var verticalSizingAnimation = invalidBuilder<OwoAnimation<Sizing>>()
 
     override var id = invalidBuilder<String>()
 
@@ -46,13 +47,15 @@ abstract class BaseComponentBuilder : ComponentBuilder {
 
     var space = size()
 
-    abstract override fun build(): BaseComponent
+    abstract override fun build(): BaseComponent?
 }
 
 fun BaseComponentBuilder.applyTo(component: BaseComponent) {
     (this as ComponentBuilder).applyTo(component)
 
-    space.applyBuilt(component::inflate)
+    space.built?.let(component::inflate)
 }
 
-inline fun BaseComponentBuilder.space(crossinline block: SizeBuilder.() -> Unit) = block(space)
+inline fun BaseComponentBuilder.space(crossinline block: Of.() -> Unit) {
+    space = sizeOf(block)
+}

@@ -1,13 +1,16 @@
 package io.github.c0nstexpr.owo.dsl
 
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.Registries
+import net.minecraft.util.Identifier
 
 abstract class ItemStackBuilder : DslBuilder<ItemStack>
 
-fun itemStack(block: DslBuilder<ItemStack> = invalidBuilder()) = object : ItemStackBuilder() {
-    override fun build() = block.build()
+fun itemStack() = invalidBuilder<ItemStack>()
 
-    override val canBuild get() = block.canBuild
-}
+fun itemStack(block: DslBuilder<ItemStack>): ItemStackBuilder =
+    object : ItemStackBuilder(), DslBuilder<ItemStack> by block {}
 
-inline fun itemStack(crossinline block: () -> ItemStack) = itemStack(dslBuilder { block() })
+fun itemStack(block: () -> ItemStack?) = itemStack(dslBuilder { block() })
+
+fun DslBuilder<Identifier>.toItemStack() = itemStack { Registries.ITEM.get(built).defaultStack }

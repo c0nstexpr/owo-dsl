@@ -1,14 +1,15 @@
 package io.github.c0nstexpr.owo.dsl
 
 import net.minecraft.text.OrderedText
+import net.minecraft.text.Text
 
-@FunctionalInterface
-fun interface OrderedTextBuilder : DslBuilder<OrderedText>
+interface OrderedTextBuilder : DslBuilder<OrderedText>
 
-fun orderedText(block: DslBuilder<OrderedText> = invalidBuilder()) = object : OrderedTextBuilder {
-    override fun build() = block.build()
+fun orderedText() = invalidBuilder<OrderedText>()
 
-    override val canBuild get() = block.canBuild
-}
+fun orderedText(block: DslBuilder<OrderedText>): OrderedTextBuilder =
+    object : OrderedTextBuilder, DslBuilder<OrderedText> by block {}
 
-inline fun orderedText(crossinline block: () -> OrderedText) = orderedText(dslBuilder { block() })
+fun orderedText(block: () -> OrderedText?) = orderedText(dslBuilder { block() })
+
+fun DslBuilder<Text>.toOrderedText() = orderedText { built?.asOrderedText() }

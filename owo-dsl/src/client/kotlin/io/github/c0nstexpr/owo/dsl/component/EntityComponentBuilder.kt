@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.entityType
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.github.c0nstexpr.owo.dsl.nbtCompound
@@ -34,9 +33,9 @@ open class EntityComponentBuilder : BaseComponentBuilder() {
 fun EntityComponentBuilder.applyTo(component: EntityComponent<*>) {
     (this as BaseComponentBuilder).applyTo(component)
 
-    allowMouseRotation.applyBuilt(component::allowMouseRotation)
-    lookAtCursor.applyBuilt(component::lookAtCursor)
-    scale.applyBuilt(component::scale)
-    scaleToFit.applyBuilt(component::scaleToFit)
-    showNametag.applyBuilt(component::showNametag)
+    allowMouseRotation.built?.let(component::allowMouseRotation)
+    lookAtCursor.built?.let(component::lookAtCursor)
+    scale.built?.let(component::scale)
+    scaleToFit.built?.let(component::scaleToFit)
+    showNametag.built?.let(component::showNametag)
 }

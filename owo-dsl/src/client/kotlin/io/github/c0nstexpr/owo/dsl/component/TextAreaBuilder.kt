@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.TextAreaComponent
@@ -22,6 +21,6 @@ open class TextAreaBuilder : EditBoxBuilder() {
 fun TextAreaBuilder.applyTo(component: TextAreaComponent) {
     (this as EditBoxBuilder).applyTo(component)
 
-    displayCharCount.applyBuilt(component::displayCharCount)
-    maxLines.applyBuilt(component::maxLines)
+    displayCharCount.built?.let(component::displayCharCount)
+    maxLines.built?.let(component::maxLines)
 }

@@ -1,7 +1,7 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.animation
-import io.github.c0nstexpr.owo.dsl.applyBuilt
+import io.github.c0nstexpr.owo.dsl.OwoAnimation
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.insets
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.github.c0nstexpr.owo.dsl.positioning
@@ -23,13 +23,13 @@ abstract class ClickableWidgetBuilder : ComponentBuilder {
 
     override var verticalSizing = sizing()
 
-    override var positioningAnimation = animation<Positioning>()
+    override var positioningAnimation = invalidBuilder<OwoAnimation<Positioning>>()
 
-    override var marginsAnimation = animation<Insets>()
+    override var marginsAnimation = invalidBuilder<OwoAnimation<Insets>>()
 
-    override var horizontalSizingAnimation = animation<Sizing>()
+    override var horizontalSizingAnimation = invalidBuilder<OwoAnimation<Sizing>>()
 
-    override var verticalSizingAnimation = animation<Sizing>()
+    override var verticalSizingAnimation = invalidBuilder<OwoAnimation<Sizing>>()
 
     override var id = invalidBuilder<String>()
 
@@ -45,11 +45,11 @@ abstract class ClickableWidgetBuilder : ComponentBuilder {
 
     var message = text()
 
-    abstract override fun build(): ClickableWidget
+    abstract override fun build(): ClickableWidget?
 }
 
 fun ClickableWidgetBuilder.applyTo(component: ClickableWidget) {
     (this as ComponentBuilder).applyTo(component)
 
-    message.applyBuilt(component::setMessage)
+    message.built?.let(component::setMessage)
 }

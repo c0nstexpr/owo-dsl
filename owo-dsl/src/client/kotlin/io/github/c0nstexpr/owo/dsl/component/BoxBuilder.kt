@@ -1,8 +1,8 @@
 package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.ColorBuilder
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
+import io.github.c0nstexpr.owo.dsl.color
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.BoxComponent
 import io.wispforest.owo.ui.component.BoxComponent.GradientDirection
@@ -17,21 +17,21 @@ open class BoxBuilder : BaseComponentBuilder() {
 
     var endColor = color()
 
-    override fun build() = Components.box(
-        horizontalSizing.build(),
-        verticalSizing.build()
-    )!!.apply(::applyTo)
-
-    override val canBuild get() = horizontalSizing.canBuild && verticalSizing.canBuild
+    override fun build(): BoxComponent? {
+        return Components.box(
+            horizontalSizing.built ?: return null,
+            verticalSizing.built ?: return null
+        )!!.apply(::applyTo)
+    }
 }
 
 fun BoxBuilder.applyTo(component: BoxComponent) {
     (this as BaseComponentBuilder).applyTo(component)
 
-    fill.applyBuilt(component::fill)
-    direction.applyBuilt(component::direction)
-    startColor.applyBuild(component::startColor)
-    endColor.applyBuild(component::endColor)
+    fill.built?.let(component::fill)
+    direction.built?.let(component::direction)
+    startColor.built?.let(component::startColor)
+    endColor.built?.let(component::endColor)
 }
 
 fun BoxBuilder.color(block: ColorBuilder) {

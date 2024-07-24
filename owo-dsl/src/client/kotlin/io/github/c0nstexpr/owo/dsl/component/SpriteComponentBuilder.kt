@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.github.c0nstexpr.owo.dsl.sprite
 import io.wispforest.owo.ui.component.Components
@@ -20,5 +19,5 @@ open class SpriteComponentBuilder : BaseComponentBuilder() {
 fun SpriteComponentBuilder.applyTo(component: SpriteComponent) {
     (this as BaseComponentBuilder).applyTo(component)
 
-    blend.applyBuilt(component::blend)
+    blend.built?.let(component::blend)
 }

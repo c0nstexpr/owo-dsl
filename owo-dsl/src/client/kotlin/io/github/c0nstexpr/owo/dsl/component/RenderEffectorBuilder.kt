@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.RenderEffectWrapper
@@ -21,5 +20,5 @@ open class RenderEffectorBuilder<T : Component> : WrappingParentBuilder() {
 fun <T : Component> RenderEffectorBuilder<T>.applyTo(component: RenderEffectWrapper<T>) {
     (this as WrappingParentBuilder).applyTo(component)
 
-    effects.applyBuilt { it.forEach(component::effect) }
+    effects.built?.let { it.forEach(component::effect) }
 }

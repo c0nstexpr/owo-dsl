@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.SlimSliderComponent
@@ -26,11 +25,11 @@ open class SlimSliderBuilder : BaseComponentBuilder() {
 fun SlimSliderBuilder.applyTo(component: SlimSliderComponent) {
     (this as BaseComponentBuilder).applyTo(component)
 
-    value.applyBuilt { component.value(it) }
+    value.built?.let { component.value(it) }
 
-    min.applyBuilt { component.min(it) }
+    min.built?.let { component.min(it) }
 
-    max.applyBuilt { component.max(it) }
+    max.built?.let { component.max(it) }
 
-    stepSize.applyBuilt { component.stepSize(it) }
+    stepSize.built?.let { component.stepSize(it) }
 }

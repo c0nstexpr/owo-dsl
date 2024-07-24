@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.applyBuilt
-import io.github.c0nstexpr.owo.dsl.canBuild
+import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.invalidBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.SliderComponent
@@ -14,21 +13,19 @@ open class SliderBuilder : SliderWidgetBuilder() {
 
     var active = invalidBuilder<Boolean>()
 
-    override fun build() = Components.slider(horizontalSizing.build())!!.apply(::applyTo)
-
-    override val canBuild get() = horizontalSizing.canBuild
+    override fun build() = horizontalSizing.built?.let(Components::slider)?.apply(::applyTo)
 }
 
 fun SliderBuilder.applyTo(component: SliderComponent) {
     (this as ClickableWidgetBuilder).applyTo(component)
 
-    value.applyBuilt(component::value)
+    value.built?.let(component::value)
 
-    if (translate.canBuild && translate.build()) message.applyBuilt { msg ->
-        component.message { Text.translatable(msg.string, it) }
+    message.built?.let { msg ->
+        if (translate.built == true) component.message { Text.translatable(msg.string, it) }
+        else component.message { msg }
     }
-    else message.applyBuilt { msg -> component.message { msg } }
 
-    scrollStep.applyBuilt(component::scrollStep)
-    active.applyBuilt(component::active)
+    scrollStep.built?.let(component::scrollStep)
+    active.built?.let(component::active)
 }
