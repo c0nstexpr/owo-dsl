@@ -1,19 +1,17 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
-import io.github.c0nstexpr.owo.dsl.sprite
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.SpriteComponent
+import net.minecraft.client.texture.Sprite
 
 open class SpriteComponentBuilder : BaseComponentBuilder() {
-    var sprite = sprite()
+    var sprite = nullBuilder<Sprite>()
 
-    var blend = invalidBuilder<Boolean>()
+    var blend = nullBuilder<Boolean>()
 
-    override fun build() = Components.sprite(sprite.build())!!.apply(::applyTo)
-
-    override val canBuild get() = sprite.canBuild
+    override fun build() = sprite.built?.let(Components::sprite)?.also(::applyTo)
 }
 
 fun SpriteComponentBuilder.applyTo(component: SpriteComponent) {

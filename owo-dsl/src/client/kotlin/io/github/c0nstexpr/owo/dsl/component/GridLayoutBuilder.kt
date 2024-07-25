@@ -1,39 +1,36 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.GridLayout
 import io.wispforest.owo.ui.core.Component
 
 open class GridLayoutBuilder : BaseParentComponentBuilder() {
-    var rows = invalidBuilder<Int>()
+    var rows = nullBuilder<Int>()
 
-    var columns = invalidBuilder<Int>()
+    var columns = nullBuilder<Int>()
 
-    val columnSize by lazy { columns.build() }
+    var children = nullBuilder<List<Map<Int, Component>>>()
 
-    var children = invalidBuilder<List<Map<Int, Component>>>()
-
-    override fun build() = Containers.grid(
-        horizontalSizing.build(),
-        verticalSizing.build(),
-        rows.build(),
-        columnSize
-    )!!.apply(::applyTo)
-
-    override val canBuild
-        get() = horizontalSizing.canBuild &&
-            verticalSizing.canBuild &&
-            rows.canBuild &&
-            columns.canBuild
+    override fun build(): GridLayout? {
+        return Containers.grid(
+            horizontalSizing.built ?: return null,
+            verticalSizing.built ?: return null,
+            rows.built ?: return null,
+            columns.built ?: return null
+        ).also(::applyTo)
+    }
 }
 
 fun GridLayoutBuilder.applyTo(component: GridLayout) {
     (this as BaseParentComponentBuilder).applyTo(component)
 
+    val rowSize = rows.built!!
+    val columnSize = columns.built!!
+
     children.built?.let {
-        require(it.size <= rows.build())
+        require(it.size <= rowSize)
 
         it.forEachIndexed { i, row ->
             require(row.size <= columnSize)

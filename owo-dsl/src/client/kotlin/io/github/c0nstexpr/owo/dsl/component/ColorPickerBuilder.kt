@@ -1,20 +1,20 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.color
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.ColorPickerComponent
+import io.wispforest.owo.ui.core.Color
 
 open class ColorPickerBuilder : BaseComponentBuilder() {
-    var selectedColor = color()
+    var selectedColor = nullBuilder<Color>()
 
-    var selectorWidth = invalidBuilder<Int>()
+    var selectorWidth = nullBuilder<Int>()
 
-    var selectorPadding = invalidBuilder<Int>()
+    var selectorPadding = nullBuilder<Int>()
 
-    var showAlpha = invalidBuilder<Boolean>()
+    var showAlpha = nullBuilder<Boolean>()
 
-    override fun build() = ColorPickerComponent().apply(::applyTo)
+    override fun build(): ColorPickerComponent? = ColorPickerComponent().also(::applyTo)
 }
 
 fun ColorPickerBuilder.applyTo(component: ColorPickerComponent) {

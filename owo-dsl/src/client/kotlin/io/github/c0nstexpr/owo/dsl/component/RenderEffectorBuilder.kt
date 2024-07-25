@@ -1,24 +1,20 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.RenderEffectWrapper
 import io.wispforest.owo.ui.container.RenderEffectWrapper.RenderEffect
 import io.wispforest.owo.ui.core.Component
 
-open class RenderEffectorBuilder<T : Component> : WrappingParentBuilder() {
-    var child = invalidBuilder<T>()
+open class RenderEffectorBuilder<T : Component> : WrappingParentBuilder<T>() {
+    var effects = nullBuilder<List<RenderEffect>>()
 
-    var effects = invalidBuilder<List<RenderEffect>>()
-
-    override fun build() = Containers.renderEffect(child.build())!!.apply(::applyTo)
-
-    override val canBuild get() = child.canBuild
+    override fun build() = child.built?.let(Containers::renderEffect)?.also(::applyTo)
 }
 
 fun <T : Component> RenderEffectorBuilder<T>.applyTo(component: RenderEffectWrapper<T>) {
-    (this as WrappingParentBuilder).applyTo(component)
+    (this as WrappingParentBuilder<T>).applyTo(component)
 
-    effects.built?.let { it.forEach(component::effect) }
+    effects.built?.forEach(component::effect)
 }

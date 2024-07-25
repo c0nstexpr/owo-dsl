@@ -1,13 +1,11 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.TextBoxComponent
 
 open class TextBoxBuilder : TextFieldWidgetBuilder() {
-    override fun build() = Components.textBox(horizontalSizing.build())!!.apply(::applyTo)
-
-    override val canBuild get() = horizontalSizing.canBuild
+    override fun build() = horizontalSizing.built?.let(Components::textBox)?.also(::applyTo)
 }
 
 fun TextBoxBuilder.applyTo(component: TextBoxComponent) {

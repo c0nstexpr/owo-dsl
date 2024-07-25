@@ -1,45 +1,40 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-
-?.let
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
-import io.github.c0nstexpr.owo.dsl.text
-import net.minecraft.client.MinecraftClient
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
+import io.github.c0nstexpr.owo.dsl.textRenderer
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.text.Text
 
 open class TextFieldWidgetBuilder : ClickableWidgetBuilder() {
-    var placeholderBuilder = text()
+    var placeholderBuilder = nullBuilder<Text>()
 
-    var text = invalidBuilder<String>()
+    var text = nullBuilder<String>()
 
-    var maxLength = invalidBuilder<Int>()
+    var maxLength = nullBuilder<Int>()
 
-    var drawsBackground = invalidBuilder<Boolean>()
+    var drawsBackground = nullBuilder<Boolean>()
 
-    var editableColor = invalidBuilder<Int>()
+    var editableColor = nullBuilder<Int>()
 
-    var uneditableColor = invalidBuilder<Int>()
+    var uneditableColor = nullBuilder<Int>()
 
-    var editable = invalidBuilder<Boolean>()
+    var editable = nullBuilder<Boolean>()
 
-    var focusUnlocked = invalidBuilder<Boolean>()
+    var focusUnlocked = nullBuilder<Boolean>()
 
-    var visible = invalidBuilder<Boolean>()
+    var visible = nullBuilder<Boolean>()
 
-    var suggestion = invalidBuilder<String>()
+    var suggestion = nullBuilder<String>()
 
-    override fun build() = TextFieldWidget(
-        MinecraftClient.getInstance().textRenderer,
-        x.build(),
-        y.build(),
+    override fun build(): TextFieldWidget? = TextFieldWidget(
+        textRenderer,
+        x.built ?: 0,
+        y.built ?: 0,
         0,
         0,
         Text.empty()
-    ).apply(::applyTo)
-
-    override val canBuild get() = true
+    ).also(::applyTo)
 }
 
 fun TextFieldWidgetBuilder.applyTo(component: TextFieldWidget) {

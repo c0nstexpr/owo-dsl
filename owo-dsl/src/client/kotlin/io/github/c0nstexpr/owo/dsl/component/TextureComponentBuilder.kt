@@ -1,47 +1,42 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.identifier
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
-import io.github.c0nstexpr.owo.dsl.posRect
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.PosRect
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.TextureComponent
+import net.minecraft.util.Identifier
 
 open class TextureComponentBuilder : BaseComponentBuilder() {
-    var texture = identifier()
+    var texture = nullBuilder<Identifier>()
 
-    var u = invalidBuilder<Int>()
+    var u = nullBuilder<Int>()
 
-    var v = invalidBuilder<Int>()
+    var v = nullBuilder<Int>()
 
-    var regionWidth = invalidBuilder<Int>()
+    var regionWidth = nullBuilder<Int>()
 
-    var regionHeight = invalidBuilder<Int>()
+    var regionHeight = nullBuilder<Int>()
 
-    var textureWidth = invalidBuilder<Int>()
+    var textureWidth = nullBuilder<Int>()
 
-    var textureHeight = invalidBuilder<Int>()
+    var textureHeight = nullBuilder<Int>()
 
-    var visibleArea = posRect()
+    var visibleArea = nullBuilder<PosRect>()
 
-    var blend = invalidBuilder<Boolean>()
+    var blend = nullBuilder<Boolean>()
 
-    override fun build() = Components.texture(
-        texture.build(),
-        u.build(),
-        v.build(),
-        regionWidth.build(),
-        regionHeight.build(),
-        if (textureWidth.canBuild) textureWidth.build() else DEFAULT_TEXTURE_LENGTH,
-        if (textureHeight.canBuild) textureHeight.build() else DEFAULT_TEXTURE_LENGTH
-    )!!.apply(::applyTo)
-
-    override val canBuild
-        get() = texture.canBuild &&
-            u.canBuild &&
-            v.canBuild &&
-            regionWidth.canBuild &&
-            regionHeight.canBuild
+    override fun build(): TextureComponent? {
+        return Components.texture(
+            texture.built ?: return null,
+            u.built ?: return null,
+            v.built ?: return null,
+            regionWidth.built ?: return null,
+            regionHeight.built ?: return null,
+            textureWidth.built ?: DEFAULT_TEXTURE_LENGTH,
+            textureHeight.built ?: DEFAULT_TEXTURE_LENGTH
+        ).also(::applyTo)
+    }
 
     companion object {
         const val DEFAULT_TEXTURE_LENGTH = 256

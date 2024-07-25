@@ -1,26 +1,32 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
-import net.minecraft.client.MinecraftClient
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
+import io.github.c0nstexpr.owo.dsl.textRenderer
 import net.minecraft.client.gui.widget.EditBoxWidget
 import net.minecraft.text.Text
 
 open class EditBoxBuilder : ScrollableWidgetBuilder() {
-    var maxLength = invalidBuilder<Int>()
+    var placeholder = nullBuilder<Text>()
 
-    var text = invalidBuilder<String>()
+    var maxLength = nullBuilder<Int>()
+
+    var text = nullBuilder<String>()
+
+    val width = nullBuilder<Int>()
+
+    val height = nullBuilder<Int>()
 
     override fun build(): EditBoxWidget? {
         return EditBoxWidget(
-            MinecraftClient.getInstance().textRenderer,
-            0,
-            0,
-            0,
-            0,
-            Text.empty(),
+            textRenderer,
+            x.built ?: 0,
+            y.built ?: 0,
+            width.built ?: 0,
+            height.built ?: 0,
+            placeholder.built ?: Text.empty(),
             message.built ?: return null
-        ).apply(::applyTo)
+        ).also(::applyTo)
     }
 }
 

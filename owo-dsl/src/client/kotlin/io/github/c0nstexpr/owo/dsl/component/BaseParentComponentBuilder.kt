@@ -1,24 +1,24 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.insets
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
-import io.github.c0nstexpr.owo.dsl.surface
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.base.BaseParentComponent
 import io.wispforest.owo.ui.core.HorizontalAlignment
+import io.wispforest.owo.ui.core.Insets
+import io.wispforest.owo.ui.core.Surface
 import io.wispforest.owo.ui.core.VerticalAlignment
 
 abstract class BaseParentComponentBuilder :
     BaseComponentBuilder(),
     ParentComponentBuilder {
-    override var verticalAlignment = invalidBuilder<VerticalAlignment>()
+    override var verticalAlignment = nullBuilder<VerticalAlignment>()
 
-    override var horizontalAlignment = invalidBuilder<HorizontalAlignment>()
+    override var horizontalAlignment = nullBuilder<HorizontalAlignment>()
 
-    override var padding = insets()
+    override var padding = nullBuilder<Insets>()
 
-    override var allowOverflow = invalidBuilder<Boolean>()
+    override var allowOverflow = nullBuilder<Boolean>()
 
-    override var surface = surface()
+    override var surface = nullBuilder<Surface>()
 
     abstract override fun build(): BaseParentComponent?
 }

@@ -1,10 +1,10 @@
 package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.DslBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.github.c0nstexpr.owo.dsl.OwoAnimation
 import io.github.c0nstexpr.owo.dsl.SizingBuilder
 import io.github.c0nstexpr.owo.dsl.animate
-import io.github.c0nstexpr.owo.dsl.built
 import io.github.c0nstexpr.owo.dsl.dslBuilder
 import io.wispforest.owo.ui.core.Component
 import io.wispforest.owo.ui.core.CursorStyle

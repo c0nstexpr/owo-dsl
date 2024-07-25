@@ -1,33 +1,36 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.entityType
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
-import io.github.c0nstexpr.owo.dsl.nbtCompound
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.EntityComponent
 import io.wispforest.owo.ui.core.Sizing
+import net.minecraft.entity.EntityType
+import net.minecraft.nbt.NbtCompound
 
 open class EntityComponentBuilder : BaseComponentBuilder() {
-    var entityType = entityType()
+    var entityType = nullBuilder<EntityType<*>>()
 
-    var nbtCompound = nbtCompound()
+    var nbtCompound = nullBuilder<NbtCompound>()
 
-    var allowMouseRotation = invalidBuilder<Boolean>()
+    var allowMouseRotation = nullBuilder<Boolean>()
 
-    var lookAtCursor = invalidBuilder<Boolean>()
+    var lookAtCursor = nullBuilder<Boolean>()
 
-    var scale = invalidBuilder<Float>()
+    var scale = nullBuilder<Float>()
 
-    var scaleToFit = invalidBuilder<Boolean>()
+    var scaleToFit = nullBuilder<Boolean>()
 
-    var showNametag = invalidBuilder<Boolean>()
+    var showNametag = nullBuilder<Boolean>()
 
-    override fun build() =
-        Components.entity(Sizing.content(), entityType.build(), nbtCompound.build())!!
-            .apply(::applyTo)
-
-    override val canBuild get() = entityType.canBuild
+    override fun build(): EntityComponent<*>? {
+        return Components.entity(
+            Sizing.content(),
+            entityType.built ?: return null,
+            nbtCompound.built ?: return null
+        )!!
+            .also(::applyTo)
+    }
 }
 
 fun EntityComponentBuilder.applyTo(component: EntityComponent<*>) {

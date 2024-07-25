@@ -1,25 +1,22 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.canBuild
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
-import io.github.c0nstexpr.owo.dsl.text
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
+import io.wispforest.owo.ui.container.CollapsibleContainer
 import io.wispforest.owo.ui.container.Containers
+import net.minecraft.text.Text
 
 open class CollapsibleBuilder : FlowLayoutBuilder() {
-    var title = text()
+    var title = nullBuilder<Text>()
 
-    var expended = invalidBuilder<Boolean>()
+    var expended = nullBuilder<Boolean>()
 
-    override fun build() = Containers.collapsible(
-        horizontalSizing.build(),
-        verticalSizing.build(),
-        title.build(),
-        expended.build()
-    )!!.apply(::applyTo)
-
-    override val canBuild
-        get() = horizontalSizing.canBuild &&
-            verticalSizing.canBuild &&
-            title.canBuild &&
-            expended.canBuild
+    override fun build(): CollapsibleContainer? {
+        return Containers.collapsible(
+            horizontalSizing.built ?: return null,
+            verticalSizing.built ?: return null,
+            title.built ?: return null,
+            expended.built ?: return null
+        ).also(::applyTo)
+    }
 }

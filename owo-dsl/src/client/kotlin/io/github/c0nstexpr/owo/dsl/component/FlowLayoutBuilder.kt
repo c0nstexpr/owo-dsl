@@ -1,18 +1,18 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.FlowLayout
 import io.wispforest.owo.ui.container.FlowLayout.Algorithm
 import io.wispforest.owo.ui.core.Component
 
 open class FlowLayoutBuilder : BaseParentComponentBuilder() {
-    var algo = invalidBuilder<Algorithm>()
+    var algo = nullBuilder<Algorithm>()
 
-    var children = invalidBuilder<List<Component>>()
+    var children = nullBuilder<List<Component>>()
 
-    var gap = invalidBuilder<Int>()
+    var gap = nullBuilder<Int>()
 
     override fun build(): FlowLayout? {
         val horizontalSizing = horizontalSizing.built ?: return null
@@ -23,7 +23,7 @@ open class FlowLayoutBuilder : BaseParentComponentBuilder() {
             Algorithm.VERTICAL -> Containers.verticalFlow(horizontalSizing, verticalSizing)
             Algorithm.LTR_TEXT -> Containers.ltrTextFlow(horizontalSizing, verticalSizing)
             else -> object : FlowLayout(horizontalSizing, verticalSizing, algorithm) {}
-        }.apply(::applyTo)
+        }.also(::applyTo)
     }
 }
 

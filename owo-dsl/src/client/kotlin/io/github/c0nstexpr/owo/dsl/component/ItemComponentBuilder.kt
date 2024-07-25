@@ -1,21 +1,19 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.ItemComponent
 import net.minecraft.item.ItemStack
 
 open class ItemComponentBuilder : BaseComponentBuilder() {
-    var stack = invalidBuilder<ItemStack>()
+    var stack = nullBuilder<ItemStack>()
 
-    var showOverlay = invalidBuilder<Boolean>()
+    var showOverlay = nullBuilder<Boolean>()
 
-    var setTooltipFromStack = invalidBuilder<Boolean>()
+    var setTooltipFromStack = nullBuilder<Boolean>()
 
-    override val canBuild get() = stack.canBuild
-
-    override fun build() = Components.item(stack.build())!!.apply(::applyTo)
+    override fun build() = stack.built?.let(Components::item)?.also(::applyTo)
 }
 
 fun ItemComponentBuilder.applyTo(component: ItemComponent) {

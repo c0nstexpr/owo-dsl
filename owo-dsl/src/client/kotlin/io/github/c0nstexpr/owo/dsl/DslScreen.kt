@@ -1,5 +1,6 @@
 package io.github.c0nstexpr.owo.dsl
 
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.wispforest.owo.ui.base.BaseOwoScreen
 import io.wispforest.owo.ui.core.OwoUIAdapter
 import io.wispforest.owo.ui.core.ParentComponent
@@ -10,9 +11,7 @@ open class DslScreen<Layout : ParentComponent>(
     private val layoutBlock: DslBuilder<Layout>
 ) : BaseOwoScreen<Layout>() {
     override fun createAdapter() = OwoUIAdapter.create(this) { h, v ->
-        require(layoutBlock.canBuild)
-
-        layoutBlock.build().apply {
+        requireNotNull(layoutBlock.built).apply {
             horizontalSizing(h)
             verticalSizing(v)
         }

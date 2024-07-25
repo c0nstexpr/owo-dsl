@@ -1,19 +1,15 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-
-?.let
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.SpriteComponent
 import io.wispforest.owo.ui.core.Sizing
 
 open class SpacerBuilder : BaseComponentBuilder() {
-    var percent = invalidBuilder<Int>()
+    var percent = nullBuilder<Int>()
 
-    override fun build() = Components.spacer()!!.apply(::applyTo)
-
-    override val canBuild get() = true
+    override fun build() = Components.spacer()!!.also(::applyTo)
 }
 
 fun SpacerBuilder.applyTo(component: SpriteComponent) {

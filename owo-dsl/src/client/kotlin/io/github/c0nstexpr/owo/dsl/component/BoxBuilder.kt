@@ -1,27 +1,27 @@
 package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.ColorBuilder
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.color
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.BoxComponent
 import io.wispforest.owo.ui.component.BoxComponent.GradientDirection
 import io.wispforest.owo.ui.component.Components
+import io.wispforest.owo.ui.core.Color
 
 open class BoxBuilder : BaseComponentBuilder() {
-    var fill = invalidBuilder<Boolean>()
+    var fill = nullBuilder<Boolean>()
 
-    var direction = invalidBuilder<GradientDirection>()
+    var direction = nullBuilder<GradientDirection>()
 
-    var startColor = color()
+    var startColor = nullBuilder<Color>()
 
-    var endColor = color()
+    var endColor = nullBuilder<Color>()
 
     override fun build(): BoxComponent? {
         return Components.box(
             horizontalSizing.built ?: return null,
             verticalSizing.built ?: return null
-        )!!.apply(::applyTo)
+        )!!.also(::applyTo)
     }
 }
 

@@ -1,25 +1,23 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.SlimSliderComponent
 import io.wispforest.owo.ui.component.SlimSliderComponent.Axis
 
 open class SlimSliderBuilder : BaseComponentBuilder() {
-    var axis = invalidBuilder<Axis>()
+    var axis = nullBuilder<Axis>()
 
-    var value = invalidBuilder<Double>()
+    var value = nullBuilder<Double>()
 
-    var min = invalidBuilder<Double>()
+    var min = nullBuilder<Double>()
 
-    var max = invalidBuilder<Double>()
+    var max = nullBuilder<Double>()
 
-    var stepSize = invalidBuilder<Double>()
+    var stepSize = nullBuilder<Double>()
 
-    override fun build() = Components.slimSlider(axis.build())!!.apply(::applyTo)
-
-    override val canBuild get() = axis.canBuild
+    override fun build() = axis.built?.let(Components::slimSlider)?.also(::applyTo)
 }
 
 fun SlimSliderBuilder.applyTo(component: SlimSliderComponent) {

@@ -1,6 +1,6 @@
 package io.github.c0nstexpr.owo.dsl
 
-import io.github.c0nstexpr.owo.dsl.SpriteIdBuilder.Companion.Ctor
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.util.Identifier
 
@@ -8,9 +8,9 @@ typealias SpriteId = SpriteIdentifier
 
 abstract class SpriteIdBuilder : DslBuilder<SpriteId> {
     companion object {
-        class Ctor(
-            var atlas: DslBuilder<Identifier> = invalidBuilder(),
-            var texture: DslBuilder<Identifier> = invalidBuilder()
+        class Of(
+            var atlas: DslBuilder<Identifier> = nullBuilder(),
+            var texture: DslBuilder<Identifier> = nullBuilder()
         ) : SpriteIdBuilder(),
             DslBuilder<SpriteId> by dslBuilder({
                 SpriteId(
@@ -20,12 +20,3 @@ abstract class SpriteIdBuilder : DslBuilder<SpriteId> {
             })
     }
 }
-
-fun spriteId() = invalidBuilder<SpriteId>()
-
-fun spriteId(block: DslBuilder<SpriteId>): SpriteIdBuilder =
-    object : SpriteIdBuilder(), DslBuilder<SpriteId> by block {}
-
-fun spriteId(block: () -> SpriteId) = spriteId(dslBuilder { block() })
-
-inline fun spriteIdCtor(crossinline block: Ctor.() -> Unit) = Ctor().apply(block)

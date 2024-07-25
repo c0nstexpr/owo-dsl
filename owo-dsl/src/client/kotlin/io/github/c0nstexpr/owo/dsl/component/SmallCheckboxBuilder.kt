@@ -1,21 +1,19 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.built
-import io.github.c0nstexpr.owo.dsl.invalidBuilder
-import io.github.c0nstexpr.owo.dsl.text
+import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.SmallCheckboxComponent
+import net.minecraft.text.Text
 
 open class SmallCheckboxBuilder : BaseComponentBuilder() {
-    var label = text()
+    var label = nullBuilder<Text>()
 
-    var checked = invalidBuilder<Boolean>()
+    var checked = nullBuilder<Boolean>()
 
-    var labelShadow = invalidBuilder<Boolean>()
+    var labelShadow = nullBuilder<Boolean>()
 
-    override fun build() = Components.smallCheckbox(label.build())!!.apply(::applyTo)
-
-    override val canBuild get() = label.canBuild
+    override fun build() = label.built?.let(Components::smallCheckbox)?.also(::applyTo)
 }
 
 fun SmallCheckboxBuilder.applyTo(component: SmallCheckboxComponent) {
