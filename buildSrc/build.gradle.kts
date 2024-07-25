@@ -23,6 +23,7 @@ dependencies {
     }
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:latest.release")
+    implementation("com.squareup:kotlinpoet:latest.release")
 }
 
 tasks { compileJava { options.encoding = Charsets.UTF_8.name() } }

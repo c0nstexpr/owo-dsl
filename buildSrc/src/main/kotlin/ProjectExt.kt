@@ -4,6 +4,7 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.provider.MapProperty
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.SourceSetContainer
+import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByType
 
 inline fun Project.fabricProperty(block: MapProperty<String, String>.() -> Unit) =
@@ -11,6 +12,9 @@ inline fun Project.fabricProperty(block: MapProperty<String, String>.() -> Unit)
 
 inline val Project.versionCatalog: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
 inline val Project.sourceSets get() = extensions.getByType<SourceSetContainer>()
+
 inline val Project.srcClient: SourceSet get() = sourceSets["client"]
+
 inline val Project.srcMain: SourceSet get() = sourceSets["main"]
