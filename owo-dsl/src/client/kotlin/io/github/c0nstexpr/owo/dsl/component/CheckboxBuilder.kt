@@ -6,10 +6,9 @@ import io.wispforest.owo.ui.component.Components
 
 open class CheckboxBuilder : CheckboxWidgetBuilder() {
     override fun build() = message.built?.let(Components::checkbox)?.also(::applyTo)
-}
 
-fun CheckboxBuilder.applyTo(component: CheckboxComponent) {
-    (this as CheckboxWidgetBuilder).applyTo(component)
-
-    checked.built?.let(component::checked)
+    protected fun applyTo(component: CheckboxComponent) {
+        super.applyTo(component)
+        checked.built?.let(component::checked)
+    }
 }

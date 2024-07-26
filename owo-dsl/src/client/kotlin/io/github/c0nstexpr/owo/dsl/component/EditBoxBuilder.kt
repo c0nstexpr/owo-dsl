@@ -28,11 +28,10 @@ open class EditBoxBuilder : ScrollableWidgetBuilder() {
             message.built ?: return null
         ).also(::applyTo)
     }
-}
 
-fun EditBoxBuilder.applyTo(component: EditBoxWidget) {
-    (this as ScrollableWidgetBuilder).applyTo(component)
-
-    maxLength.built?.let(component::setMaxLength)
-    text.built?.let(component::setText)
+    protected fun applyTo(component: EditBoxWidget) {
+        super.applyTo(component)
+        maxLength.built?.let(component::setMaxLength)
+        text.built?.let(component::setText)
+    }
 }

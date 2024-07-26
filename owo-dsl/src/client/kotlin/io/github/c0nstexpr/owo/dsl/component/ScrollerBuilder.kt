@@ -29,13 +29,12 @@ open class ScrollerBuilder<T : Component> : WrappingParentBuilder<T>() {
             ScrollDirection.HORIZONTAL -> Containers.horizontalScroll(h, v, c)
         }.also(::applyTo)
     }
-}
 
-fun <T : Component> ScrollerBuilder<T>.applyTo(component: ScrollContainer<T>) {
-    (this as WrappingParentBuilder<T>).applyTo(component)
-
-    scrollbarThickness.built?.let(component::scrollbarThiccness)
-    scrollbar.built?.let(component::scrollbar)
-    scrollStep.built?.let(component::scrollStep)
-    fixedScrollbarLength.built?.let(component::fixedScrollbarLength)
+    protected fun applyTo(component: ScrollContainer<T>) {
+        super.applyTo(component)
+        scrollbarThickness.built?.let(component::scrollbarThiccness)
+        scrollbar.built?.let(component::scrollbar)
+        scrollStep.built?.let(component::scrollStep)
+        fixedScrollbarLength.built?.let(component::fixedScrollbarLength)
+    }
 }

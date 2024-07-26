@@ -12,10 +12,9 @@ open class SpriteComponentBuilder : BaseComponentBuilder() {
     var blend = nullBuilder<Boolean>()
 
     override fun build() = sprite.built?.let(Components::sprite)?.also(::applyTo)
-}
 
-fun SpriteComponentBuilder.applyTo(component: SpriteComponent) {
-    (this as BaseComponentBuilder).applyTo(component)
-
-    blend.built?.let(component::blend)
+    protected fun applyTo(component: SpriteComponent) {
+        super.applyTo(component)
+        blend.built?.let(component::blend)
+    }
 }

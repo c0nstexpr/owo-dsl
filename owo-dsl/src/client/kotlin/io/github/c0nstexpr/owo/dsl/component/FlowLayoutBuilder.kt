@@ -5,12 +5,11 @@ import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.FlowLayout
 import io.wispforest.owo.ui.container.FlowLayout.Algorithm
-import io.wispforest.owo.ui.core.Component
 
-open class FlowLayoutBuilder : BaseParentComponentBuilder() {
+open class FlowLayoutBuilder :
+    BaseParentComponentBuilder(),
+    ListChildren by listChildren() {
     var algo = nullBuilder<Algorithm>()
-
-    var children = nullBuilder<List<Component>>()
 
     var gap = nullBuilder<Int>()
 
@@ -25,11 +24,10 @@ open class FlowLayoutBuilder : BaseParentComponentBuilder() {
             else -> object : FlowLayout(horizontalSizing, verticalSizing, algorithm) {}
         }.also(::applyTo)
     }
-}
 
-fun FlowLayoutBuilder.applyTo(component: FlowLayout) {
-    (this as BaseParentComponentBuilder).applyTo(component)
-
-    children.built?.forEach(component::child)
-    gap.built?.let(component::gap)
+    protected fun applyTo(component: FlowLayout) {
+        super.applyTo(component)
+        children.built?.forEach(component::child)
+        gap.built?.let(component::gap)
+    }
 }

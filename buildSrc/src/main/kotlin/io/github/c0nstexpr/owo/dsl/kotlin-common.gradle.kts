@@ -1,3 +1,5 @@
+import io.github.c0nstexpr.owo.dsl.versionCatalog
+import io.github.c0nstexpr.owo.dsl.versions
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode

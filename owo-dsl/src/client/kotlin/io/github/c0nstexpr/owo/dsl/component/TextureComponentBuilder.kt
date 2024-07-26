@@ -41,11 +41,10 @@ open class TextureComponentBuilder : BaseComponentBuilder() {
     companion object {
         const val DEFAULT_TEXTURE_LENGTH = 256
     }
-}
 
-fun TextureComponentBuilder.applyTo(component: TextureComponent) {
-    (this as BaseComponentBuilder).applyTo(component)
-
-    visibleArea.built?.let(component::visibleArea)
-    blend.built?.let(component::blend)
+    protected fun applyTo(component: TextureComponent) {
+        (this as BaseComponentBuilder).applyTo(component)
+        visibleArea.built?.let(component::visibleArea)
+        blend.built?.let(component::blend)
+    }
 }

@@ -14,11 +14,11 @@ open class ItemComponentBuilder : BaseComponentBuilder() {
     var setTooltipFromStack = nullBuilder<Boolean>()
 
     override fun build() = stack.built?.let(Components::item)?.also(::applyTo)
-}
 
-fun ItemComponentBuilder.applyTo(component: ItemComponent) {
-    (this as BaseComponentBuilder).applyTo(component)
+    protected fun applyTo(component: ItemComponent) {
+        super.applyTo(component)
 
-    showOverlay.built?.let(component::showOverlay)
-    setTooltipFromStack.built?.let(component::setTooltipFromStack)
+        showOverlay.built?.let(component::showOverlay)
+        setTooltipFromStack.built?.let(component::setTooltipFromStack)
+    }
 }

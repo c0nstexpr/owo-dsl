@@ -35,19 +35,18 @@ open class TextFieldWidgetBuilder : ClickableWidgetBuilder() {
         0,
         Text.empty()
     ).also(::applyTo)
-}
 
-fun TextFieldWidgetBuilder.applyTo(component: TextFieldWidget) {
-    (this as ClickableWidgetBuilder).applyTo(component)
-
-    placeholderBuilder.built?.let(component::setPlaceholder)
-    text.built?.let(component::setText)
-    maxLength.built?.let(component::setMaxLength)
-    drawsBackground.built?.let(component::setDrawsBackground)
-    editableColor.built?.let(component::setEditableColor)
-    uneditableColor.built?.let(component::setUneditableColor)
-    editable.built?.let(component::setEditable)
-    focusUnlocked.built?.let(component::setFocusUnlocked)
-    visible.built?.let(component::setVisible)
-    suggestion.built?.let(component::setSuggestion)
+    protected fun applyTo(component: TextFieldWidget) {
+        super.applyTo(component)
+        placeholderBuilder.built?.let(component::setPlaceholder)
+        text.built?.let(component::setText)
+        maxLength.built?.let(component::setMaxLength)
+        drawsBackground.built?.let(component::setDrawsBackground)
+        editableColor.built?.let(component::setEditableColor)
+        uneditableColor.built?.let(component::setUneditableColor)
+        editable.built?.let(component::setEditable)
+        focusUnlocked.built?.let(component::setFocusUnlocked)
+        visible.built?.let(component::setVisible)
+        suggestion.built?.let(component::setSuggestion)
+    }
 }

@@ -18,16 +18,12 @@ open class SlimSliderBuilder : BaseComponentBuilder() {
     var stepSize = nullBuilder<Double>()
 
     override fun build() = axis.built?.let(Components::slimSlider)?.also(::applyTo)
-}
 
-fun SlimSliderBuilder.applyTo(component: SlimSliderComponent) {
-    (this as BaseComponentBuilder).applyTo(component)
-
-    value.built?.let { component.value(it) }
-
-    min.built?.let { component.min(it) }
-
-    max.built?.let { component.max(it) }
-
-    stepSize.built?.let { component.stepSize(it) }
+    protected fun applyTo(component: SlimSliderComponent) {
+        super.applyTo(component)
+        value.built?.let { component.value(it) }
+        min.built?.let { component.min(it) }
+        max.built?.let { component.max(it) }
+        stepSize.built?.let { component.stepSize(it) }
+    }
 }

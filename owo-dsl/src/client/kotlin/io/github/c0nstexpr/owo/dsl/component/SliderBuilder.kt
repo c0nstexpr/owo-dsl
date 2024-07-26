@@ -14,18 +14,18 @@ open class SliderBuilder : SliderWidgetBuilder() {
     var active = nullBuilder<Boolean>()
 
     override fun build() = horizontalSizing.built?.let(Components::slider)?.also(::applyTo)
-}
 
-fun SliderBuilder.applyTo(component: SliderComponent) {
-    (this as ClickableWidgetBuilder).applyTo(component)
+    protected fun applyTo(component: SliderComponent) {
+        super.applyTo(component)
 
-    value.built?.let(component::value)
+        value.built?.let(component::value)
 
-    message.built?.let { msg ->
-        if (translate.built == true) component.message { Text.translatable(msg.string, it) }
-        else component.message { msg }
+        message.built?.let { msg ->
+            if (translate.built == true) component.message { Text.translatable(msg.string, it) }
+            else component.message { msg }
+        }
+
+        scrollStep.built?.let(component::scrollStep)
+        active.built?.let(component::active)
     }
-
-    scrollStep.built?.let(component::scrollStep)
-    active.built?.let(component::active)
 }

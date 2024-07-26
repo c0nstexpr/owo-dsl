@@ -1,3 +1,5 @@
+package io.github.c0nstexpr.owo.dsl
+
 import org.gradle.api.artifacts.VersionCatalog
 
 class VCVersionsAccess internal constructor(versionCatalog: VersionCatalog) :

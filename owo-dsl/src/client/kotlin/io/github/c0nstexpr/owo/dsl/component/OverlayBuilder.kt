@@ -10,10 +10,9 @@ open class OverlayBuilder<T : Component> : WrappingParentBuilder<T>() {
     var closeOnClick = nullBuilder<Boolean>()
 
     override fun build() = child.built?.let(Containers::overlay)?.also(::applyTo)
-}
 
-fun <T : Component> OverlayBuilder<T>.applyTo(component: OverlayContainer<T>) {
-    (this as WrappingParentBuilder<T>).applyTo(component)
-
-    closeOnClick.built?.let(component::closeOnClick)
+    protected fun applyTo(component: OverlayContainer<T>) {
+        super.applyTo(component)
+        closeOnClick.built?.let(component::closeOnClick)
+    }
 }

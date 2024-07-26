@@ -27,15 +27,15 @@ open class LabelBuilder : BaseComponentBuilder() {
     var lineSpacing = nullBuilder<Int>()
 
     override fun build() = text.built?.let(Components::label)?.also(::applyTo)
-}
 
-fun LabelBuilder.applyTo(label: LabelComponent) {
-    (this as BaseComponentBuilder).applyTo(label)
+    protected fun applyTo(label: LabelComponent) {
+        super.applyTo(label)
 
-    maxWidth.built?.let(label::maxWidth)
-    shadow.built?.let(label::shadow)
-    color.built?.let(label::color)
-    verticalTextAlignment.built?.let(label::verticalTextAlignment)
-    horizontalTextAlignment.built?.let(label::horizontalTextAlignment)
-    lineHeight.built?.let(label::lineHeight)
+        maxWidth.built?.let(label::maxWidth)
+        shadow.built?.let(label::shadow)
+        color.built?.let(label::color)
+        verticalTextAlignment.built?.let(label::verticalTextAlignment)
+        horizontalTextAlignment.built?.let(label::horizontalTextAlignment)
+        lineHeight.built?.let(label::lineHeight)
+    }
 }

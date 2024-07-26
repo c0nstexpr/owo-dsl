@@ -43,10 +43,9 @@ abstract class BaseComponentBuilder : ComponentBuilder {
     var space = nullBuilder<Size>()
 
     abstract override fun build(): BaseComponent?
-}
 
-fun BaseComponentBuilder.applyTo(component: BaseComponent) {
-    (this as ComponentBuilder).applyTo(component)
-
-    space.built?.let(component::inflate)
+    protected fun applyTo(component: BaseComponent) {
+        super.applyTo(component)
+        space.built?.let(component::inflate)
+    }
 }

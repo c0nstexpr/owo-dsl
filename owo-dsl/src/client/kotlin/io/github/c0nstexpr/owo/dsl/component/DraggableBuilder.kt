@@ -19,10 +19,9 @@ open class DraggableBuilder<T : Component> : WrappingParentBuilder<T>() {
             child.built ?: return null
         ).also(::applyTo)
     }
-}
 
-fun <T : Component> DraggableBuilder<T>.applyTo(component: DraggableContainer<T>) {
-    (this as WrappingParentBuilder<T>).applyTo(component)
-
-    foreheadSize.built?.let(component::foreheadSize)
+    protected fun applyTo(component: DraggableContainer<T>) {
+        super.applyTo(component)
+        foreheadSize.built?.let(component::foreheadSize)
+    }
 }

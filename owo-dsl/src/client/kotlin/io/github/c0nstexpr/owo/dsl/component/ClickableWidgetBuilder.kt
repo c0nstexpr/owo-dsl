@@ -43,10 +43,10 @@ abstract class ClickableWidgetBuilder : ComponentBuilder {
     var message = nullBuilder<Text>()
 
     abstract override fun build(): ClickableWidget?
-}
 
-fun ClickableWidgetBuilder.applyTo(component: ClickableWidget) {
-    (this as ComponentBuilder).applyTo(component)
+    protected fun applyTo(component: ClickableWidget) {
+        super.applyTo(component)
 
-    message.built?.let(component::setMessage)
+        message.built?.let(component::setMessage)
+    }
 }

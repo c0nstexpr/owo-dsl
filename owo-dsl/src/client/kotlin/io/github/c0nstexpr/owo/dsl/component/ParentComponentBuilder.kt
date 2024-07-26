@@ -15,17 +15,14 @@ interface ParentComponentBuilder : ComponentBuilder {
     var allowOverflow: DslBuilder<Boolean>
     var surface: DslBuilder<Surface>
 
-    // fun <T : Component> child(block: DslBuilder<T>)
-
     override fun build(): ParentComponent?
-}
 
-fun ParentComponentBuilder.applyTo(component: ParentComponent) {
-    (this as ComponentBuilder).applyTo(component)
-
-    verticalAlignment.built?.let(component::verticalAlignment)
-    horizontalAlignment.built?.let(component::horizontalAlignment)
-    padding.built?.let(component::padding)
-    allowOverflow.built?.let(component::allowOverflow)
-    surface.built?.let(component::surface)
+    fun applyTo(component: ParentComponent) {
+        super.applyTo(component)
+        verticalAlignment.built?.let(component::verticalAlignment)
+        horizontalAlignment.built?.let(component::horizontalAlignment)
+        padding.built?.let(component::padding)
+        allowOverflow.built?.let(component::allowOverflow)
+        surface.built?.let(component::surface)
+    }
 }

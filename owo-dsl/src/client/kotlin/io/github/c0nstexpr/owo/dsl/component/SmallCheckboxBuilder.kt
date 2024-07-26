@@ -14,11 +14,10 @@ open class SmallCheckboxBuilder : BaseComponentBuilder() {
     var labelShadow = nullBuilder<Boolean>()
 
     override fun build() = label.built?.let(Components::smallCheckbox)?.also(::applyTo)
-}
 
-fun SmallCheckboxBuilder.applyTo(component: SmallCheckboxComponent) {
-    (this as BaseComponentBuilder).applyTo(component)
-
-    checked.built?.let(component::checked)
-    labelShadow.built?.let(component::labelShadow)
+    protected fun applyTo(component: SmallCheckboxComponent) {
+        super.applyTo(component)
+        checked.built?.let(component::checked)
+        labelShadow.built?.let(component::labelShadow)
+    }
 }

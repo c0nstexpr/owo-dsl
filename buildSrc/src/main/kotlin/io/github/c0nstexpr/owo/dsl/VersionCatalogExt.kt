@@ -1,3 +1,5 @@
+package io.github.c0nstexpr.owo.dsl
+
 import org.gradle.api.artifacts.VersionCatalog
 import java.util.Optional
 

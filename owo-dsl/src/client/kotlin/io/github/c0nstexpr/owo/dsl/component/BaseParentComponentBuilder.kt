@@ -21,9 +21,9 @@ abstract class BaseParentComponentBuilder :
     override var surface = nullBuilder<Surface>()
 
     abstract override fun build(): BaseParentComponent?
-}
 
-fun BaseParentComponentBuilder.applyTo(component: BaseParentComponent) {
-    (this as BaseComponentBuilder).applyTo(component)
-    (this as ParentComponentBuilder).applyTo(component)
+    protected fun applyTo(component: BaseParentComponent) {
+        super<BaseComponentBuilder>.applyTo(component)
+        super<ParentComponentBuilder>.applyTo(component)
+    }
 }

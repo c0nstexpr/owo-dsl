@@ -1,3 +1,10 @@
+import io.github.c0nstexpr.owo.dsl.MOD_JSON
+import io.github.c0nstexpr.owo.dsl.ModPropertyPluginExtension
+import io.github.c0nstexpr.owo.dsl.bundles
+import io.github.c0nstexpr.owo.dsl.get
+import io.github.c0nstexpr.owo.dsl.srcClient
+import io.github.c0nstexpr.owo.dsl.srcMain
+import io.github.c0nstexpr.owo.dsl.versionCatalog
 import kotlinx.datetime.Clock.System.now
 
 plugins {

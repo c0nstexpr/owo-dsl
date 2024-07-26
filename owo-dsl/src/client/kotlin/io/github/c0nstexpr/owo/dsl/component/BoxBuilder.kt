@@ -23,18 +23,17 @@ open class BoxBuilder : BaseComponentBuilder() {
             verticalSizing.built ?: return null
         )!!.also(::applyTo)
     }
-}
 
-fun BoxBuilder.applyTo(component: BoxComponent) {
-    (this as BaseComponentBuilder).applyTo(component)
+    protected fun applyTo(component: BoxComponent) {
+        super.applyTo(component)
+        fill.built?.let(component::fill)
+        direction.built?.let(component::direction)
+        startColor.built?.let(component::startColor)
+        endColor.built?.let(component::endColor)
+    }
 
-    fill.built?.let(component::fill)
-    direction.built?.let(component::direction)
-    startColor.built?.let(component::startColor)
-    endColor.built?.let(component::endColor)
-}
-
-fun BoxBuilder.color(block: ColorBuilder) {
-    startColor = block
-    endColor = block
+    fun color(block: ColorBuilder) {
+        startColor = block
+        endColor = block
+    }
 }

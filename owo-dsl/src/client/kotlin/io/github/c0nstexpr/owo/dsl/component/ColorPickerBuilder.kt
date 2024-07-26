@@ -15,13 +15,12 @@ open class ColorPickerBuilder : BaseComponentBuilder() {
     var showAlpha = nullBuilder<Boolean>()
 
     override fun build(): ColorPickerComponent? = ColorPickerComponent().also(::applyTo)
-}
 
-fun ColorPickerBuilder.applyTo(component: ColorPickerComponent) {
-    (this as BaseComponentBuilder).applyTo(component)
-
-    selectedColor.built?.let(component::selectedColor)
-    selectorWidth.built?.let(component::selectorWidth)
-    selectorPadding.built?.let(component::selectorPadding)
-    showAlpha.built?.let(component::showAlpha)
+    protected fun applyTo(component: ColorPickerComponent) {
+        super.applyTo(component)
+        selectedColor.built?.let(component::selectedColor)
+        selectorWidth.built?.let(component::selectorWidth)
+        selectorPadding.built?.let(component::selectorPadding)
+        showAlpha.built?.let(component::showAlpha)
+    }
 }

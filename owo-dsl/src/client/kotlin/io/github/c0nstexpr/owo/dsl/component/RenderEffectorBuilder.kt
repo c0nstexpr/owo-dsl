@@ -11,10 +11,9 @@ open class RenderEffectorBuilder<T : Component> : WrappingParentBuilder<T>() {
     var effects = nullBuilder<List<RenderEffect>>()
 
     override fun build() = child.built?.let(Containers::renderEffect)?.also(::applyTo)
-}
 
-fun <T : Component> RenderEffectorBuilder<T>.applyTo(component: RenderEffectWrapper<T>) {
-    (this as WrappingParentBuilder<T>).applyTo(component)
-
-    effects.built?.forEach(component::effect)
+    protected fun applyTo(component: RenderEffectWrapper<T>) {
+        super.applyTo(component)
+        effects.built?.forEach(component::effect)
+    }
 }

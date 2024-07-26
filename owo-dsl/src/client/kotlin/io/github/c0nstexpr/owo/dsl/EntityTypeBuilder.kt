@@ -1,7 +1,6 @@
 package io.github.c0nstexpr.owo.dsl
 
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
-import io.github.c0nstexpr.owo.dsl.EntityTypeBuilder.Id
 import net.minecraft.entity.EntityType
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier

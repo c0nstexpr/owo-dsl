@@ -1,5 +1,8 @@
+import io.github.c0nstexpr.owo.dsl.fabricProperty
+
 plugins {
     `fabric-common`
+    `dsl-generate`
 }
 
 repositories {

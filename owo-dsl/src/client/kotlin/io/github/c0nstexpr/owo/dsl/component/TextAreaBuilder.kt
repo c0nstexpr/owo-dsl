@@ -16,11 +16,10 @@ open class TextAreaBuilder : EditBoxBuilder() {
             verticalSizing.built ?: return null
         )!!.also(::applyTo)
     }
-}
 
-fun TextAreaBuilder.applyTo(component: TextAreaComponent) {
-    (this as EditBoxBuilder).applyTo(component)
-
-    displayCharCount.built?.let(component::displayCharCount)
-    maxLines.built?.let(component::maxLines)
+    protected fun applyTo(component: TextAreaComponent) {
+        super.applyTo(component)
+        displayCharCount.built?.let(component::displayCharCount)
+        maxLines.built?.let(component::maxLines)
+    }
 }

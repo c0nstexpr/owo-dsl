@@ -10,10 +10,9 @@ open class SpacerBuilder : BaseComponentBuilder() {
     var percent = nullBuilder<Int>()
 
     override fun build() = Components.spacer()!!.also(::applyTo)
-}
 
-fun SpacerBuilder.applyTo(component: SpriteComponent) {
-    (this as BaseComponentBuilder).applyTo(component)
-
-    percent.built?.let { component.sizing(Sizing.expand(it)) }
+    protected fun applyTo(component: SpriteComponent) {
+        super.applyTo(component)
+        percent.built?.let { component.sizing(Sizing.expand(it)) }
+    }
 }

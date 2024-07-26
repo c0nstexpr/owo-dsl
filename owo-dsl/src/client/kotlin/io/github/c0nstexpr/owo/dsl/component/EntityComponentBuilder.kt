@@ -31,14 +31,13 @@ open class EntityComponentBuilder : BaseComponentBuilder() {
         )!!
             .also(::applyTo)
     }
-}
 
-fun EntityComponentBuilder.applyTo(component: EntityComponent<*>) {
-    (this as BaseComponentBuilder).applyTo(component)
-
-    allowMouseRotation.built?.let(component::allowMouseRotation)
-    lookAtCursor.built?.let(component::lookAtCursor)
-    scale.built?.let(component::scale)
-    scaleToFit.built?.let(component::scaleToFit)
-    showNametag.built?.let(component::showNametag)
+    protected fun applyTo(component: EntityComponent<*>) {
+        super.applyTo(component)
+        allowMouseRotation.built?.let(component::allowMouseRotation)
+        lookAtCursor.built?.let(component::lookAtCursor)
+        scale.built?.let(component::scale)
+        scaleToFit.built?.let(component::scaleToFit)
+        showNametag.built?.let(component::showNametag)
+    }
 }

@@ -23,12 +23,11 @@ open class DiscreteSliderBuilder : SliderBuilder() {
             max.built ?: return null
         ).also(::applyTo)
     }
-}
 
-fun DiscreteSliderBuilder.applyTo(component: DiscreteSliderComponent) {
-    (this as SliderBuilder).applyTo(component)
-
-    discreteValue.built?.let(component::setFromDiscreteValue)
-    decimalPlaces.built?.let(component::decimalPlaces)
-    snap.built?.let(component::snap)
+    protected fun applyTo(component: DiscreteSliderComponent) {
+        super.applyTo(component)
+        discreteValue.built?.let(component::setFromDiscreteValue)
+        decimalPlaces.built?.let(component::decimalPlaces)
+        snap.built?.let(component::snap)
+    }
 }

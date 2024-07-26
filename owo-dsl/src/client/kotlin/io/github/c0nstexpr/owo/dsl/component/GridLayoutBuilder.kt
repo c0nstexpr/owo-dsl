@@ -1,18 +1,12 @@
 package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
-import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.GridLayout
-import io.wispforest.owo.ui.core.Component
 
-open class GridLayoutBuilder : BaseParentComponentBuilder() {
-    var rows = nullBuilder<Int>()
-
-    var columns = nullBuilder<Int>()
-
-    var children = nullBuilder<List<Map<Int, Component>>>()
-
+open class GridLayoutBuilder :
+    BaseParentComponentBuilder(),
+    GridChildren by gridChildren() {
     override fun build(): GridLayout? {
         return Containers.grid(
             horizontalSizing.built ?: return null,
@@ -21,21 +15,21 @@ open class GridLayoutBuilder : BaseParentComponentBuilder() {
             columns.built ?: return null
         ).also(::applyTo)
     }
-}
 
-fun GridLayoutBuilder.applyTo(component: GridLayout) {
-    (this as BaseParentComponentBuilder).applyTo(component)
+    protected fun applyTo(component: GridLayout) {
+        super.applyTo(component)
 
-    val rowSize = rows.built!!
-    val columnSize = columns.built!!
+        val rowSize = rows.built!!
+        val columnSize = columns.built!!
 
-    children.built?.let {
-        require(it.size <= rowSize)
+        children.built?.let {
+            require(it.size <= rowSize)
 
-        it.forEachIndexed { i, row ->
-            require(row.size <= columnSize)
+            it.forEachIndexed { i, row ->
+                require(row.size <= columnSize)
 
-            row.forEach { (j, child) -> component.child(child, i, j) }
+                row.forEach { (j, child) -> component.child(child, i, j) }
+            }
         }
     }
 }

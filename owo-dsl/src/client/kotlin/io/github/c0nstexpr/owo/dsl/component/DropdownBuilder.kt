@@ -11,11 +11,10 @@ open class DropdownBuilder : FlowLayoutBuilder() {
     var closeWhenNotHovered = nullBuilder<Boolean>()
 
     override fun build() = horizontalSizing.built?.let(Components::dropdown)?.also(::applyTo)
-}
 
-fun DropdownBuilder.applyTo(component: DropdownComponent) {
-    (this as FlowLayoutBuilder).applyTo(component)
-
-    list.built?.forEach { component.it() }
-    closeWhenNotHovered.built?.let(component::closeWhenNotHovered)
+    protected fun applyTo(component: DropdownComponent) {
+        super.applyTo(component)
+        list.built?.forEach { component.it() }
+        closeWhenNotHovered.built?.let(component::closeWhenNotHovered)
+    }
 }

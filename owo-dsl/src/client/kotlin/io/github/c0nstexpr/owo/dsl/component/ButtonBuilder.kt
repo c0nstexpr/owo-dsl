@@ -11,9 +11,9 @@ open class ButtonBuilder : ButtonWidgetBuilder() {
 
     override fun build(): ButtonComponent? =
         message.built?.let { Components.button(it) {} }?.also(::applyTo)
-}
 
-fun ButtonBuilder.applyTo(component: ButtonComponent) {
-    (this as ButtonWidgetBuilder).applyTo(component)
-    onPress.built?.let(component::onPress)
+    protected fun applyTo(component: ButtonComponent) {
+        super.applyTo(component)
+        onPress.built?.let(component::onPress)
+    }
 }
