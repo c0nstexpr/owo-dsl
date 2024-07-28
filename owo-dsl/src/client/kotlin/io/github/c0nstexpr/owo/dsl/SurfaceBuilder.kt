@@ -1,11 +1,6 @@
 package io.github.c0nstexpr.owo.dsl
 
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
-import io.github.c0nstexpr.owo.dsl.SurfaceBuilder.Blur
-import io.github.c0nstexpr.owo.dsl.SurfaceBuilder.Flat
-import io.github.c0nstexpr.owo.dsl.SurfaceBuilder.Outline
-import io.github.c0nstexpr.owo.dsl.SurfaceBuilder.PanelInset
-import io.github.c0nstexpr.owo.dsl.SurfaceBuilder.Tiled
 import io.wispforest.owo.ui.core.OwoUIDrawContext
 import io.wispforest.owo.ui.core.Surface
 import io.wispforest.owo.ui.util.NinePatchTexture
@@ -72,24 +67,3 @@ interface SurfaceBuilder : DslBuilder<Surface> {
             }
         })
 }
-
-fun surface(block: DslBuilder<Surface>): SurfaceBuilder =
-    object : SurfaceBuilder, DslBuilder<Surface> by block {}
-
-@OwoDslMarker
-fun surface(block: () -> Surface?): SurfaceBuilder = surface(dslBuilder(block))
-
-@OwoDslMarker
-inline fun panelInsetSurface(crossinline block: PanelInset.() -> Unit) = PanelInset().also(block)
-
-@OwoDslMarker
-inline fun blurSurface(crossinline block: Blur.() -> Unit) = Blur().also(block)
-
-@OwoDslMarker
-inline fun flatSurface(crossinline block: Flat.() -> Unit) = Flat().also(block)
-
-@OwoDslMarker
-inline fun outlineSurface(crossinline block: Outline.() -> Unit) = Outline().also(block)
-
-@OwoDslMarker
-inline fun tiledSurface(crossinline block: Tiled.() -> Unit) = Tiled().also(block)

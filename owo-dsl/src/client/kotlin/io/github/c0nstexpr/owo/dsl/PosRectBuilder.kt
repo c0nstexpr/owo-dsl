@@ -23,7 +23,7 @@ interface PosRectBuilder : DslBuilder<PosRect> {
     open class Of(
         var x: DslBuilder<Int> = nullBuilder(),
         var y: DslBuilder<Int> = nullBuilder(),
-        var size: DslBuilder<Size> = size()
+        var size: DslBuilder<Size> = nullBuilder()
     ) : PosRectBuilder,
         DslBuilder<PositionedRectangle> by dslBuilder({
             PositionedRectangle.of(

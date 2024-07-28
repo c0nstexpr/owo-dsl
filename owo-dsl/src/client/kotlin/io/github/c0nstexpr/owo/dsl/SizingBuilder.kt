@@ -9,11 +9,13 @@ abstract class SizingBuilder : DslBuilder<Sizing> {
         var method: DslBuilder<Sizing.Method> = nullBuilder()
     ) : SizingBuilder(),
         DslBuilder<Sizing> by dslBuilder({
+            val s = size.built ?: return@dslBuilder null
+
             when (method.built ?: return@dslBuilder null) {
-                Sizing.Method.FIXED -> Sizing.fixed(size.built ?: return@dslBuilder null)
-                Sizing.Method.CONTENT -> Sizing.content(size.built ?: return@dslBuilder null)
-                Sizing.Method.FILL -> Sizing.fill(size.built ?: return@dslBuilder null)
-                Sizing.Method.EXPAND -> Sizing.expand(size.built ?: return@dslBuilder null)
+                Sizing.Method.FIXED -> Sizing.fixed(s)
+                Sizing.Method.CONTENT -> Sizing.content(s)
+                Sizing.Method.FILL -> Sizing.fill(s)
+                Sizing.Method.EXPAND -> Sizing.expand(s)
             }
         })
 }

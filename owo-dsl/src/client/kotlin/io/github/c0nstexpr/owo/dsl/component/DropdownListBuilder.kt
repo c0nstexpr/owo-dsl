@@ -8,16 +8,23 @@ import io.wispforest.owo.ui.component.DropdownComponent
 import io.wispforest.owo.ui.core.Sizing
 import net.minecraft.text.Text as McText
 
-open class DropdownListBuilder : ListBuilder<DropdownComponent.() -> Unit> {
+open class DropdownListBuilder {
     protected constructor() : super()
 
-    fun divider() = add(dslBuilder { { divider() } })
+    val list = mutableListOf<DropdownComponent.() -> Unit>()
 
-    class Text private constructor(var txt: DslBuilder<McText> = nullBuilder()) :
-        DslBuilder<DropdownComponent.() -> Unit> by
-        dslBuilder({ txt.built?.let { { text(it) } } }) {
-            fun DropdownListBuilder.text(block: Text.() -> Unit) = add(Text().also(block))
+    fun add(block: DropdownComponent.() -> Unit) = list.add(block)
+
+    fun divider() = add { divider() }
+
+    class Text private constructor(var txt: DslBuilder<McText> = nullBuilder()) {
+        companion object {
+            fun DropdownListBuilder.text(block: Text.() -> Unit): Boolean {
+                val txt = Text().also(block)
+                return add { txt.txt.built?.let(::text) }
+            }
         }
+    }
 
     class Button private constructor(
         var txt: DslBuilder<McText> = nullBuilder(),
