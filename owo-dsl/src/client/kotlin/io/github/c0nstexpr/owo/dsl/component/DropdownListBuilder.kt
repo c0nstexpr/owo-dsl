@@ -2,74 +2,86 @@ package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
-import io.github.c0nstexpr.owo.dsl.dslBuilder
+import io.github.c0nstexpr.owo.dsl.OwoDslMarker
 import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.DropdownComponent
 import io.wispforest.owo.ui.core.Sizing
 import net.minecraft.text.Text as McText
 
-open class DropdownListBuilder {
-    protected constructor() : super()
-
+@OwoDslMarker
+open class DropdownListBuilder protected constructor() {
     val list = mutableListOf<DropdownComponent.() -> Unit>()
 
+    @OwoDslMarker
     fun add(block: DropdownComponent.() -> Unit) = list.add(block)
 
+    @OwoDslMarker
     fun divider() = add { divider() }
 
+    @OwoDslMarker
     class Text private constructor(var txt: DslBuilder<McText> = nullBuilder()) {
         companion object {
-            fun DropdownListBuilder.text(block: Text.() -> Unit): Boolean {
-                val txt = Text().also(block)
-                return add { txt.txt.built?.let(::text) }
+            @OwoDslMarker
+            fun DropdownListBuilder.text(block: Text.() -> Unit) = Text().run {
+                block()
+                this@text.add { txt.built?.let(::text) }
             }
         }
     }
 
-    class Button private constructor(
+    @OwoDslMarker
+    open class Button protected constructor(
         var txt: DslBuilder<McText> = nullBuilder(),
-        var onClick: DslBuilder<(DropdownComponent) -> Unit> = nullBuilder()
-    ) : DslBuilder<DropdownComponent.() -> Unit> by dslBuilder({
-            txt.built?.let {
-                {
-                    val click = onClick.built
-                    if (click == null) button(it) {}
-                    else button(it, click)
-                }
+        var onClick: (DropdownComponent) -> Unit = {}
+    ) {
+        companion object {
+            @OwoDslMarker
+            fun DropdownListBuilder.button(block: Button.() -> Unit) = Button().run {
+                block()
+                this@button.add { button(txt.built ?: return@add, onClick) }
             }
-        }) {
-        fun DropdownListBuilder.button(block: Button.() -> Unit) = add(Button().also(block))
+        }
     }
 
-    class CheckBox private constructor(
+    @OwoDslMarker
+    open class CheckBox protected constructor(
         var txt: DslBuilder<McText> = nullBuilder(),
         var state: DslBuilder<Boolean> = nullBuilder(),
-        var onClick: DslBuilder<(Boolean) -> Unit> = nullBuilder()
-    ) : DslBuilder<DropdownComponent.() -> Unit> by dslBuilder({
-            val t = txt.built ?: return@dslBuilder null
-            val s = state.built ?: return@dslBuilder null
-
-            (onClick.built ?: return@dslBuilder { checkbox(t, s) {} })
-                .let { { checkbox(t, s, it) } }
-        }) {
-        fun DropdownListBuilder.checkbox(block: CheckBox.() -> Unit) = add(CheckBox().also(block))
+        var onClick: (Boolean) -> Unit = {}
+    ) {
+        companion object {
+            @OwoDslMarker
+            fun DropdownListBuilder.checkbox(block: CheckBox.() -> Unit) = CheckBox().run {
+                block()
+                this@checkbox.add {
+                    checkbox(
+                        txt.built ?: return@add,
+                        state.built ?: false,
+                        onClick
+                    )
+                }
+            }
+        }
     }
 
-    class Nested private constructor(
+    @OwoDslMarker
+    open class Nested protected constructor(
         var txt: DslBuilder<McText> = nullBuilder(),
         var horizontalSizing: DslBuilder<Sizing> = nullBuilder(),
-        var builder: DslBuilder<(DropdownComponent) -> Unit> = nullBuilder()
-    ) : DslBuilder<DropdownComponent.() -> Unit> by dslBuilder({
-            val t = txt.built ?: return@dslBuilder null
-            val h = horizontalSizing.built ?: return@dslBuilder null
-            val b = builder.built ?: return@dslBuilder { nested(t, h) {} }
-
-            { nested(t, h, b) }
-        }) {
-        fun DropdownListBuilder.nested(block: Nested.() -> Unit) = add(Nested().also(block))
-    }
-
-    fun DropdownBuilder.list(block: DropdownListBuilder.() -> Unit) {
-        list = DropdownListBuilder().also(block)
+        var builder: (DropdownComponent) -> Unit = {}
+    ) {
+        companion object {
+            @OwoDslMarker
+            fun DropdownListBuilder.nested(block: Nested.() -> Unit) = Nested().run {
+                block()
+                this@nested.add {
+                    nested(
+                        txt.built ?: return@add,
+                        horizontalSizing.built ?: return@add,
+                        builder
+                    )
+                }
+            }
+        }
     }
 }

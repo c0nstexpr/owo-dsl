@@ -1,40 +1,29 @@
 package io.github.c0nstexpr.owo.dsl
 
-import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.wispforest.owo.ui.core.Insets
 
-abstract class InsetsBuilder : DslBuilder<Insets> {
-    class Of(
-        var top: DslBuilder<Int> = nullBuilder(),
-        var bottom: DslBuilder<Int> = nullBuilder(),
-        var left: DslBuilder<Int> = nullBuilder(),
-        var right: DslBuilder<Int> = nullBuilder()
-    ) : InsetsBuilder(),
-        DslBuilder<Insets> by dslBuilder({
-            Insets.of(
-                top.built ?: return@dslBuilder null,
-                bottom.built ?: return@dslBuilder null,
-                left.built ?: return@dslBuilder null,
-                right.built ?: return@dslBuilder null
-            )
-        }) {
-        fun vertical(v: DslBuilder<Int>) {
-            top = v
-            bottom = v
-        }
-
-        fun horizontal(h: DslBuilder<Int>) {
-            left = h
-            right = h
-        }
-
-        fun both(h: DslBuilder<Int>, v: DslBuilder<Int>) {
-            horizontal(h)
-            vertical(v)
-        }
-
-        fun of(v: DslBuilder<Int>) = both(v, v)
-
-        fun none() = of(dslBuilder { 0 })
+abstract class InsetsBuilder(
+    var top: Int = 0,
+    var bottom: Int = 0,
+    var left: Int = 0,
+    var right: Int = 0
+) : DslBuilder<Insets> by dslBuilder({ Insets.of(top, bottom, left, right) }) {
+    fun vertical(v: Int) {
+        top = v
+        bottom = v
     }
+
+    fun horizontal(h: Int) {
+        left = h
+        right = h
+    }
+
+    fun both(h: Int, v: Int) {
+        horizontal(h)
+        vertical(v)
+    }
+
+    fun of(v: Int) = both(v, v)
+
+    fun none() = of(0)
 }

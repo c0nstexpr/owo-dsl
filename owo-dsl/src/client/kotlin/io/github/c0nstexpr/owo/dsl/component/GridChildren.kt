@@ -6,12 +6,12 @@ import io.wispforest.owo.ui.core.Component
 
 interface GridChildren {
     var children: DslBuilder<Map<GridIndex, Component>>
-    var rows: DslBuilder<Int>
-    var columns: DslBuilder<Int>
+    var rows: Int
+    var columns: Int
 }
 
 fun gridChildren() = object : GridChildren {
     override var children = nullBuilder<Map<GridIndex, Component>>()
-    override var rows = nullBuilder<Int>()
-    override var columns = nullBuilder<Int>()
+    override var rows = 0
+    override var columns = 0
 }

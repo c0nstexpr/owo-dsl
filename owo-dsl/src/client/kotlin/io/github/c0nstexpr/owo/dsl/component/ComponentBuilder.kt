@@ -3,8 +3,8 @@ package io.github.c0nstexpr.owo.dsl.component
 import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.github.c0nstexpr.owo.dsl.OwoAnimation
+import io.github.c0nstexpr.owo.dsl.OwoAnimation.Companion.animate
 import io.github.c0nstexpr.owo.dsl.SizingBuilder
-import io.github.c0nstexpr.owo.dsl.animate
 import io.wispforest.owo.ui.core.Component
 import io.wispforest.owo.ui.core.CursorStyle
 import io.wispforest.owo.ui.core.Insets
@@ -29,17 +29,17 @@ interface ComponentBuilder {
 
     var verticalSizingAnimation: DslBuilder<OwoAnimation<Sizing>>
 
-    var id: DslBuilder<String>
+    var id: String?
 
-    var tooltip: DslBuilder<List<TooltipComponent>>
+    var tooltip: List<TooltipComponent>
 
-    var zIndex: DslBuilder<Int>
+    var zIndex: Int?
 
-    var cursor: DslBuilder<CursorStyle>
+    var cursor: CursorStyle?
 
-    var x: DslBuilder<Int>
+    var x: Int?
 
-    var y: DslBuilder<Int>
+    var y: Int?
 
     fun build(): Component?
 
@@ -48,16 +48,16 @@ interface ComponentBuilder {
         margins.built?.let(component::margins)
         horizontalSizing.built?.let(component::horizontalSizing)
         verticalSizing.built?.let(component::verticalSizing)
-        positioningAnimation.built?.let(component.positioning()::animate)
-        marginsAnimation.built?.let(component.margins()::animate)
-        horizontalSizingAnimation.built?.let(component.horizontalSizing()::animate)
-        verticalSizingAnimation.built?.let(component.verticalSizing()::animate)
-        id.built?.let(component::id)
-        tooltip.built?.let(component::tooltip)
-        zIndex.built?.let(component::zIndex)
-        cursor.built?.let(component::cursorStyle)
-        x.built?.let(component::updateX)
-        y.built?.let(component::updateY)
+        positioningAnimation.built?.let { component.positioning().animate(it) }
+        marginsAnimation.built?.let { component.margins().animate(it) }
+        horizontalSizingAnimation.built?.let { component.horizontalSizing().animate(it) }
+        verticalSizingAnimation.built?.let { component.verticalSizing().animate(it) }
+        id?.let(component::id)
+        tooltip.let(component::tooltip)
+        zIndex?.let(component::zIndex)
+        cursor?.let(component::cursorStyle)
+        x?.let(component::updateX)
+        y?.let(component::updateY)
     }
 
     fun sizing(block: SizingBuilder) {

@@ -6,8 +6,7 @@ import org.joml.Vector3f
 
 interface RotationAxisBuilder : DslBuilder<RotationAxis> {
     companion object {
-        fun DslBuilder<Vector3f>.toRotationAxis(): RotationAxisBuilder = object :
-            RotationAxisBuilder,
+        fun DslBuilder<Vector3f>.toRotationAxis() = object :
             DslBuilder<RotationAxis> by dslBuilder({ built?.let(RotationAxis::of) }) {}
     }
 }

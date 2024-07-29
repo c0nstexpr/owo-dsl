@@ -1,24 +1,15 @@
 package io.github.c0nstexpr.owo.dsl
 
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
-import net.minecraft.block.Block
-import net.minecraft.command.argument.BlockArgumentParser
+import net.minecraft.block.BlockState
 import net.minecraft.command.argument.BlockArgumentParser.BlockResult
-import net.minecraft.registry.Registries
-import net.minecraft.registry.RegistryWrapper
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.state.property.Property
 
-abstract class BlockResultBuilder : DslBuilder<BlockResult> {
-    class Parse(
-        var string: DslBuilder<String> = nullBuilder(),
-        var registry: DslBuilder<RegistryWrapper<Block>> =
-            dslBuilder { Registries.BLOCK.readOnlyWrapper!! },
-        var allowNbt: DslBuilder<Boolean> = dslBuilder { true }
-    ) : BlockResultBuilder(),
-        DslBuilder<BlockResult> by dslBuilder({
-            val r = registry.built ?: return@dslBuilder null
-            val s = string.built ?: return@dslBuilder null
-            val a = allowNbt.built ?: return@dslBuilder null
-
-            BlockArgumentParser.block(r, s, a)
-        })
-}
+open class BlockResultBuilder(
+    var state: DslBuilder<BlockState> = nullBuilder(),
+    var properties: MutableMap<Property<*>, Comparable<*>> = mutableMapOf(),
+    var nbt: DslBuilder<NbtCompound> = nullBuilder()
+) : DslBuilder<BlockResult> by dslBuilder({
+        BlockResult(state.built ?: return@dslBuilder null, properties, nbt.built)
+})

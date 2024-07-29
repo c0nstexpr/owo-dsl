@@ -5,10 +5,9 @@ import io.github.c0nstexpr.owo.dsl.PosRect
 import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.TextureComponent
-import net.minecraft.util.Identifier
 
 open class TextureComponentBuilder : BaseComponentBuilder() {
-    var texture = nullBuilder<Identifier>()
+    var texture = nullBuilder<Id>()
 
     var u = nullBuilder<Int>()
 

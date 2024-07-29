@@ -6,8 +6,7 @@ import net.minecraft.text.Text
 
 interface OrderedTextBuilder : DslBuilder<OrderedText> {
     companion object {
-        fun DslBuilder<Text>.toOrderedText(): OrderedTextBuilder = object :
-            OrderedTextBuilder,
+        fun DslBuilder<Text>.toOrderedText() = object :
             DslBuilder<OrderedText> by dslBuilder({ built?.asOrderedText() }) {}
     }
 }

@@ -2,11 +2,10 @@ package io.github.c0nstexpr.owo.dsl
 
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import net.minecraft.client.texture.Sprite
-import net.minecraft.util.Identifier
 
 abstract class SpriteBuilder : DslBuilder<Sprite> {
     companion object {
-        val MC_ATLAS_ID = Identifier.of("textures/atlas/gui.png")!!
+        val MC_ATLAS_ID = Id.of("textures/atlas/gui.png")!!
 
         fun DslBuilder<SpriteId>.toSprite(): SpriteBuilder = object :
             SpriteBuilder(),

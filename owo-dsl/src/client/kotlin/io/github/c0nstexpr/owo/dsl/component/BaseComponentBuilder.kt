@@ -28,17 +28,17 @@ abstract class BaseComponentBuilder : ComponentBuilder {
 
     override var verticalSizingAnimation = nullBuilder<OwoAnimation<Sizing>>()
 
-    override var id = nullBuilder<String>()
+    override var id: String? = null
 
     override var tooltip = nullBuilder<List<TooltipComponent>>()
 
-    override var zIndex = nullBuilder<Int>()
+    override var zIndex: Int? = null
 
-    override var cursor = nullBuilder<CursorStyle>()
+    override var cursor: CursorStyle? = null
 
-    override var x = nullBuilder<Int>()
+    override var x: Int? = null
 
-    override var y = nullBuilder<Int>()
+    override var y: Int? = null
 
     var space = nullBuilder<Size>()
 
