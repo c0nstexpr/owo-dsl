@@ -25,13 +25,18 @@ reaktive = { module = "com.badoo.reaktive:reaktive-jvm", version = "latest.relea
 reaktive-utils = { module = "com.badoo.reaktive:utils-internal-jvm", version = "latest.release" }
 reaktive-annotations = { module = "com.badoo.reaktive:reaktive-annotations-jvm", version = "latest.release" }
 reaktive-coroutines-interop = { module = "com.badoo.reaktive:coroutines-interop-jvm", version = "latest.release" }
+ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version = "latest.release" }
+kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version = "latest.release" }
+kord-codegen = { module = "dev.kord.codegen:kotlinpoet", version = "latest.release" }
 
 [bundles]
 fabric = ["fabric-kotlin", "fabric-api", "fabric-loader"]
 
 reaktive = ["reaktive", "reaktive-utils", "reaktive-annotations", "reaktive-coroutines-interop"]
+ksp = ["ksp-api", "kotlinpoet-ksp", "kord-codegen"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "latest.release" }
 loom = { id = "fabric-loom", version = "latest.release" }
 spotless = { id = "com.diffplug.spotless", version = "latest.release" }
+ksp = { id = "com.google.devtools.ksp", version = "latest.release" }

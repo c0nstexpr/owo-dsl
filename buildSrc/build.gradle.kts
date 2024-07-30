@@ -13,7 +13,8 @@ dependencies {
     listOf(
         libs.plugins.kotlin.jvm,
         libs.plugins.loom,
-        libs.plugins.spotless
+        libs.plugins.spotless,
+        libs.plugins.ksp
     ).forEach { provider ->
         val p = provider.get()
         val id = p.pluginId
@@ -23,7 +24,6 @@ dependencies {
     }
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:latest.release")
-    implementation("com.squareup:kotlinpoet:latest.release")
 }
 
 tasks { compileJava { options.encoding = Charsets.UTF_8.name() } }

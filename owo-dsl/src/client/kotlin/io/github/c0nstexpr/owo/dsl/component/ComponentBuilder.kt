@@ -4,6 +4,7 @@ import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.github.c0nstexpr.owo.dsl.OwoAnimation
 import io.github.c0nstexpr.owo.dsl.OwoAnimation.Companion.animate
+import io.github.c0nstexpr.owo.dsl.OwoDslMarker
 import io.github.c0nstexpr.owo.dsl.SizingBuilder
 import io.wispforest.owo.ui.core.Component
 import io.wispforest.owo.ui.core.CursorStyle
@@ -12,6 +13,7 @@ import io.wispforest.owo.ui.core.Positioning
 import io.wispforest.owo.ui.core.Sizing
 import net.minecraft.client.gui.tooltip.TooltipComponent
 
+@OwoDslMarker
 interface ComponentBuilder {
     var positioning: DslBuilder<Positioning>
 

@@ -1,12 +1,11 @@
 plugins {
     id("kotlin-common")
+    id("com.google.devtools.ksp")
 }
 
-tasks {
-    val generate = register<Task>("generate") {
-        doLast {
-        }
-    }
+val processorProj = project(":processor")
 
-    build { dependsOn(generate) }
+dependencies {
+    implementation(processorProj)
+    ksp(processorProj)
 }

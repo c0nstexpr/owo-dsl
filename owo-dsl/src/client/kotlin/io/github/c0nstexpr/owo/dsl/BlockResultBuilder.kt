@@ -12,4 +12,4 @@ open class BlockResultBuilder(
     var nbt: DslBuilder<NbtCompound> = nullBuilder()
 ) : DslBuilder<BlockResult> by dslBuilder({
         BlockResult(state.built ?: return@dslBuilder null, properties, nbt.built)
-})
+    })

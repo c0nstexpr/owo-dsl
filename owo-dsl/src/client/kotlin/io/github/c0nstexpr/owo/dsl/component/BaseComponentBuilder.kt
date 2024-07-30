@@ -30,7 +30,7 @@ abstract class BaseComponentBuilder : ComponentBuilder {
 
     override var id: String? = null
 
-    override var tooltip = nullBuilder<List<TooltipComponent>>()
+    override var tooltip = listOf<TooltipComponent>()
 
     override var zIndex: Int? = null
 
