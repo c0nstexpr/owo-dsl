@@ -9,28 +9,28 @@ import net.minecraft.text.Text
 open class TextFieldWidgetBuilder : ClickableWidgetBuilder() {
     var placeholderBuilder = nullBuilder<Text>()
 
-    var text = nullBuilder<String>()
+    var text: String? = null
 
-    var maxLength = nullBuilder<Int>()
+    var maxLength: Int? = null
 
-    var drawsBackground = nullBuilder<Boolean>()
+    var drawsBackground: Boolean? = null
 
-    var editableColor = nullBuilder<Int>()
+    var editableColor: Int? = null
 
-    var uneditableColor = nullBuilder<Int>()
+    var uneditableColor: Int? = null
 
-    var editable = nullBuilder<Boolean>()
+    var editable: Boolean? = null
 
-    var focusUnlocked = nullBuilder<Boolean>()
+    var focusUnlocked: Boolean? = null
 
-    var visible = nullBuilder<Boolean>()
+    var visible: Boolean? = null
 
-    var suggestion = nullBuilder<String>()
+    var suggestion: String? = null
 
-    override fun build(): TextFieldWidget? = TextFieldWidget(
+    override fun buildComponent(): TextFieldWidget? = TextFieldWidget(
         textRenderer,
-        x.built ?: 0,
-        y.built ?: 0,
+        x ?: 0,
+        y ?: 0,
         0,
         0,
         Text.empty()
@@ -39,14 +39,14 @@ open class TextFieldWidgetBuilder : ClickableWidgetBuilder() {
     protected fun applyTo(component: TextFieldWidget) {
         super.applyTo(component)
         placeholderBuilder.built?.let(component::setPlaceholder)
-        text.built?.let(component::setText)
-        maxLength.built?.let(component::setMaxLength)
-        drawsBackground.built?.let(component::setDrawsBackground)
-        editableColor.built?.let(component::setEditableColor)
-        uneditableColor.built?.let(component::setUneditableColor)
-        editable.built?.let(component::setEditable)
-        focusUnlocked.built?.let(component::setFocusUnlocked)
-        visible.built?.let(component::setVisible)
-        suggestion.built?.let(component::setSuggestion)
+        text?.let(component::setText)
+        maxLength?.let(component::setMaxLength)
+        drawsBackground?.let(component::setDrawsBackground)
+        editableColor?.let(component::setEditableColor)
+        uneditableColor?.let(component::setUneditableColor)
+        editable?.let(component::setEditable)
+        focusUnlocked?.let(component::setFocusUnlocked)
+        visible?.let(component::setVisible)
+        suggestion?.let(component::setSuggestion)
     }
 }

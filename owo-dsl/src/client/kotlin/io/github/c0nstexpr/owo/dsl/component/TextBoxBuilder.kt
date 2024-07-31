@@ -5,10 +5,11 @@ import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.TextBoxComponent
 
 open class TextBoxBuilder : TextFieldWidgetBuilder() {
-    override fun build() = horizontalSizing.built?.let(Components::textBox)?.also(::applyTo)
+    override fun buildComponent() =
+        horizontalSizing.built?.let(Components::textBox)?.also(::applyTo)
 
     protected fun applyTo(component: TextBoxComponent) {
         super.applyTo(component)
-        text.built?.let(component::text)
+        text?.let(component::text)
     }
 }

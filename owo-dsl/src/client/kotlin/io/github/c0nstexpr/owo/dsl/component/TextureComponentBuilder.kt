@@ -1,6 +1,7 @@
 package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.Id
 import io.github.c0nstexpr.owo.dsl.PosRect
 import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
@@ -9,31 +10,31 @@ import io.wispforest.owo.ui.component.TextureComponent
 open class TextureComponentBuilder : BaseComponentBuilder() {
     var texture = nullBuilder<Id>()
 
-    var u = nullBuilder<Int>()
+    var u: Int? = null
 
-    var v = nullBuilder<Int>()
+    var v: Int? = null
 
-    var regionWidth = nullBuilder<Int>()
+    var regionWidth: Int? = null
 
-    var regionHeight = nullBuilder<Int>()
+    var regionHeight: Int? = null
 
-    var textureWidth = nullBuilder<Int>()
+    var textureWidth = DEFAULT_TEXTURE_LENGTH
 
-    var textureHeight = nullBuilder<Int>()
+    var textureHeight = DEFAULT_TEXTURE_LENGTH
 
     var visibleArea = nullBuilder<PosRect>()
 
-    var blend = nullBuilder<Boolean>()
+    var blend: Boolean? = null
 
-    override fun build(): TextureComponent? {
+    override fun buildComponent(): TextureComponent? {
         return Components.texture(
             texture.built ?: return null,
-            u.built ?: return null,
-            v.built ?: return null,
-            regionWidth.built ?: return null,
-            regionHeight.built ?: return null,
-            textureWidth.built ?: DEFAULT_TEXTURE_LENGTH,
-            textureHeight.built ?: DEFAULT_TEXTURE_LENGTH
+            u ?: return null,
+            v ?: return null,
+            regionWidth ?: return null,
+            regionHeight ?: return null,
+            textureWidth,
+            textureHeight
         ).also(::applyTo)
     }
 
@@ -44,6 +45,6 @@ open class TextureComponentBuilder : BaseComponentBuilder() {
     protected fun applyTo(component: TextureComponent) {
         (this as BaseComponentBuilder).applyTo(component)
         visibleArea.built?.let(component::visibleArea)
-        blend.built?.let(component::blend)
+        blend?.let(component::blend)
     }
 }

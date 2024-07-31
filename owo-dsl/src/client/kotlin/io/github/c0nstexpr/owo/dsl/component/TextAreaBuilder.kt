@@ -1,16 +1,15 @@
 package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
-import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.TextAreaComponent
 
 open class TextAreaBuilder : EditBoxBuilder() {
-    var displayCharCount = nullBuilder<Boolean>()
+    var displayCharCount: Boolean? = null
 
-    var maxLines = nullBuilder<Int>()
+    var maxLines: Int? = null
 
-    override fun build(): TextAreaComponent? {
+    override fun buildComponent(): TextAreaComponent? {
         return Components.textArea(
             horizontalSizing.built ?: return null,
             verticalSizing.built ?: return null
@@ -19,7 +18,7 @@ open class TextAreaBuilder : EditBoxBuilder() {
 
     protected fun applyTo(component: TextAreaComponent) {
         super.applyTo(component)
-        displayCharCount.built?.let(component::displayCharCount)
-        maxLines.built?.let(component::maxLines)
+        displayCharCount?.let(component::displayCharCount)
+        maxLines?.let(component::maxLines)
     }
 }

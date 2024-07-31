@@ -1,5 +1,5 @@
 plugins { `kotlin-common` }
 
-dependencies {
-    implementation(libs.bundles.ksp)
-}
+repositories { maven("https://oss.sonatype.org/content/repositories/snapshots") }
+
+dependencies { implementation(libs.bundles.ksp) }

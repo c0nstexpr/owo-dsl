@@ -2,6 +2,7 @@ package io.github.c0nstexpr.owo.dsl.component
 
 import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.core.HorizontalAlignment
 import io.wispforest.owo.ui.core.Insets
 import io.wispforest.owo.ui.core.ParentComponent
@@ -9,20 +10,40 @@ import io.wispforest.owo.ui.core.Surface
 import io.wispforest.owo.ui.core.VerticalAlignment
 
 interface ParentComponentBuilder : ComponentBuilder {
-    var verticalAlignment: DslBuilder<VerticalAlignment>
-    var horizontalAlignment: DslBuilder<HorizontalAlignment>
+    var verticalAlignment: VerticalAlignment?
+
+    var horizontalAlignment: HorizontalAlignment?
+
     var padding: DslBuilder<Insets>
-    var allowOverflow: DslBuilder<Boolean>
+
+    var allowOverflow: Boolean?
+
     var surface: DslBuilder<Surface>
 
-    override fun build(): ParentComponent?
+    override fun buildComponent(): ParentComponent? = null
 
     fun applyTo(component: ParentComponent) {
         super.applyTo(component)
-        verticalAlignment.built?.let(component::verticalAlignment)
-        horizontalAlignment.built?.let(component::horizontalAlignment)
+        verticalAlignment?.let(component::verticalAlignment)
+        horizontalAlignment?.let(component::horizontalAlignment)
         padding.built?.let(component::padding)
-        allowOverflow.built?.let(component::allowOverflow)
+        allowOverflow?.let(component::allowOverflow)
         surface.built?.let(component::surface)
     }
+}
+
+fun parentComponent(): ParentComponentBuilder = object :
+    ParentComponentBuilder,
+    ComponentBuilder by component() {
+    override var verticalAlignment: VerticalAlignment? = null
+
+    override var horizontalAlignment: HorizontalAlignment? = null
+
+    override var padding: DslBuilder<Insets> = nullBuilder()
+
+    override var allowOverflow: Boolean? = null
+
+    override var surface: DslBuilder<Surface> = nullBuilder()
+
+    override fun buildComponent(): ParentComponent? = null
 }

@@ -6,8 +6,7 @@ import net.minecraft.registry.Registries
 
 abstract class ItemBuilder : DslBuilder<Item> {
     companion object {
-        fun DslBuilder<Id>.toItem(): ItemBuilder = object :
-            ItemBuilder(),
+        fun DslBuilder<Id>.toItem() = object :
             DslBuilder<Item> by dslBuilder({ Registries.ITEM.get(built) }) {}
     }
 }

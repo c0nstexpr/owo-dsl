@@ -1,10 +1,9 @@
 package io.github.c0nstexpr.owo.dsl.component
 
-import io.github.c0nstexpr.owo.dsl.nullBuilder
 import net.minecraft.client.gui.widget.SliderWidget
 
 abstract class SliderWidgetBuilder : ClickableWidgetBuilder() {
-    var value = nullBuilder<Double>()
+    var value: Double = .0
 
-    abstract override fun build(): SliderWidget?
+    override fun buildComponent(): SliderWidget? = null
 }

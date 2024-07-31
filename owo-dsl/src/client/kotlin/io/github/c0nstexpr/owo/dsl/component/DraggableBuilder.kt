@@ -1,5 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.container.Containers
@@ -7,12 +8,11 @@ import io.wispforest.owo.ui.container.DraggableContainer
 import io.wispforest.owo.ui.container.ScrollContainer.ScrollDirection
 import io.wispforest.owo.ui.core.Component
 
-open class DraggableBuilder<T : Component> : WrappingParentBuilder<T>() {
-    var direction = nullBuilder<ScrollDirection>()
-
-    var foreheadSize = nullBuilder<Int>()
-
-    override fun build(): DraggableContainer<T>? {
+open class DraggableBuilder<T : Component>(
+    var direction: DslBuilder<ScrollDirection> = nullBuilder(),
+    var foreheadSize: Int? = null
+) : WrappingParentBuilder<T>() {
+    override fun buildComponent(): DraggableContainer<T>? {
         return Containers.draggable(
             horizontalSizing.built ?: return null,
             verticalSizing.built ?: return null,
@@ -22,6 +22,6 @@ open class DraggableBuilder<T : Component> : WrappingParentBuilder<T>() {
 
     protected fun applyTo(component: DraggableContainer<T>) {
         super.applyTo(component)
-        foreheadSize.built?.let(component::foreheadSize)
+        foreheadSize?.let(component::foreheadSize)
     }
 }

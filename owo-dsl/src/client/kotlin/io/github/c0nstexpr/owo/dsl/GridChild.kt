@@ -1,5 +1,5 @@
 package io.github.c0nstexpr.owo.dsl
 
-import io.github.c0nstexpr.owo.dsl.component.GridIndex
+import io.wispforest.owo.ui.core.Component
 
-data class GridChild<out T : Any>(val index: GridIndex, val child: T)
+data class GridChild(val index: GridIndex, val child: Component)

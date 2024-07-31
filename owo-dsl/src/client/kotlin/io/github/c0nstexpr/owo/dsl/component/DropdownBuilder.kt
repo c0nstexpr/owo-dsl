@@ -1,20 +1,22 @@
 package io.github.c0nstexpr.owo.dsl.component
 
+import io.github.c0nstexpr.owo.dsl.DropdownChild
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
-import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.component.Components
 import io.wispforest.owo.ui.component.DropdownComponent
 
-open class DropdownBuilder : FlowLayoutBuilder() {
-    var list = nullBuilder<List<DropdownComponent.() -> Unit>>()
-
-    var closeWhenNotHovered = nullBuilder<Boolean>()
-
-    override fun build() = horizontalSizing.built?.let(Components::dropdown)?.also(::applyTo)
+open class DropdownBuilder(
+    var list: List<DslBuilder<DropdownChild>> = listOf(),
+    var closeWhenNotHovered: Boolean? = null
+) : FlowLayoutBuilder() {
+    override fun buildComponent() =
+        horizontalSizing.built?.let(Components::dropdown)?.also(::applyTo)
 
     protected fun applyTo(component: DropdownComponent) {
         super.applyTo(component)
-        list.built?.forEach { component.it() }
-        closeWhenNotHovered.built?.let(component::closeWhenNotHovered)
+
+        run { list.map { it.built ?: return@run }.toList().forEach { it.applyTo(component) } }
+        closeWhenNotHovered?.let(component::closeWhenNotHovered)
     }
 }

@@ -5,7 +5,8 @@ import io.wispforest.owo.ui.core.Surface
 import io.wispforest.owo.ui.util.NinePatchTexture
 
 open class PanelInsetSurfaceBuilder(var inset: Int = 0) :
-    DslBuilder<Surface> by dslBuilder({
+    DslBuilder<Surface> by
+    dslBuilder({
         val inset2 = inset * 2
 
         Surface { context, component ->

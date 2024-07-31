@@ -9,21 +9,21 @@ import io.wispforest.owo.ui.component.SlimSliderComponent.Axis
 open class SlimSliderBuilder : BaseComponentBuilder() {
     var axis = nullBuilder<Axis>()
 
-    var value = nullBuilder<Double>()
+    var value: Double? = null
 
-    var min = nullBuilder<Double>()
+    var min = .0
 
-    var max = nullBuilder<Double>()
+    var max: Double? = null
 
-    var stepSize = nullBuilder<Double>()
+    var stepSize: Double? = null
 
-    override fun build() = axis.built?.let(Components::slimSlider)?.also(::applyTo)
+    override fun buildComponent() = axis.built?.let(Components::slimSlider)?.also(::applyTo)
 
     protected fun applyTo(component: SlimSliderComponent) {
         super.applyTo(component)
-        value.built?.let { component.value(it) }
-        min.built?.let { component.min(it) }
-        max.built?.let { component.max(it) }
-        stepSize.built?.let { component.stepSize(it) }
+        value?.let(component::value)
+        component.min(min)
+        max?.let(component::max)
+        stepSize?.let(component::stepSize)
     }
 }

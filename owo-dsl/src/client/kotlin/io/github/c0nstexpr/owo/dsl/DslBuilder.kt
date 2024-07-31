@@ -6,6 +6,8 @@ interface DslBuilder<out T : Any> {
 
     fun build() = Unit
 
+    fun clear() = Unit
+
     companion object {
         inline val <T : Any> DslBuilder<T>.built: T?
             get() {
@@ -16,8 +18,6 @@ interface DslBuilder<out T : Any> {
         inline val <T : Any> T?.owoValue: DslBuilder<T>
             get() = object : DslBuilder<T> {
                 override val cached get() = this@owoValue
-
-                override fun build() = Unit
             }
     }
 }
@@ -28,5 +28,9 @@ fun <T : Any> dslBuilder(buildBlock: () -> T?): DslBuilder<T> = object : DslBuil
 
     override fun build() {
         if (cached == null) cached = buildBlock()
+    }
+
+    override fun clear() {
+        cached = null
     }
 }

@@ -3,6 +3,8 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+repositories { maven("https://oss.sonatype.org/content/repositories/snapshots") }
+
 val processorProj = project(":processor")
 
 dependencies {

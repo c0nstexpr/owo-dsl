@@ -9,13 +9,17 @@ open class PositioningBuilder(
     var y: Int? = null,
     var type: DslBuilder<Type> = nullBuilder()
 ) : DslBuilder<Positioning> by dslBuilder({
+        val t = type.built ?: return@dslBuilder null
+
+        if (t == Type.LAYOUT) return@dslBuilder Positioning.layout()
+
         val px = x ?: return@dslBuilder null
         val py = y ?: return@dslBuilder null
 
-        when (type.built ?: return@dslBuilder null) {
-            Type.LAYOUT -> Positioning.layout().withX(px).withY(py)
+        when (t) {
             Type.ABSOLUTE -> Positioning.absolute(px, py)
             Type.RELATIVE -> Positioning.relative(px, py)
             Type.ACROSS -> Positioning.across(px, py)
+            else -> null
     }
 })

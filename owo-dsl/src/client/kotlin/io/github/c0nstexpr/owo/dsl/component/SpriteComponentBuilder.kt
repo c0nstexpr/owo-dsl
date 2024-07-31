@@ -9,12 +9,12 @@ import net.minecraft.client.texture.Sprite
 open class SpriteComponentBuilder : BaseComponentBuilder() {
     var sprite = nullBuilder<Sprite>()
 
-    var blend = nullBuilder<Boolean>()
+    var blend: Boolean? = null
 
-    override fun build() = sprite.built?.let(Components::sprite)?.also(::applyTo)
+    override fun buildComponent() = sprite.built?.let(Components::sprite)?.also(::applyTo)
 
     protected fun applyTo(component: SpriteComponent) {
         super.applyTo(component)
-        blend.built?.let(component::blend)
+        blend?.let(component::blend)
     }
 }

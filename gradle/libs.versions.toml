@@ -27,7 +27,7 @@ reaktive-annotations = { module = "com.badoo.reaktive:reaktive-annotations-jvm",
 reaktive-coroutines-interop = { module = "com.badoo.reaktive:coroutines-interop-jvm", version = "latest.release" }
 ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version = "latest.release" }
 kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version = "latest.release" }
-kord-codegen = { module = "dev.kord.codegen:kotlinpoet", version = "latest.release" }
+kord-codegen = { module = "dev.kord.codegen:kotlinpoet", version = "main-SNAPSHOT" }
 
 [bundles]
 fabric = ["fabric-kotlin", "fabric-api", "fabric-loader"]

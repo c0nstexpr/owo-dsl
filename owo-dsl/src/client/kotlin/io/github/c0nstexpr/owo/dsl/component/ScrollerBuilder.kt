@@ -1,5 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.container.Containers
@@ -8,18 +9,14 @@ import io.wispforest.owo.ui.container.ScrollContainer.ScrollDirection
 import io.wispforest.owo.ui.container.ScrollContainer.Scrollbar
 import io.wispforest.owo.ui.core.Component
 
-open class ScrollerBuilder<T : Component> : WrappingParentBuilder<T>() {
-    var direction = nullBuilder<ScrollDirection>()
-
-    var scrollbarThickness = nullBuilder<Int>()
-
-    var scrollbar = nullBuilder<Scrollbar>()
-
-    var scrollStep = nullBuilder<Int>()
-
-    var fixedScrollbarLength = nullBuilder<Int>()
-
-    override fun build(): ScrollContainer<T>? {
+open class ScrollerBuilder<T : Component>(
+    var direction: DslBuilder<ScrollDirection> = nullBuilder(),
+    var scrollbarThickness: Int? = null,
+    var scrollbar: DslBuilder<Scrollbar> = nullBuilder(),
+    var scrollStep: Int? = null,
+    var fixedScrollbarLength: Int? = null
+) : WrappingParentBuilder<T>() {
+    override fun buildComponent(): ScrollContainer<T>? {
         val h = horizontalSizing.built ?: return null
         val v = verticalSizing.built ?: return null
         val c = child.built ?: return null
@@ -32,9 +29,9 @@ open class ScrollerBuilder<T : Component> : WrappingParentBuilder<T>() {
 
     protected fun applyTo(component: ScrollContainer<T>) {
         super.applyTo(component)
-        scrollbarThickness.built?.let(component::scrollbarThiccness)
+        scrollbarThickness?.let(component::scrollbarThiccness)
         scrollbar.built?.let(component::scrollbar)
-        scrollStep.built?.let(component::scrollStep)
-        fixedScrollbarLength.built?.let(component::fixedScrollbarLength)
+        scrollStep?.let(component::scrollStep)
+        fixedScrollbarLength?.let(component::fixedScrollbarLength)
     }
 }

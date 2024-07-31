@@ -6,8 +6,8 @@ import io.wispforest.owo.ui.container.StackLayout
 
 open class StackLayoutBuilder :
     BaseParentComponentBuilder(),
-    ListChildren by listChildren() {
-    override fun build(): StackLayout? {
+    ListChildrenBuilder by listChildren() {
+    override fun buildComponent(): StackLayout? {
         return Containers.stack(
             horizontalSizing.built ?: return null,
             verticalSizing.built ?: return null
@@ -16,6 +16,6 @@ open class StackLayoutBuilder :
 
     protected fun applyTo(component: StackLayout) {
         super.applyTo(component)
-        children.built?.forEach(component::child)
+        children.map { it.built ?: return }.toList().forEach(component::child)
     }
 }

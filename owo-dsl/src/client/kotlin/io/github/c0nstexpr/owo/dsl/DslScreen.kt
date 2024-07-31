@@ -20,6 +20,11 @@ open class DslScreen<Layout : ParentComponent>(
     override fun build(rootComponent: Layout) {
     }
 
+    override fun clearChildren() {
+        layoutBlock.clear()
+        super.clearChildren()
+    }
+
     override fun close() {
         client?.setScreen(parent)
     }

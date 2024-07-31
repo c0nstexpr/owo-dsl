@@ -1,19 +1,18 @@
 package io.github.c0nstexpr.owo.dsl.component
 
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.container.Containers
 import io.wispforest.owo.ui.container.FlowLayout
 import io.wispforest.owo.ui.container.FlowLayout.Algorithm
 
-open class FlowLayoutBuilder :
-    BaseParentComponentBuilder(),
-    ListChildren by listChildren() {
-    var algo = nullBuilder<Algorithm>()
-
-    var gap = nullBuilder<Int>()
-
-    override fun build(): FlowLayout? {
+open class FlowLayoutBuilder(
+    var algo: DslBuilder<Algorithm> = nullBuilder<Algorithm>(),
+    var gap: Int? = null
+) : BaseParentComponentBuilder(),
+    ListChildrenBuilder by listChildren() {
+    override fun buildComponent(): FlowLayout? {
         val horizontalSizing = horizontalSizing.built ?: return null
         val verticalSizing = verticalSizing.built ?: return null
 
@@ -27,7 +26,11 @@ open class FlowLayoutBuilder :
 
     protected fun applyTo(component: FlowLayout) {
         super.applyTo(component)
-        children.built?.forEach(component::child)
-        gap.built?.let(component::gap)
+
+        run {
+            children.map { it.built ?: return@run null }.toList().forEach(component::child)
+        }
+
+        gap?.let(component::gap)
     }
 }

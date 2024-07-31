@@ -1,5 +1,6 @@
 package io.github.c0nstexpr.owo.dsl.component
 
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.base.BaseParentComponent
 import io.wispforest.owo.ui.core.HorizontalAlignment
@@ -10,17 +11,17 @@ import io.wispforest.owo.ui.core.VerticalAlignment
 abstract class BaseParentComponentBuilder :
     BaseComponentBuilder(),
     ParentComponentBuilder {
-    override var verticalAlignment = nullBuilder<VerticalAlignment>()
+    override var verticalAlignment: VerticalAlignment? = null
 
-    override var horizontalAlignment = nullBuilder<HorizontalAlignment>()
+    override var horizontalAlignment: HorizontalAlignment? = null
 
-    override var padding = nullBuilder<Insets>()
+    override var padding: DslBuilder<Insets> = nullBuilder()
 
-    override var allowOverflow = nullBuilder<Boolean>()
+    override var allowOverflow: Boolean? = null
 
-    override var surface = nullBuilder<Surface>()
+    override var surface: DslBuilder<Surface> = nullBuilder()
 
-    abstract override fun build(): BaseParentComponent?
+    override fun buildComponent(): BaseParentComponent? = null
 
     protected fun applyTo(component: BaseParentComponent) {
         super<BaseComponentBuilder>.applyTo(component)

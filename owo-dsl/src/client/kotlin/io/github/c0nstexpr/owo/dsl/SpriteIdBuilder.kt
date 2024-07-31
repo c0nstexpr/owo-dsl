@@ -5,9 +5,9 @@ import net.minecraft.client.util.SpriteIdentifier
 
 typealias SpriteId = SpriteIdentifier
 
-abstract class SpriteIdBuilder(
+open class SpriteIdBuilder(
     var atlas: DslBuilder<Id> = nullBuilder(),
     var texture: DslBuilder<Id> = nullBuilder()
 ) : DslBuilder<SpriteId> by dslBuilder({
         SpriteId(atlas.built ?: return@dslBuilder null, texture.built ?: return@dslBuilder null)
-})
+    })

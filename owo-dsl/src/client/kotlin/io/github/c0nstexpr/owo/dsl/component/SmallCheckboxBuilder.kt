@@ -9,15 +9,15 @@ import net.minecraft.text.Text
 open class SmallCheckboxBuilder : BaseComponentBuilder() {
     var label = nullBuilder<Text>()
 
-    var checked = nullBuilder<Boolean>()
+    var checked = false
 
-    var labelShadow = nullBuilder<Boolean>()
+    var labelShadow: Boolean? = null
 
-    override fun build() = label.built?.let(Components::smallCheckbox)?.also(::applyTo)
+    override fun buildComponent() = label.built?.let(Components::smallCheckbox)?.also(::applyTo)
 
     protected fun applyTo(component: SmallCheckboxComponent) {
         super.applyTo(component)
-        checked.built?.let(component::checked)
-        labelShadow.built?.let(component::labelShadow)
+        component.checked(checked)
+        labelShadow?.let(component::labelShadow)
     }
 }

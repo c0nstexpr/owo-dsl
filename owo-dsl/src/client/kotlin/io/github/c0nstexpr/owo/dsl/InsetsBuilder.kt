@@ -2,7 +2,7 @@ package io.github.c0nstexpr.owo.dsl
 
 import io.wispforest.owo.ui.core.Insets
 
-abstract class InsetsBuilder(
+open class InsetsBuilder(
     var top: Int = 0,
     var bottom: Int = 0,
     var left: Int = 0,

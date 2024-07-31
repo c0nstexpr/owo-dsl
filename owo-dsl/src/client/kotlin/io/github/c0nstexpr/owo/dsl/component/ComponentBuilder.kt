@@ -6,6 +6,7 @@ import io.github.c0nstexpr.owo.dsl.OwoAnimation
 import io.github.c0nstexpr.owo.dsl.OwoAnimation.Companion.animate
 import io.github.c0nstexpr.owo.dsl.OwoDslMarker
 import io.github.c0nstexpr.owo.dsl.SizingBuilder
+import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.core.Component
 import io.wispforest.owo.ui.core.CursorStyle
 import io.wispforest.owo.ui.core.Insets
@@ -43,7 +44,7 @@ interface ComponentBuilder {
 
     var y: Int?
 
-    fun build(): Component?
+    fun buildComponent(): Component? = null
 
     fun applyTo(component: Component) {
         positioning.built?.let(component::positioning)
@@ -66,4 +67,34 @@ interface ComponentBuilder {
         horizontalSizing = block
         verticalSizing = block
     }
+}
+
+fun component() = object : ComponentBuilder {
+    override var positioning = nullBuilder<Positioning>()
+
+    override var margins = nullBuilder<Insets>()
+
+    override var horizontalSizing = nullBuilder<Sizing>()
+
+    override var verticalSizing = nullBuilder<Sizing>()
+
+    override var positioningAnimation = nullBuilder<OwoAnimation<Positioning>>()
+
+    override var marginsAnimation = nullBuilder<OwoAnimation<Insets>>()
+
+    override var horizontalSizingAnimation = nullBuilder<OwoAnimation<Sizing>>()
+
+    override var verticalSizingAnimation = nullBuilder<OwoAnimation<Sizing>>()
+
+    override var id: String? = null
+
+    override var tooltip: List<TooltipComponent> = emptyList()
+
+    override var zIndex: Int? = null
+
+    override var cursor: CursorStyle? = null
+
+    override var x: Int? = null
+
+    override var y: Int? = null
 }

@@ -1,29 +1,26 @@
 package io.github.c0nstexpr.owo.dsl.component
 
+import io.github.c0nstexpr.owo.dsl.DslBuilder
 import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.github.c0nstexpr.owo.dsl.textRenderer
 import net.minecraft.client.gui.widget.EditBoxWidget
 import net.minecraft.text.Text
 
-open class EditBoxBuilder : ScrollableWidgetBuilder() {
-    var placeholder = nullBuilder<Text>()
-
-    var maxLength = nullBuilder<Int>()
-
-    var text = nullBuilder<String>()
-
-    val width = nullBuilder<Int>()
-
-    val height = nullBuilder<Int>()
-
-    override fun build(): EditBoxWidget? {
+open class EditBoxBuilder(
+    var placeholder: DslBuilder<Text> = nullBuilder(),
+    var maxLength: Int? = null,
+    var text: String? = null,
+    val width: Int? = null,
+    val height: Int? = null
+) : ScrollableWidgetBuilder() {
+    override fun buildComponent(): EditBoxWidget? {
         return EditBoxWidget(
             textRenderer,
-            x.built ?: 0,
-            y.built ?: 0,
-            width.built ?: 0,
-            height.built ?: 0,
+            x ?: 0,
+            y ?: 0,
+            width ?: 0,
+            height ?: 0,
             placeholder.built ?: Text.empty(),
             message.built ?: return null
         ).also(::applyTo)
@@ -31,7 +28,7 @@ open class EditBoxBuilder : ScrollableWidgetBuilder() {
 
     protected fun applyTo(component: EditBoxWidget) {
         super.applyTo(component)
-        maxLength.built?.let(component::setMaxLength)
-        text.built?.let(component::setText)
+        maxLength?.let(component::setMaxLength)
+        text?.let(component::setText)
     }
 }
