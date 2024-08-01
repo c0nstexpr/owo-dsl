@@ -32,9 +32,9 @@ interface ParentComponentProvider : ComponentProvider {
     }
 }
 
-fun parentComponent(): ParentComponentProvider = object :
+fun parentComponentProvider(): ParentComponentProvider = object :
     ParentComponentProvider,
-    ComponentProvider by component() {
+    ComponentProvider by componentProvider() {
     override var verticalAlignment: VerticalAlignment? = null
 
     override var horizontalAlignment: HorizontalAlignment? = null

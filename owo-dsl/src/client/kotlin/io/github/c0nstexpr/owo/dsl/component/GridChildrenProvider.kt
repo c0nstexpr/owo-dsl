@@ -11,8 +11,8 @@ interface GridChildrenProvider : ComponentProvider {
     var columns: Int
 }
 
-fun gridChildren(): GridChildrenProvider =
-    object : GridChildrenProvider, ComponentProvider by component() {
+fun gridChildrenProvider(): GridChildrenProvider =
+    object : GridChildrenProvider, ComponentProvider by componentProvider() {
         override var children = listOf<DslBuilder<GridChild>>()
 
         override var rows = 0

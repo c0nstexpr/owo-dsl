@@ -67,7 +67,7 @@ interface ComponentProvider {
     }
 }
 
-fun component() = object : ComponentProvider {
+fun componentProvider() = object : ComponentProvider {
     override var positioning = nullBuilder<Positioning>()
 
     override var margins = nullBuilder<Insets>()

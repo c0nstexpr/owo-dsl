@@ -11,7 +11,7 @@ open class FlowLayoutProvider(
     var algo: DslBuilder<Algorithm> = nullBuilder<Algorithm>(),
     var gap: Int? = null
 ) : BaseParentComponentProvider(),
-    ListChildrenBuilder by listChildren() {
+    ListChildrenProvider by listChildrenProvider() {
     override fun provide(): FlowLayout? {
         val horizontalSizing = horizontalSizing.built ?: return null
         val verticalSizing = verticalSizing.built ?: return null

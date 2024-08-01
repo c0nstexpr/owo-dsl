@@ -8,7 +8,7 @@ interface WrapperComponentProvider<T : Component> : ComponentProvider {
     var child: DslBuilder<T>
 }
 
-fun <T : Component> wrapperComponent(): WrapperComponentProvider<T> =
-    object : WrapperComponentProvider<T>, ComponentProvider by component() {
+fun <T : Component> wrapperComponentProvider(): WrapperComponentProvider<T> =
+    object : WrapperComponentProvider<T>, ComponentProvider by componentProvider() {
         override var child = nullBuilder<T>()
     }

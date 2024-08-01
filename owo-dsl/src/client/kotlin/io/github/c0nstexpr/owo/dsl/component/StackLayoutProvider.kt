@@ -6,7 +6,7 @@ import io.wispforest.owo.ui.container.StackLayout
 
 open class StackLayoutProvider :
     BaseParentComponentProvider(),
-    ListChildrenBuilder by listChildren() {
+    ListChildrenProvider by listChildrenProvider() {
     override fun provide(): StackLayout? {
         return Containers.stack(
             horizontalSizing.built ?: return null,

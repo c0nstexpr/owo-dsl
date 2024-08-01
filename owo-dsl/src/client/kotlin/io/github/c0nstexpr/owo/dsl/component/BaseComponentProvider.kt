@@ -5,7 +5,7 @@ import io.github.c0nstexpr.owo.dsl.nullBuilder
 import io.wispforest.owo.ui.base.BaseComponent
 import io.wispforest.owo.ui.core.Size
 
-abstract class BaseComponentProvider : ComponentProvider by component() {
+abstract class BaseComponentProvider : ComponentProvider by componentProvider() {
     var space = nullBuilder<Size>()
 
     override fun provide(): BaseComponent? = null
