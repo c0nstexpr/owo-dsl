@@ -1,6 +1,5 @@
 package io.github.c0nstexpr.owo.dsl
 
-import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.wispforest.owo.ui.component.DropdownComponent
 import io.wispforest.owo.ui.core.Sizing
 import net.minecraft.text.Text
@@ -11,8 +10,8 @@ open class DropdownNestedChildBuilder(
     var builder: (DropdownComponent) -> Unit = {}
 ) : DslBuilder<DropdownNestedChild> by dslBuilder({
         DropdownNestedChild(
-            txt.built ?: return@dslBuilder null,
-            horizontalSizing.built ?: return@dslBuilder null,
+            txt.value ?: return@dslBuilder null,
+            horizontalSizing.value ?: return@dslBuilder null,
             builder
         )
     })

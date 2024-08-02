@@ -1,6 +1,5 @@
 package io.github.c0nstexpr.owo.dsl
 
-import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import net.minecraft.client.texture.Sprite
 
 abstract class SpriteBuilder : DslBuilder<Sprite> {
@@ -10,7 +9,7 @@ abstract class SpriteBuilder : DslBuilder<Sprite> {
         fun DslBuilder<SpriteId>.toSprite(): SpriteBuilder = object :
             SpriteBuilder(),
             DslBuilder<Sprite> by dslBuilder({
-                built?.run {
+                value?.run {
                     if (atlasId == MC_ATLAS_ID) atlasManager.getSprite(
                         textureId
                     )!!

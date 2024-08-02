@@ -1,6 +1,5 @@
 package io.github.c0nstexpr.owo.dsl
 
-import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.wispforest.owo.ui.core.Color
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Formatting
@@ -16,12 +15,12 @@ open class ColorBuilder(
     }) {
     companion object {
         fun DslBuilder<DyeColor>.toColor() = object :
-            DslBuilder<Color> by dslBuilder({ built?.let(Color::ofDye) }) {}
+            DslBuilder<Color> by dslBuilder({ value?.let(Color::ofDye) }) {}
 
         fun DslBuilder<Formatting>.toColor() = object :
-            DslBuilder<Color> by dslBuilder({ built?.let(Color::ofFormatting) }) {}
+            DslBuilder<Color> by dslBuilder({ value?.let(Color::ofFormatting) }) {}
 
         fun DslBuilder<Node>.parseColor() = object :
-            DslBuilder<Color> by dslBuilder({ built?.let(Color::parse) }) {}
+            DslBuilder<Color> by dslBuilder({ value?.let(Color::parse) }) {}
     }
 }

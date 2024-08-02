@@ -1,6 +1,5 @@
 package io.github.c0nstexpr.owo.dsl
 
-import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import io.wispforest.owo.ui.core.Positioning
 import io.wispforest.owo.ui.core.Positioning.Type
 
@@ -9,7 +8,7 @@ open class PositioningBuilder(
     var y: Int? = null,
     var type: DslBuilder<Type> = nullBuilder()
 ) : DslBuilder<Positioning> by dslBuilder({
-        val t = type.built ?: return@dslBuilder null
+        val t = type.value ?: return@dslBuilder null
 
         if (t == Type.LAYOUT) return@dslBuilder Positioning.layout()
 
@@ -21,5 +20,5 @@ open class PositioningBuilder(
             Type.RELATIVE -> Positioning.relative(px, py)
             Type.ACROSS -> Positioning.across(px, py)
             else -> null
-    }
-})
+        }
+    })

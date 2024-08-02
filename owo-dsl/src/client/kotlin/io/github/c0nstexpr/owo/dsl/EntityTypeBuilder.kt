@@ -1,6 +1,5 @@
 package io.github.c0nstexpr.owo.dsl
 
-import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import net.minecraft.block.Block
 import net.minecraft.client.util.math.Vector2f
 import net.minecraft.entity.Entity
@@ -32,12 +31,12 @@ open class EntityTypeBuilder(
             { t, w -> factory(t, w) },
             spawn ?: return@dslBuilder null
         ).run {
-            dimensions.built?.let { dimensions(it.x, it.y) }
+            dimensions.value?.let { dimensions(it.x, it.y) }
             spawnBoxScale?.let(::spawnBoxScale)
             eyeHeight?.let(::eyeHeight)
 
             attachments.run inner@{
-                mapValues { it.value.built ?: return@inner }.toMap()
+                mapValues { it.value.value ?: return@inner }.toMap()
                     .forEach { (type, vec) -> attachment(type, vec) }
             }
 
@@ -46,7 +45,7 @@ open class EntityTypeBuilder(
             if (makeFireImmune) makeFireImmune()
 
             allowSpawningInside.run inner@{
-                allowSpawningInside(*map { it.built ?: return@inner }.toTypedArray())
+                allowSpawningInside(*map { it.value ?: return@inner }.toTypedArray())
             }
 
             if (spawnableFarFromPlayer) spawnableFarFromPlayer()
@@ -54,7 +53,7 @@ open class EntityTypeBuilder(
             trackingTickInterval?.let(::trackingTickInterval)
 
             features.run inner@{
-                requires(*map { it.built ?: return@inner }.toTypedArray())
+                requires(*map { it.value ?: return@inner }.toTypedArray())
             }
 
             build()
@@ -62,6 +61,6 @@ open class EntityTypeBuilder(
     }) {
     companion object {
         fun DslBuilder<Id>.toEntityType() = object :
-            DslBuilder<EntityType<*>> by dslBuilder({ Registries.ENTITY_TYPE.get(built) }) {}
+            DslBuilder<EntityType<*>> by dslBuilder({ Registries.ENTITY_TYPE.get(value) }) {}
     }
 }

@@ -1,6 +1,5 @@
 package io.github.c0nstexpr.owo.dsl
 
-import io.github.c0nstexpr.owo.dsl.DslBuilder.Companion.built
 import net.minecraft.block.Block
 import net.minecraft.command.argument.BlockArgumentParser
 import net.minecraft.registry.Registries
@@ -13,7 +12,7 @@ open class ParseBlockResultBuilder(
     var allowNbt: Boolean = true
 ) : DslBuilder<BlockArgumentParser.BlockResult> by dslBuilder({
         BlockArgumentParser.block(
-            registry.built ?: return@dslBuilder null,
+            registry.value ?: return@dslBuilder null,
             string ?: return@dslBuilder null,
             allowNbt
         )
